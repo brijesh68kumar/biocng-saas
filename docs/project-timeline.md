@@ -55,21 +55,22 @@ Update rule:
    - Step-by-step run guide
    - Documentation maintenance rules
 13. Large explanatory comments added across backend, scripts, and frontend starter files.
+14. S1-05 Land and Crop planning modules added:
+   - `LandParcel` schema + routes
+   - `CropPlan` schema + routes
+15. Seed and smoke flow extended for Land/Crop planning path.
 
 ### Planned / Pending
-1. S1-05: Land Parcel module (schema + CRUD).
-2. S1-05: Crop Plan module (schema + CRUD).
-3. Update seed and smoke scripts for new S1-05 modules.
-4. S1-06: Harvest batch module with lot generation.
-5. S1-07: Collection center receipt lots + center stock ledger.
-6. S1-08: Dispatch + manual intake + weekly invoice generation flow.
-7. Frontend feature pages beyond starter template.
+1. S1-06: Harvest batch module with lot generation.
+2. S1-07: Collection center receipt lots + center stock ledger.
+3. S1-08: Dispatch + manual intake + weekly invoice generation flow.
+4. Frontend feature pages beyond starter template.
 
 ### Next Target
-1. Start S1-05:
-   - Create `LandParcel` model and routes.
-   - Create `CropPlan` model and routes.
-   - Add tests in smoke flow.
+1. Start S1-06:
+   - Create `HarvestBatch` model and routes.
+   - Add lot-generation logic.
+   - Extend smoke script for harvest path.
 
 ---
 

@@ -76,6 +76,7 @@ npm run smoke
 
 Expected:
 - `Smoke test passed`
+- This now validates masters including land parcels and crop plans too.
 
 If smoke fails, ensure step 5 server is running.
 

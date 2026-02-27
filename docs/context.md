@@ -74,6 +74,8 @@ CRUD + deactivate for:
 2. Farmers
 3. Collection Centers
 4. Vehicles
+5. Land Parcels
+6. Crop Plans
 
 ### Rate Cards (S1-04 Implemented)
 
@@ -148,15 +150,16 @@ This explains purpose of every important folder and file.
 ## 9) Next Development Priorities
 
 1. S1-05: Land Parcel and Crop Plan masters.
-2. S1-06: Harvest batches + lot generation + stock-in hooks.
-3. S1-07: Collection center receipt lots + center stock ledger.
-4. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
+2. S1-05: Seed and smoke coverage for Land/Crop flow.
+3. S1-06: Harvest batches + lot generation + stock-in hooks.
+4. S1-07: Collection center receipt lots + center stock ledger.
+5. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
 
 ## 10) Resume Prompt For AI
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles), and rate cards are implemented with seed and smoke scripts. Start S1-05 (LandParcel + CropPlan models/routes + seed/smoke updates), then run smoke and commit changes.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), and rate cards are implemented with seed and smoke scripts. Next start S1-06 harvest-batch workflow, run smoke, update docs, and commit.`
 
 ## 11) Mandatory Process For Every Future Change
 

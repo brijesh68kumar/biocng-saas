@@ -77,6 +77,12 @@ Purpose: Vehicle master for transport/dispatch.
 Purpose: Price master with effective date logic.
 Supports future price versions and quality adjustments.
 
+- `LandParcel.js`
+Purpose: Land parcel master for rented/owned cultivation land.
+
+- `CropPlan.js`
+Purpose: Crop planning records linked to land parcel and feedstock type.
+
 ### Folder: `src/routes` (API Endpoints)
 
 - `auth.js`
@@ -99,6 +105,12 @@ Purpose: Vehicle CRUD routes.
 
 - `rateCards.js`
 Purpose: Rate card CRUD + `/resolve` endpoint to get active rate by date.
+
+- `landParcels.js`
+Purpose: Land parcel CRUD routes.
+
+- `cropPlans.js`
+Purpose: Crop plan CRUD routes.
 
 ## Folder: `scripts` (Utility Scripts)
 

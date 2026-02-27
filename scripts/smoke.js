@@ -139,7 +139,56 @@ async function main() {
   });
   assert(vehicleList.ok, `List vehicles failed (${vehicleList.status}): ${JSON.stringify(vehicleList.body)}`);
 
-  // 7) Rate card create/list.
+  // 7) Land parcel create/list.
+  const landParcelCreate = await request('/api/land-parcels', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      parcelCode: `LP-SMOKE-${String(now).slice(-6)}`,
+      landType: 'rented',
+      lessorName: 'Smoke Lessor',
+      village: 'Smoke Village',
+      district: 'Smoke District',
+      areaAcres: 5,
+      leaseStartDate: '2026-01-01T00:00:00.000Z',
+      leaseEndDate: '2027-12-31T00:00:00.000Z',
+      rentPerAcrePerYear: 21000,
+    }),
+  });
+  assert(landParcelCreate.ok, `Create land parcel failed (${landParcelCreate.status}): ${JSON.stringify(landParcelCreate.body)}`);
+  const landParcelId = landParcelCreate.body && landParcelCreate.body._id;
+  assert(landParcelId, 'Create land parcel response missing _id');
+
+  const landParcelList = await request('/api/land-parcels', {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  assert(landParcelList.ok, `List land parcels failed (${landParcelList.status}): ${JSON.stringify(landParcelList.body)}`);
+
+  // 8) Crop plan create/list.
+  const cropPlanCreate = await request('/api/crop-plans', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      planCode: `CP-SMOKE-${String(now).slice(-6)}`,
+      landParcelId,
+      feedstockTypeId,
+      sowingDate: '2026-06-01T00:00:00.000Z',
+      expectedHarvestDate: '2026-10-01T00:00:00.000Z',
+      expectedYieldTon: 42,
+      estimatedCost: 75000,
+      notes: 'Smoke test crop plan',
+    }),
+  });
+  assert(cropPlanCreate.ok, `Create crop plan failed (${cropPlanCreate.status}): ${JSON.stringify(cropPlanCreate.body)}`);
+
+  const cropPlanList = await request('/api/crop-plans', {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  assert(cropPlanList.ok, `List crop plans failed (${cropPlanList.status}): ${JSON.stringify(cropPlanList.body)}`);
+
+  // 9) Rate card create/list.
   const currentRate = await request('/api/rate-cards', {
     method: 'POST',
     headers: authHeaders,
@@ -175,7 +224,7 @@ async function main() {
   assert(rateList.ok, `List rate cards failed (${rateList.status}): ${JSON.stringify(rateList.body)}`);
   assert(Array.isArray(rateList.body) && rateList.body.length >= 2, 'Expected at least 2 rate cards for smoke entity');
 
-  // 8) Verify resolve endpoint chooses correct row by date.
+  // 10) Verify resolve endpoint chooses correct row by date.
   const resolvedCurrent = await request(
     `/api/rate-cards/resolve?partyType=farmer&partyId=${encodeURIComponent(farmerId)}&feedstockTypeId=${encodeURIComponent(feedstockTypeId)}&asOf=2026-06-01T00:00:00.000Z`,
     {

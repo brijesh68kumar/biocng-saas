@@ -1,7 +1,8 @@
 // Seed script purpose:
 // 1) Ensure one demo admin user exists
 // 2) Populate baseline masters (feedstock, farmers, centers, vehicles)
-// 3) Add sample rate cards for effective-date testing
+// 3) Populate land and crop planning masters
+// 4) Add sample rate cards for effective-date testing
 // This lets a beginner run the API quickly without manual data entry.
 const dotenv = require('dotenv');
 const bcrypt = require('bcryptjs');
@@ -12,6 +13,8 @@ const FeedstockType = require('../src/models/FeedstockType');
 const Farmer = require('../src/models/Farmer');
 const CollectionCenter = require('../src/models/CollectionCenter');
 const Vehicle = require('../src/models/Vehicle');
+const LandParcel = require('../src/models/LandParcel');
+const CropPlan = require('../src/models/CropPlan');
 const RateCard = require('../src/models/RateCard');
 
 dotenv.config();
@@ -97,6 +100,83 @@ async function runSeed() {
   for (const row of vehicles) {
     await Vehicle.findOneAndUpdate(
       { tenantId, number: row.number },
+      { ...row, tenantId, isActive: true },
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    );
+  }
+
+  const landParcels = [
+    {
+      parcelCode: 'LP-001',
+      landType: 'rented',
+      lessorName: 'Mohan Lal',
+      village: 'Rampur',
+      district: 'Ahmedabad',
+      areaAcres: 12,
+      leaseStartDate: new Date('2026-01-01T00:00:00.000Z'),
+      leaseEndDate: new Date('2028-12-31T00:00:00.000Z'),
+      rentPerAcrePerYear: 22000,
+    },
+    {
+      parcelCode: 'LP-002',
+      landType: 'rented',
+      lessorName: 'Ravi Patel',
+      village: 'Kheda',
+      district: 'Ahmedabad',
+      areaAcres: 8,
+      leaseStartDate: new Date('2026-03-01T00:00:00.000Z'),
+      leaseEndDate: new Date('2028-02-28T00:00:00.000Z'),
+      rentPerAcrePerYear: 20000,
+    },
+  ];
+
+  // Seed land parcel master records.
+  for (const row of landParcels) {
+    await LandParcel.findOneAndUpdate(
+      { tenantId, parcelCode: row.parcelCode },
+      { ...row, tenantId, isActive: true },
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    );
+  }
+
+  // Lookup references needed for crop plans.
+  const parcel001 = await LandParcel.findOne({ tenantId, parcelCode: 'LP-001' });
+  const parcel002 = await LandParcel.findOne({ tenantId, parcelCode: 'LP-002' });
+  const cattleDung = await FeedstockType.findOne({ tenantId, code: 'CATTLE_DUNG' });
+  const agriResidue = await FeedstockType.findOne({ tenantId, code: 'AGRI_RESIDUE' });
+
+  // Seed crop plans only when referenced master data exists.
+  const cropPlans = [];
+  if (parcel001 && cattleDung) {
+    cropPlans.push({
+      planCode: 'CP-2026-001',
+      landParcelId: parcel001._id,
+      feedstockTypeId: cattleDung._id,
+      sowingDate: new Date('2026-06-01T00:00:00.000Z'),
+      expectedHarvestDate: new Date('2026-10-15T00:00:00.000Z'),
+      expectedYieldTon: 110,
+      estimatedCost: 180000,
+      notes: 'Kharif cycle plan',
+    });
+  }
+
+  if (parcel002 && agriResidue) {
+    cropPlans.push({
+      planCode: 'CP-2026-002',
+      landParcelId: parcel002._id,
+      feedstockTypeId: agriResidue._id,
+      sowingDate: new Date('2026-07-01T00:00:00.000Z'),
+      expectedHarvestDate: new Date('2026-11-30T00:00:00.000Z'),
+      expectedYieldTon: 90,
+      estimatedCost: 140000,
+      notes: 'Residue-focused cycle',
+    });
+  }
+
+  // Seed crop plan records.
+  for (const row of cropPlans) {
+    await CropPlan.findOneAndUpdate(
+      { tenantId, planCode: row.planCode },
       { ...row, tenantId, isActive: true },
       { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );
