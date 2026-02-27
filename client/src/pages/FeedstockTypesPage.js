@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
-import { API_BASE_URL } from '../config/api';
 
 // First real module page: list and create feedstock master records.
 export default function FeedstockTypesPage() {
-  const { getAuthorizedHeaders } = useAuth();
+  const { authRequest } = useAuth();
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorText, setErrorText] = useState('');
@@ -20,22 +19,14 @@ export default function FeedstockTypesPage() {
     setIsLoading(true);
     setErrorText('');
     try {
-      const response = await fetch(`${API_BASE_URL}/api/feedstock-types`, {
-        headers: {
-          ...getAuthorizedHeaders(),
-        },
-      });
-      const payload = await response.json().catch(() => []);
-      if (!response.ok) {
-        throw new Error(payload?.message || 'Failed to load feedstock types');
-      }
+      const payload = await authRequest('/api/feedstock-types');
       setItems(Array.isArray(payload) ? payload : []);
     } catch (error) {
       setErrorText(error.message || 'Unable to load feedstock types');
     } finally {
       setIsLoading(false);
     }
-  }, [getAuthorizedHeaders]);
+  }, [authRequest]);
 
   useEffect(() => {
     loadFeedstockTypes();
@@ -49,11 +40,10 @@ export default function FeedstockTypesPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/feedstock-types`, {
+      await authRequest('/api/feedstock-types', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...getAuthorizedHeaders(),
         },
         body: JSON.stringify({
           code: code.trim(),
@@ -61,10 +51,6 @@ export default function FeedstockTypesPage() {
           uom,
         }),
       });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(payload?.message || 'Failed to create feedstock type');
-      }
 
       setCode('');
       setName('');

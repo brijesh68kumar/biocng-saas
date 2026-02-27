@@ -50,6 +50,10 @@ Update rule:
    - Vehicles page now supports API-based list and create flow
    - Vehicle fields covered: number, capacityTon, ownerType
    - Uses auth + tenant headers from frontend session
+8. Frontend token/session strategy hardening completed:
+   - Central authenticated request helper added in frontend auth context
+   - Automatic logout on backend `401 Unauthorized`
+   - Frontend `.env.example` added for API base URL configuration
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first

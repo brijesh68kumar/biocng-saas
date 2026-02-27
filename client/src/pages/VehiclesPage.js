@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
-import { API_BASE_URL } from '../config/api';
 
 // Vehicles module page: list and create vehicle master records.
 export default function VehiclesPage() {
-  const { getAuthorizedHeaders } = useAuth();
+  const { authRequest } = useAuth();
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorText, setErrorText] = useState('');
@@ -20,22 +19,14 @@ export default function VehiclesPage() {
     setIsLoading(true);
     setErrorText('');
     try {
-      const response = await fetch(`${API_BASE_URL}/api/vehicles`, {
-        headers: {
-          ...getAuthorizedHeaders(),
-        },
-      });
-      const payload = await response.json().catch(() => []);
-      if (!response.ok) {
-        throw new Error(payload?.message || 'Failed to load vehicles');
-      }
+      const payload = await authRequest('/api/vehicles');
       setItems(Array.isArray(payload) ? payload : []);
     } catch (error) {
       setErrorText(error.message || 'Unable to load vehicles');
     } finally {
       setIsLoading(false);
     }
-  }, [getAuthorizedHeaders]);
+  }, [authRequest]);
 
   useEffect(() => {
     loadVehicles();
@@ -54,11 +45,10 @@ export default function VehiclesPage() {
         throw new Error('capacityTon must be a valid non-negative number');
       }
 
-      const response = await fetch(`${API_BASE_URL}/api/vehicles`, {
+      await authRequest('/api/vehicles', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...getAuthorizedHeaders(),
         },
         body: JSON.stringify({
           number: number.trim(),
@@ -66,10 +56,6 @@ export default function VehiclesPage() {
           ownerType,
         }),
       });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(payload?.message || 'Failed to create vehicle');
-      }
 
       setNumber('');
       setCapacityTon('0');

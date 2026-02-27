@@ -113,6 +113,16 @@ $env:REACT_APP_API_BASE_URL="http://localhost:5000"
 npm start
 ```
 
+You can also copy template:
+```powershell
+cd client
+copy .env.example .env
+```
+
+Token/session behavior:
+1. Token is saved in browser local storage after login.
+2. If backend returns `401 Unauthorized`, frontend auto-logs out and returns to login.
+
 Backend API runs on:
 - `http://localhost:5000`
 

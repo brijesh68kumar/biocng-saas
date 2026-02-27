@@ -198,6 +198,9 @@ Purpose: Frontend scripts and dependencies.
 - `client/package-lock.json`
 Purpose: Exact frontend dependency versions.
 
+- `client/.env.example`
+Purpose: Frontend environment template for API base URL (`REACT_APP_API_BASE_URL`).
+
 - `client/README.md`
 Purpose: Default React app notes from Create React App.
 
@@ -227,7 +230,7 @@ Purpose: Frontend API base URL configuration (`REACT_APP_API_BASE_URL` fallback 
 Purpose: Local storage helpers for token and user session persistence.
 
 - `auth/AuthContext.js`
-Purpose: Shared auth provider (login, logout, session bootstrap/validation, auth headers helper).
+Purpose: Shared auth provider (login, logout, session bootstrap/validation, auth headers helper, centralized authenticated request with auto logout on `401`).
 
 - `components/ProtectedRoute.js`
 Purpose: Route guard that redirects unauthenticated users to login.

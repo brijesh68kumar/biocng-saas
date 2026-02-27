@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
-import { API_BASE_URL } from '../config/api';
 
 // Farmers module page: list and create farmer master records.
 export default function FarmersPage() {
-  const { getAuthorizedHeaders } = useAuth();
+  const { authRequest } = useAuth();
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorText, setErrorText] = useState('');
@@ -21,22 +20,14 @@ export default function FarmersPage() {
     setIsLoading(true);
     setErrorText('');
     try {
-      const response = await fetch(`${API_BASE_URL}/api/farmers`, {
-        headers: {
-          ...getAuthorizedHeaders(),
-        },
-      });
-      const payload = await response.json().catch(() => []);
-      if (!response.ok) {
-        throw new Error(payload?.message || 'Failed to load farmers');
-      }
+      const payload = await authRequest('/api/farmers');
       setItems(Array.isArray(payload) ? payload : []);
     } catch (error) {
       setErrorText(error.message || 'Unable to load farmers');
     } finally {
       setIsLoading(false);
     }
-  }, [getAuthorizedHeaders]);
+  }, [authRequest]);
 
   useEffect(() => {
     loadFarmers();
@@ -50,11 +41,10 @@ export default function FarmersPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/farmers`, {
+      await authRequest('/api/farmers', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...getAuthorizedHeaders(),
         },
         body: JSON.stringify({
           code: code.trim(),
@@ -63,10 +53,6 @@ export default function FarmersPage() {
           village: village.trim(),
         }),
       });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(payload?.message || 'Failed to create farmer');
-      }
 
       setCode('');
       setName('');

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { API_BASE_URL } from '../config/api';
 import { authStorage } from './storage';
@@ -73,21 +73,51 @@ export function AuthProvider({ children }) {
   };
 
   // Logout clears local session state and local storage.
-  const logout = () => {
+  const logout = useCallback(() => {
     authStorage.clear();
     setToken('');
     setUser(null);
-  };
+  }, []);
 
   // Helper for future API calls where tenant and auth headers are needed.
-  const getAuthorizedHeaders = () => {
+  const getAuthorizedHeaders = useCallback(() => {
     const latestToken = authStorage.getToken();
     const latestUser = authStorage.getUser();
     return {
       Authorization: `Bearer ${latestToken}`,
       'x-tenant-id': latestUser?.tenantId || '',
     };
-  };
+  }, []);
+
+  // Centralized authenticated request helper:
+  // 1) Injects auth + tenant headers
+  // 2) Handles JSON parsing
+  // 3) Auto-logs out on 401 token expiry/invalid session
+  const authRequest = useCallback(
+    async (path, options = {}) => {
+      const response = await fetch(`${API_BASE_URL}${path}`, {
+        ...options,
+        headers: {
+          ...getAuthorizedHeaders(),
+          ...(options.headers || {}),
+        },
+      });
+
+      const payload = await response.json().catch(() => ({}));
+
+      if (response.status === 401) {
+        logout();
+        throw new Error('Session expired. Please login again.');
+      }
+
+      if (!response.ok) {
+        throw new Error(payload?.message || `Request failed (${response.status})`);
+      }
+
+      return payload;
+    },
+    [getAuthorizedHeaders, logout]
+  );
 
   const value = useMemo(
     () => ({
@@ -97,8 +127,9 @@ export function AuthProvider({ children }) {
       login,
       logout,
       getAuthorizedHeaders,
+      authRequest,
     }),
-    [token, user, isAuthLoading]
+    [token, user, isAuthLoading, logout, getAuthorizedHeaders, authRequest]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -111,4 +142,3 @@ export function useAuth() {
   }
   return context;
 }
-

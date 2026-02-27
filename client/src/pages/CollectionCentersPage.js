@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
-import { API_BASE_URL } from '../config/api';
 
 // Collection centers module page: list and create center master records.
 export default function CollectionCentersPage() {
-  const { getAuthorizedHeaders } = useAuth();
+  const { authRequest } = useAuth();
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorText, setErrorText] = useState('');
@@ -21,22 +20,14 @@ export default function CollectionCentersPage() {
     setIsLoading(true);
     setErrorText('');
     try {
-      const response = await fetch(`${API_BASE_URL}/api/collection-centers`, {
-        headers: {
-          ...getAuthorizedHeaders(),
-        },
-      });
-      const payload = await response.json().catch(() => []);
-      if (!response.ok) {
-        throw new Error(payload?.message || 'Failed to load collection centers');
-      }
+      const payload = await authRequest('/api/collection-centers');
       setItems(Array.isArray(payload) ? payload : []);
     } catch (error) {
       setErrorText(error.message || 'Unable to load collection centers');
     } finally {
       setIsLoading(false);
     }
-  }, [getAuthorizedHeaders]);
+  }, [authRequest]);
 
   useEffect(() => {
     loadCollectionCenters();
@@ -50,11 +41,10 @@ export default function CollectionCentersPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/collection-centers`, {
+      await authRequest('/api/collection-centers', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...getAuthorizedHeaders(),
         },
         body: JSON.stringify({
           code: code.trim(),
@@ -63,10 +53,6 @@ export default function CollectionCentersPage() {
           managerName: managerName.trim(),
         }),
       });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(payload?.message || 'Failed to create collection center');
-      }
 
       setCode('');
       setName('');

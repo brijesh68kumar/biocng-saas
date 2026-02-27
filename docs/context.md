@@ -260,6 +260,19 @@ CRUD + deactivate for:
    - numeric validation for capacityTon
    - responsive list table
 
+### Frontend Token And Session Strategy (Implemented)
+
+1. Browser token persistence:
+   - JWT + user profile stored in local storage.
+2. Central authenticated request helper:
+   - `authRequest(path, options)` in `AuthContext`.
+   - Injects `Authorization` and `x-tenant-id` headers automatically.
+3. Token expiry handling:
+   - Any `401 Unauthorized` response triggers auto logout and session clear.
+   - User is redirected to login by protected route guard.
+4. Environment-based frontend API config:
+   - `client/.env.example` added with `REACT_APP_API_BASE_URL`.
+
 ## 5) Local Environment State
 
 1. MongoDB service is installed and can run locally.
