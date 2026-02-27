@@ -245,7 +245,7 @@ Purpose: Protected dashboard page with user info and backend connectivity check.
 Purpose: Feedstock module page with backend-integrated list and create flow.
 
 - `pages/FarmersPage.js`
-Purpose: Placeholder route page for farmer module.
+Purpose: Farmers module page with backend-integrated list and create flow.
 
 - `pages/CollectionCentersPage.js`
 Purpose: Placeholder route page for collection center module.

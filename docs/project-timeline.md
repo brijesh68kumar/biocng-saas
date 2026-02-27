@@ -38,6 +38,10 @@ Update rule:
    - Feedstock Types page now supports API-based list and create flow
    - Auth + tenant headers are sent from frontend session for protected backend routes
    - UI form and table layout added for feedstock module
+5. Frontend Step 4 completed:
+   - Farmers page now supports API-based list and create flow
+   - Farmer fields covered: code, name, mobile, village
+   - Uses auth + tenant headers from frontend session
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -138,11 +142,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Farmers, collection centers, and vehicles pages.
+   - Collection centers and vehicles pages.
 
 ### Next Target
 1. Start next phase:
-   - Build farmers page with list + create integration.
+   - Build collection centers page with list + create integration.
 
 ---
 

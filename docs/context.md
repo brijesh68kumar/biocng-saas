@@ -226,6 +226,17 @@ CRUD + deactivate for:
    - success/error message handling
    - responsive list table
 
+### Frontend Farmers Module Integration (Current)
+
+1. Farmers page is now connected to backend:
+   - `GET /api/farmers` listing
+   - `POST /api/farmers` create form
+2. Farmer form includes:
+   - code, name, mobile, village
+3. Farmers screen includes:
+   - success/error message handling
+   - responsive list table
+
 ## 5) Local Environment State
 
 1. MongoDB service is installed and can run locally.
@@ -277,7 +288,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement farmers page list + create integration.
+   - Implement collection centers page list + create integration.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -301,7 +312,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend Step 1 auth foundation (login, protected route, logout, local session) is implemented. Next build Step 2 layout shell with module navigation and then Step 3 first module page.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend Step 1 (auth foundation), Step 2 (layout shell/routes), Step 3 (feedstock list/create), and Step 4 (farmers list/create) are implemented. Next build collection centers page with list/create integration, then vehicles page.`
 
 ## 11) Mandatory Process For Every Future Change
 
