@@ -112,6 +112,15 @@ CRUD + deactivate for:
    - `seed.js` creates sample center receipt lots + matching IN ledger rows
    - `smoke.js` validates center receipt create/list + ledger IN/OUT flow
 
+### Dispatch Module (S1-08 In Progress)
+
+1. `DispatchTrip` model is added with:
+   - auto `tripCode` generation
+   - source references (`collectionCenterId`, `landParcelId`)
+   - lot-wise plan (`plannedLots`)
+   - status lifecycle (`planned`, `dispatched`, `in_transit`, `arrived`, `closed`, `cancelled`)
+2. Dispatch routes and seed/smoke integration are pending next steps.
+
 ### Rate Cards (S1-04 Implemented)
 
 1. RateCard schema with:
@@ -186,11 +195,29 @@ This explains purpose of every important folder and file.
 
 1. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
 
+## 9.1) Remaining Work Estimate (Planning Snapshot)
+
+1. Backend remaining for MVP: ~25-35%
+2. Frontend remaining for MVP: ~80-90%
+3. Overall MVP remaining: ~45-55%
+
+## 9.2) S1-08 Step Breakdown
+
+1. Step 6.1: `DispatchTrip` model
+2. Step 6.2: Dispatch routes + app wiring
+3. Step 6.3: Seed/smoke for dispatch
+4. Step 6.4: `PlantIntakeEntry` model
+5. Step 6.5: Intake routes + app wiring
+6. Step 6.6: Seed/smoke for intake
+7. Step 6.7: Invoice cycle foundation model
+8. Step 6.8: Invoice generation route (basic)
+9. Step 6.9: Smoke for invoice generation (end-to-end path)
+
 ## 10) Resume Prompt For AI
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, and center flow (models+routes+seed+smoke) are implemented. Next start S1-08 dispatch/intake/invoice workflow and keep docs/timeline updated per commit.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, and center flow (models+routes+seed+smoke) are implemented. S1-08 step 6.1 DispatchTrip model is done. Next do step 6.2 dispatch routes+wiring, then follow steps 6.3 to 6.9 in order, validating with smoke and updating docs/timeline each commit.`
 
 ## 11) Mandatory Process For Every Future Change
 

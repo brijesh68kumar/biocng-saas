@@ -82,16 +82,26 @@ Update rule:
 22. S1-07 Step 5.4 completed:
    - Seed script extended for center receipt lots and IN ledger rows
    - Smoke script extended for center receipt create/list and ledger IN/OUT validation
+23. S1-08 Step 6.1 completed:
+   - `DispatchTrip` model added
+   - trip code auto-generation added
+   - planned lot structure and status lifecycle added
 
 ### Planned / Pending
-1. S1-08: Dispatch + manual intake + weekly invoice generation flow.
-2. Frontend feature pages beyond starter template.
+1. S1-08 Step 6.2: Dispatch routes + app wiring.
+2. S1-08 Step 6.3: Seed/smoke for dispatch flow.
+3. S1-08 Step 6.4: Plant intake model.
+4. S1-08 Step 6.5: Intake routes + app wiring.
+5. S1-08 Step 6.6: Seed/smoke for intake flow.
+6. S1-08 Step 6.7: Invoice cycle foundation model.
+7. S1-08 Step 6.8: Invoice generation route (basic).
+8. S1-08 Step 6.9: End-to-end invoice smoke validation.
+9. Frontend feature pages beyond starter template.
 
 ### Next Target
-1. Start S1-08:
-   - Add dispatch trip model and routes.
-   - Connect center lots and harvest lots to dispatch flow.
-   - Add basic intake entries and invoice data hooks.
+1. Continue S1-08:
+   - Add dispatch routes and app wiring (step 6.2).
+   - Add dispatch seed/smoke coverage (step 6.3).
 
 ---
 

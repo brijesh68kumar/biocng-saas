@@ -92,6 +92,9 @@ Purpose: Receipt lot master at collection center with auto-generated receipt lot
 - `CenterStockLedger.js`
 Purpose: Lot-wise center stock movement ledger (IN/OUT/ADJUST) for auditable stock history.
 
+- `DispatchTrip.js`
+Purpose: Trip planning and status lifecycle model for transport from source lots to plant.
+
 ### Folder: `src/routes` (API Endpoints)
 
 - `auth.js`
