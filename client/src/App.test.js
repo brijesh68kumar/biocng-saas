@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-// Basic smoke test for frontend render.
-test('renders learn react link', () => {
+// Basic render check for new auth-first app shell.
+test('renders login heading', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const headingElement = screen.getByText(/BioCNG SaaS Login/i);
+  expect(headingElement).toBeInTheDocument();
 });

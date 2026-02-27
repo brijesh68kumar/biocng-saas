@@ -96,6 +96,21 @@ npm start
 Frontend opens on:
 - `http://localhost:3000`
 
+You should now see:
+1. Login page (`BioCNG SaaS Login`)
+2. After login, protected dashboard page
+3. Logout button to end session
+
+Default demo login:
+1. Email: `admin@biocng.local`
+2. Password: `Admin@123`
+
+Optional frontend API URL override:
+```powershell
+$env:REACT_APP_API_BASE_URL="http://localhost:5000"
+npm start
+```
+
 Backend API runs on:
 - `http://localhost:5000`
 

@@ -215,10 +215,28 @@ Purpose: Browser metadata and static assets.
 Purpose: Frontend entry point that renders `<App />`.
 
 - `App.js`
-Purpose: Main UI component (currently starter template).
+Purpose: Main frontend router and auth-aware entry shell (`/login`, `/dashboard`).
 
 - `App.css`, `index.css`
-Purpose: Styling files.
+Purpose: Global and page styling for auth and dashboard starter pages.
+
+- `config/api.js`
+Purpose: Frontend API base URL configuration (`REACT_APP_API_BASE_URL` fallback support).
+
+- `auth/storage.js`
+Purpose: Local storage helpers for token and user session persistence.
+
+- `auth/AuthContext.js`
+Purpose: Shared auth provider (login, logout, session bootstrap/validation, auth headers helper).
+
+- `components/ProtectedRoute.js`
+Purpose: Route guard that redirects unauthenticated users to login.
+
+- `pages/LoginPage.js`
+Purpose: Login form page integrated with backend auth API.
+
+- `pages/DashboardPage.js`
+Purpose: First protected placeholder page with user info and backend connectivity check.
 
 - `reportWebVitals.js`
 Purpose: Optional frontend performance metrics helper.

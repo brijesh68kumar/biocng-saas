@@ -41,7 +41,7 @@ This section describes how the user wants the project handled.
 ## 3) Current Technical Architecture
 
 1. Frontend:
-   - React app in `client` (currently mostly starter CRA template).
+   - React app in `client` with auth foundation now implemented (login, protected route, logout, local session).
 2. Backend:
    - Node.js + Express modular monolith in `src`.
 3. Database:
@@ -183,6 +183,23 @@ CRUD + deactivate for:
    - `npm run dev`
 4. Postman assets exist in `postman/`.
 
+### Frontend Auth Foundation (Current)
+
+1. Login page implemented:
+   - Calls `POST /api/auth/login`
+   - Handles loading and error states
+2. Session persistence implemented:
+   - JWT token + user profile stored in local storage
+   - Session validation on app load via `GET /api/auth/me`
+3. Protected routing implemented:
+   - `/dashboard` requires valid token
+   - unauthenticated users redirected to `/login`
+4. Logout flow implemented:
+   - Clears local storage session and redirects to login
+5. Temporary dashboard page added:
+   - Displays user/tenant info
+   - Has backend connectivity check button
+
 ## 5) Local Environment State
 
 1. MongoDB service is installed and can run locally.
@@ -229,8 +246,10 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. Build first frontend functional screens beyond starter template.
-2. Start with login + protected layout + initial master listing pages.
+1. Frontend Step 2:
+   - Build layout shell (sidebar/header) and module navigation routes.
+2. Frontend Step 3:
+   - Implement first module page (feedstock list + create form).
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -254,7 +273,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, center flow, dispatch flow, intake flow, and invoice flow (models+routes+smoke) are implemented through S1-08 step 6.9. Next build frontend functional pages starting from login and protected module navigation.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend Step 1 auth foundation (login, protected route, logout, local session) is implemented. Next build Step 2 layout shell with module navigation and then Step 3 first module page.`
 
 ## 11) Mandatory Process For Every Future Change
 

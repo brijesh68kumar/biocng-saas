@@ -24,6 +24,12 @@ Update rule:
 1. Tooling strategy document added:
    - `docs/tooling-strategy-and-execution.md`
    - Includes phased adoption plan (now/soon/later) and weekly execution process
+2. Frontend Step 1 completed (auth foundation):
+   - Login page added with API-based sign in
+   - JWT/user session persisted in browser local storage
+   - Protected route guard added
+   - Logout flow added
+   - Basic protected dashboard placeholder added
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -123,10 +129,12 @@ Update rule:
 
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
+2. Frontend Step 2:
+   - Layout shell (sidebar/header) and module navigation.
 
 ### Next Target
 1. Start next phase:
-   - Build first functional frontend pages for login and core operational modules.
+   - Build frontend Step 2 layout shell and route structure.
 
 ---
 
