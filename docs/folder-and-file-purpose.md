@@ -137,7 +137,7 @@ Purpose: Inserts demo data (admin, masters, land/crop, harvest batches, sample r
 Run when setting up local environment.
 
 - `scripts/smoke.js`
-Purpose: End-to-end API sanity check (login + create/list across masters/land/crop/harvest + rate resolution).
+Purpose: End-to-end API sanity check (login + create/list across masters/land/crop/harvest/center flow + rate resolution).
 
 ## Folder: `docs` (Project Documentation)
 

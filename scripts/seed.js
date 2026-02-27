@@ -16,6 +16,8 @@ const Vehicle = require('../src/models/Vehicle');
 const LandParcel = require('../src/models/LandParcel');
 const CropPlan = require('../src/models/CropPlan');
 const HarvestBatch = require('../src/models/HarvestBatch');
+const CenterReceiptLot = require('../src/models/CenterReceiptLot');
+const CenterStockLedger = require('../src/models/CenterStockLedger');
 const RateCard = require('../src/models/RateCard');
 
 dotenv.config();
@@ -227,24 +229,94 @@ async function runSeed() {
     );
   }
 
+  // Seed center receipt lots and matching IN ledger entries.
+  const centerNorth = await CollectionCenter.findOne({ tenantId, code: 'CC-NORTH' });
+  const centerSouth = await CollectionCenter.findOne({ tenantId, code: 'CC-SOUTH' });
+  const farm001 = await Farmer.findOne({ tenantId, code: 'FARM001' });
+  const farm002 = await Farmer.findOne({ tenantId, code: 'FARM002' });
+
+  const centerReceipts = [];
+  if (centerNorth && cattleDung && farm001) {
+    centerReceipts.push({
+      receiptLotCode: 'CRL-SEED-001',
+      collectionCenterId: centerNorth._id,
+      sourceType: 'farmer',
+      sourceRefId: String(farm001._id),
+      feedstockTypeId: cattleDung._id,
+      receiptDate: new Date('2026-10-05T00:00:00.000Z'),
+      grossQtyTon: 22,
+      moisturePercent: 18,
+      qualityGrade: 'A',
+      availableQtyTon: 22,
+      notes: 'Seed center receipt lot 1',
+    });
+  }
+
+  if (centerSouth && agriResidue && farm002) {
+    centerReceipts.push({
+      receiptLotCode: 'CRL-SEED-002',
+      collectionCenterId: centerSouth._id,
+      sourceType: 'farmer',
+      sourceRefId: String(farm002._id),
+      feedstockTypeId: agriResidue._id,
+      receiptDate: new Date('2026-10-07T00:00:00.000Z'),
+      grossQtyTon: 19,
+      moisturePercent: 23,
+      qualityGrade: 'B',
+      availableQtyTon: 19,
+      notes: 'Seed center receipt lot 2',
+    });
+  }
+
+  for (const row of centerReceipts) {
+    const lot = await CenterReceiptLot.findOneAndUpdate(
+      { tenantId, receiptLotCode: row.receiptLotCode },
+      { ...row, tenantId, isActive: true },
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    );
+
+    // Ensure one corresponding IN ledger row exists for each seeded receipt lot.
+    await CenterStockLedger.findOneAndUpdate(
+      {
+        tenantId,
+        centerReceiptLotId: lot._id,
+        movementType: 'IN',
+        refType: 'center-receipt',
+        refId: String(lot._id),
+      },
+      {
+        tenantId,
+        collectionCenterId: lot.collectionCenterId,
+        centerReceiptLotId: lot._id,
+        movementType: 'IN',
+        qtyTon: Math.abs(lot.grossQtyTon),
+        balanceAfterTon: lot.availableQtyTon,
+        refType: 'center-receipt',
+        refId: String(lot._id),
+        remarks: lot.notes || undefined,
+      },
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    );
+  }
+
   // Lookup seeded references needed for rate card records.
   const pressmud = await FeedstockType.findOne({ tenantId, code: 'PRESSMUD' });
-  const farm001 = await Farmer.findOne({ tenantId, code: 'FARM001' });
+  const farm001ForRate = await Farmer.findOne({ tenantId, code: 'FARM001' });
 
-  if (pressmud && farm001) {
+  if (pressmud && farm001ForRate) {
     // Current effective rate example.
     await RateCard.findOneAndUpdate(
       {
         tenantId,
         partyType: 'farmer',
-        partyId: String(farm001._id),
+        partyId: String(farm001ForRate._id),
         feedstockTypeId: pressmud._id,
         effectiveFrom: new Date('2026-01-01T00:00:00.000Z'),
       },
       {
         tenantId,
         partyType: 'farmer',
-        partyId: String(farm001._id),
+        partyId: String(farm001ForRate._id),
         feedstockTypeId: pressmud._id,
         effectiveFrom: new Date('2026-01-01T00:00:00.000Z'),
         ratePerTon: 1500,
@@ -259,14 +331,14 @@ async function runSeed() {
       {
         tenantId,
         partyType: 'farmer',
-        partyId: String(farm001._id),
+        partyId: String(farm001ForRate._id),
         feedstockTypeId: pressmud._id,
         effectiveFrom: new Date('2027-01-01T00:00:00.000Z'),
       },
       {
         tenantId,
         partyType: 'farmer',
-        partyId: String(farm001._id),
+        partyId: String(farm001ForRate._id),
         feedstockTypeId: pressmud._id,
         effectiveFrom: new Date('2027-01-01T00:00:00.000Z'),
         ratePerTon: 1650,

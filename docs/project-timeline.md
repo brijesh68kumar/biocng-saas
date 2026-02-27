@@ -79,15 +79,19 @@ Update rule:
    - `CenterStockLedger` routes added and wired
    - `POST /api/center-stock-ledger/out` added for OUT posting
    - Receipt lot creation now auto-posts `IN` movement to ledger
+22. S1-07 Step 5.4 completed:
+   - Seed script extended for center receipt lots and IN ledger rows
+   - Smoke script extended for center receipt create/list and ledger IN/OUT validation
 
 ### Planned / Pending
-1. S1-07 Step 5.4: Seed/smoke coverage for center flow.
-4. S1-08: Dispatch + manual intake + weekly invoice generation flow.
-5. Frontend feature pages beyond starter template.
+1. S1-08: Dispatch + manual intake + weekly invoice generation flow.
+2. Frontend feature pages beyond starter template.
 
 ### Next Target
-1. Start S1-07:
-   - Extend seed/smoke for center receipt and stock movement (step 5.4).
+1. Start S1-08:
+   - Add dispatch trip model and routes.
+   - Connect center lots and harvest lots to dispatch flow.
+   - Add basic intake entries and invoice data hooks.
 
 ---
 

@@ -120,6 +120,8 @@ async function main() {
     headers: { Authorization: `Bearer ${token}` },
   });
   assert(centerList.ok, `List centers failed (${centerList.status}): ${JSON.stringify(centerList.body)}`);
+  const centerId = centerCreate.body && centerCreate.body._id;
+  assert(centerId, 'Create center response missing _id');
 
   // 6) Vehicle create/list.
   const vehicleCreate = await request('/api/vehicles', {
@@ -227,7 +229,67 @@ async function main() {
     `List harvest batches failed (${harvestBatchList.status}): ${JSON.stringify(harvestBatchList.body)}`
   );
 
-  // 10) Rate card create/list.
+  // 10) Center receipt create should auto-post IN ledger entry.
+  const centerReceiptCreate = await request('/api/center-receipt-lots', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      collectionCenterId: centerId,
+      sourceType: 'farmer',
+      sourceRefId: farmerId,
+      feedstockTypeId,
+      receiptDate: '2026-10-12T00:00:00.000Z',
+      grossQtyTon: 25,
+      moisturePercent: 17,
+      qualityGrade: 'A',
+      notes: 'Smoke center receipt',
+    }),
+  });
+  assert(
+    centerReceiptCreate.ok,
+    `Create center receipt failed (${centerReceiptCreate.status}): ${JSON.stringify(centerReceiptCreate.body)}`
+  );
+  const centerReceiptLotId = centerReceiptCreate.body && centerReceiptCreate.body._id;
+  assert(centerReceiptLotId, 'Create center receipt response missing _id');
+
+  const centerReceiptList = await request('/api/center-receipt-lots', {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  assert(
+    centerReceiptList.ok,
+    `List center receipt lots failed (${centerReceiptList.status}): ${JSON.stringify(centerReceiptList.body)}`
+  );
+
+  const ledgerAfterIn = await request(`/api/center-stock-ledger?centerReceiptLotId=${encodeURIComponent(centerReceiptLotId)}`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  assert(
+    ledgerAfterIn.ok,
+    `List center stock ledger failed (${ledgerAfterIn.status}): ${JSON.stringify(ledgerAfterIn.body)}`
+  );
+  assert(Array.isArray(ledgerAfterIn.body) && ledgerAfterIn.body.length >= 1, 'Expected at least one IN ledger row');
+  const hasIn = ledgerAfterIn.body.some((x) => x.movementType === 'IN');
+  assert(hasIn, 'Expected IN ledger row after center receipt creation');
+
+  // 11) Post OUT movement and verify balance changes.
+  const outPost = await request('/api/center-stock-ledger/out', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      centerReceiptLotId,
+      qtyTon: 8,
+      refType: 'smoke-out',
+      refId: `SMOKE-OUT-${now}`,
+      remarks: 'Smoke OUT movement',
+    }),
+  });
+  assert(outPost.ok, `Post OUT ledger failed (${outPost.status}): ${JSON.stringify(outPost.body)}`);
+  assert(outPost.body.movementType === 'OUT', 'Expected OUT movement type');
+  assert(outPost.body.balanceAfterTon === 17, `Expected balanceAfterTon 17, got ${outPost.body.balanceAfterTon}`);
+
+  // 12) Rate card create/list.
   const currentRate = await request('/api/rate-cards', {
     method: 'POST',
     headers: authHeaders,
@@ -263,7 +325,7 @@ async function main() {
   assert(rateList.ok, `List rate cards failed (${rateList.status}): ${JSON.stringify(rateList.body)}`);
   assert(Array.isArray(rateList.body) && rateList.body.length >= 2, 'Expected at least 2 rate cards for smoke entity');
 
-  // 11) Verify resolve endpoint chooses correct row by date.
+  // 13) Verify resolve endpoint chooses correct row by date.
   const resolvedCurrent = await request(
     `/api/rate-cards/resolve?partyType=farmer&partyId=${encodeURIComponent(farmerId)}&feedstockTypeId=${encodeURIComponent(feedstockTypeId)}&asOf=2026-06-01T00:00:00.000Z`,
     {

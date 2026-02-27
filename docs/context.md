@@ -108,6 +108,9 @@ CRUD + deactivate for:
    - `GET /api/center-stock-ledger`
    - `POST /api/center-stock-ledger/out`
 5. Receipt creation now auto-posts `IN` movement to center stock ledger.
+6. Center seed/smoke integration is implemented:
+   - `seed.js` creates sample center receipt lots + matching IN ledger rows
+   - `smoke.js` validates center receipt create/list + ledger IN/OUT flow
 
 ### Rate Cards (S1-04 Implemented)
 
@@ -181,14 +184,13 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. S1-07 Step 5.4: Seed/smoke coverage for center receipt and ledger flow.
-4. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
+1. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
 
 ## 10) Resume Prompt For AI
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, and harvest batch flow (model+routes+seed+smoke) are implemented. S1-07 step 5.1, 5.2, and 5.3 are done (center models + receipt routes + ledger APIs). Next do step 5.4 seed/smoke + docs + commit.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, and center flow (models+routes+seed+smoke) are implemented. Next start S1-08 dispatch/intake/invoice workflow and keep docs/timeline updated per commit.`
 
 ## 11) Mandatory Process For Every Future Change
 
