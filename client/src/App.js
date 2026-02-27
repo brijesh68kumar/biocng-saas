@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 import CollectionCentersPage from './pages/CollectionCentersPage';
 import CenterReceiptLotsPage from './pages/CenterReceiptLotsPage';
+import CenterStockLedgerPage from './pages/CenterStockLedgerPage';
 import CropPlansPage from './pages/CropPlansPage';
 import DashboardPage from './pages/DashboardPage';
 import FarmersPage from './pages/FarmersPage';
@@ -39,6 +40,7 @@ function AppRoutes() {
         <Route path="crop-plans" element={<CropPlansPage />} />
         <Route path="harvest-batches" element={<HarvestBatchesPage />} />
         <Route path="center-receipt-lots" element={<CenterReceiptLotsPage />} />
+        <Route path="center-stock-ledger" element={<CenterStockLedgerPage />} />
         <Route index element={<Navigate to="/dashboard" replace />} />
       </Route>
       <Route path="*" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />

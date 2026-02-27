@@ -12,6 +12,7 @@ const links = [
   { to: '/crop-plans', label: 'Crop Plans' },
   { to: '/harvest-batches', label: 'Harvest Batches' },
   { to: '/center-receipt-lots', label: 'Center Receipt Lots' },
+  { to: '/center-stock-ledger', label: 'Center Stock Ledger' },
 ];
 
 // Reusable protected shell for all authenticated pages.

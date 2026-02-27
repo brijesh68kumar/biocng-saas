@@ -70,6 +70,10 @@ Update rule:
    - Center receipt lots page now supports API-based list and create flow
    - Receipt fields covered: center, source, feedstock, date, quantity and quality fields
    - Uses dropdown options loaded from collection centers and feedstock masters
+13. Frontend Step 11 completed:
+   - Center stock ledger page now supports API-based listing and OUT posting flow
+   - OUT posting fields covered: receipt lot, qtyTon, refType, refId, remarks
+   - Receipt lot dropdown shows available quantity for stock control
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -170,11 +174,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Stock ledger, dispatch, intake, and invoices pages.
+   - Dispatch, intake, and invoices pages.
 
 ### Next Target
 1. Start next phase:
-   - Build center stock ledger page with list + OUT posting integration.
+   - Build dispatch trips page with list + create + status update integration.
 
 ---
 

@@ -268,6 +268,9 @@ Purpose: Harvest batches module page with backend-integrated list and create flo
 - `pages/CenterReceiptLotsPage.js`
 Purpose: Center receipt lots module page with backend-integrated list and create flow.
 
+- `pages/CenterStockLedgerPage.js`
+Purpose: Center stock ledger module page with backend-integrated list and OUT posting flow.
+
 - `reportWebVitals.js`
 Purpose: Optional frontend performance metrics helper.
 

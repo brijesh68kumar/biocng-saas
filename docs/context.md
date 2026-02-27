@@ -313,6 +313,18 @@ CRUD + deactivate for:
    - success/error message handling
    - responsive list table
 
+### Frontend Center Stock Ledger Module Integration (Current)
+
+1. Center stock ledger page is now connected to backend:
+   - `GET /api/center-stock-ledger` listing
+   - `POST /api/center-stock-ledger/out` posting
+2. OUT posting form includes:
+   - centerReceiptLotId, qtyTon, refType, refId, remarks
+3. Stock ledger screen includes:
+   - receipt lot dropdown with current available quantity
+   - success/error message handling
+   - responsive movement list table
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -377,7 +389,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement center stock ledger page with list + OUT posting.
+   - Implement dispatch trips page with list + create + status updates.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
