@@ -83,6 +83,9 @@ Purpose: Land parcel master for rented/owned cultivation land.
 - `CropPlan.js`
 Purpose: Crop planning records linked to land parcel and feedstock type.
 
+- `HarvestBatch.js`
+Purpose: Harvest lot/batch record with auto-generated `batchCode` and `lotNo` for traceability.
+
 ### Folder: `src/routes` (API Endpoints)
 
 - `auth.js`

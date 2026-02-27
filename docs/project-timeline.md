@@ -59,18 +59,22 @@ Update rule:
    - `LandParcel` schema + routes
    - `CropPlan` schema + routes
 15. Seed and smoke flow extended for Land/Crop planning path.
+16. S1-06 Step 4.1 completed:
+   - `HarvestBatch` model added
+   - auto `batchCode` generation added
+   - auto `lotNo` generation added
 
 ### Planned / Pending
-1. S1-06: Harvest batch module with lot generation.
-2. S1-07: Collection center receipt lots + center stock ledger.
-3. S1-08: Dispatch + manual intake + weekly invoice generation flow.
-4. Frontend feature pages beyond starter template.
+1. S1-06 Step 4.2: HarvestBatch routes and API wiring.
+2. S1-06 Step 4.3: Seed and smoke coverage for HarvestBatch.
+3. S1-07: Collection center receipt lots + center stock ledger.
+4. S1-08: Dispatch + manual intake + weekly invoice generation flow.
+5. Frontend feature pages beyond starter template.
 
 ### Next Target
-1. Start S1-06:
-   - Create `HarvestBatch` model and routes.
-   - Add lot-generation logic.
-   - Extend smoke script for harvest path.
+1. Continue S1-06:
+   - Add `HarvestBatch` routes and app wiring (step 4.2).
+   - Extend seed and smoke for harvest flow (step 4.3).
 
 ---
 

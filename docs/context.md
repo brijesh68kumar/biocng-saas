@@ -77,6 +77,14 @@ CRUD + deactivate for:
 5. Land Parcels
 6. Crop Plans
 
+### Harvest Module (S1-06 In Progress)
+
+1. `HarvestBatch` model is created with:
+   - auto `batchCode` generation
+   - auto `lotNo` generation
+   - links to `LandParcel`, `CropPlan`, and `FeedstockType`
+2. Harvest routes and seed/smoke integration are pending next steps.
+
 ### Rate Cards (S1-04 Implemented)
 
 1. RateCard schema with:
@@ -149,17 +157,16 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. S1-05: Land Parcel and Crop Plan masters.
-2. S1-05: Seed and smoke coverage for Land/Crop flow.
-3. S1-06: Harvest batches + lot generation + stock-in hooks.
-4. S1-07: Collection center receipt lots + center stock ledger.
-5. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
+1. S1-06 Step 4.2: HarvestBatch routes + app wiring.
+2. S1-06 Step 4.3: Seed and smoke coverage for HarvestBatch flow.
+3. S1-07: Collection center receipt lots + center stock ledger.
+4. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
 
 ## 10) Resume Prompt For AI
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), and rate cards are implemented with seed and smoke scripts. Next start S1-06 harvest-batch workflow, run smoke, update docs, and commit.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), and rate cards are implemented with seed and smoke scripts. HarvestBatch model is added (S1-06 step 4.1). Next do step 4.2 routes+wiring, then step 4.3 seed/smoke, run smoke, update docs, and commit.`
 
 ## 11) Mandatory Process For Every Future Change
 
