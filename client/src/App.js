@@ -9,6 +9,7 @@ import CenterReceiptLotsPage from './pages/CenterReceiptLotsPage';
 import CenterStockLedgerPage from './pages/CenterStockLedgerPage';
 import CropPlansPage from './pages/CropPlansPage';
 import DashboardPage from './pages/DashboardPage';
+import DispatchTripsPage from './pages/DispatchTripsPage';
 import FarmersPage from './pages/FarmersPage';
 import FeedstockTypesPage from './pages/FeedstockTypesPage';
 import HarvestBatchesPage from './pages/HarvestBatchesPage';
@@ -41,6 +42,7 @@ function AppRoutes() {
         <Route path="harvest-batches" element={<HarvestBatchesPage />} />
         <Route path="center-receipt-lots" element={<CenterReceiptLotsPage />} />
         <Route path="center-stock-ledger" element={<CenterStockLedgerPage />} />
+        <Route path="dispatch-trips" element={<DispatchTripsPage />} />
         <Route index element={<Navigate to="/dashboard" replace />} />
       </Route>
       <Route path="*" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />

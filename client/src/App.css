@@ -249,6 +249,16 @@
   font-weight: 700;
 }
 
+.table-inline {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.table-inline-select {
+  min-width: 140px;
+}
+
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;

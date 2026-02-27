@@ -325,6 +325,20 @@ CRUD + deactivate for:
    - success/error message handling
    - responsive movement list table
 
+### Frontend Dispatch Trips Module Integration (Current)
+
+1. Dispatch trips page is now connected to backend:
+   - `GET /api/dispatch-trips` listing
+   - `POST /api/dispatch-trips` create form
+   - `PATCH /api/dispatch-trips/:id/status` status update
+2. Dispatch form includes:
+   - sourceType, collectionCenterId, landParcelId, vehicleId
+   - driver and destination fields
+   - planned lot source/reference/quantity fields
+3. Dispatch screen includes:
+   - success/error message handling
+   - responsive list table with inline status update controls
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -389,7 +403,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement dispatch trips page with list + create + status updates.
+   - Implement plant intake entries page with list + create integration.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 

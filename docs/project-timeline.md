@@ -74,6 +74,10 @@ Update rule:
    - Center stock ledger page now supports API-based listing and OUT posting flow
    - OUT posting fields covered: receipt lot, qtyTon, refType, refId, remarks
    - Receipt lot dropdown shows available quantity for stock control
+14. Frontend Step 12 completed:
+   - Dispatch trips page now supports API-based list and create flow
+   - Dispatch status update flow added using status endpoint
+   - Dispatch form includes source, vehicle, route, and planned lot details
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -174,11 +178,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Dispatch, intake, and invoices pages.
+   - Intake and invoices pages.
 
 ### Next Target
 1. Start next phase:
-   - Build dispatch trips page with list + create + status update integration.
+   - Build plant intake entries page with list + create integration.
 
 ---
 

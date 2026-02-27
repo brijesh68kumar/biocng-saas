@@ -271,6 +271,9 @@ Purpose: Center receipt lots module page with backend-integrated list and create
 - `pages/CenterStockLedgerPage.js`
 Purpose: Center stock ledger module page with backend-integrated list and OUT posting flow.
 
+- `pages/DispatchTripsPage.js`
+Purpose: Dispatch trips module page with backend-integrated list/create flow and status update action.
+
 - `reportWebVitals.js`
 Purpose: Optional frontend performance metrics helper.
 
