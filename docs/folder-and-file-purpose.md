@@ -86,6 +86,12 @@ Purpose: Crop planning records linked to land parcel and feedstock type.
 - `HarvestBatch.js`
 Purpose: Harvest lot/batch record with auto-generated `batchCode` and `lotNo` for traceability.
 
+- `CenterReceiptLot.js`
+Purpose: Receipt lot master at collection center with auto-generated receipt lot code and available quantity tracking.
+
+- `CenterStockLedger.js`
+Purpose: Lot-wise center stock movement ledger (IN/OUT/ADJUST) for auditable stock history.
+
 ### Folder: `src/routes` (API Endpoints)
 
 - `auth.js`

@@ -69,17 +69,22 @@ Update rule:
 18. S1-06 Step 4.3 completed:
    - Seed script extended with sample harvest batches
    - Smoke script extended to validate harvest create/list and auto-generated codes
+19. S1-07 Step 5.1 completed:
+   - `CenterReceiptLot` model added
+   - `CenterStockLedger` model added
 
 ### Planned / Pending
-1. S1-07: Collection center receipt lots + center stock ledger.
-2. S1-08: Dispatch + manual intake + weekly invoice generation flow.
-3. Frontend feature pages beyond starter template.
+1. S1-07 Step 5.2: Routes and API wiring for CenterReceiptLot.
+2. S1-07 Step 5.3: Center stock ledger posting + list APIs.
+3. S1-07 Step 5.4: Seed/smoke coverage for center flow.
+4. S1-08: Dispatch + manual intake + weekly invoice generation flow.
+5. Frontend feature pages beyond starter template.
 
 ### Next Target
 1. Start S1-07:
-   - Add collection center receipt lot model and routes.
-   - Add center stock ledger model and posting logic.
-   - Extend seed/smoke for center receipt and stock movement.
+   - Add CenterReceiptLot routes and app wiring (step 5.2).
+   - Add center stock ledger posting/list APIs (step 5.3).
+   - Extend seed/smoke for center receipt and stock movement (step 5.4).
 
 ---
 
