@@ -86,21 +86,23 @@ Update rule:
    - `DispatchTrip` model added
    - trip code auto-generation added
    - planned lot structure and status lifecycle added
+24. S1-08 Step 6.2 completed:
+   - `DispatchTrip` routes added
+   - `/api/dispatch-trips` wired into app
+   - status transition endpoint added (`PATCH /api/dispatch-trips/:id/status`)
 
 ### Planned / Pending
-1. S1-08 Step 6.2: Dispatch routes + app wiring.
-2. S1-08 Step 6.3: Seed/smoke for dispatch flow.
-3. S1-08 Step 6.4: Plant intake model.
-4. S1-08 Step 6.5: Intake routes + app wiring.
-5. S1-08 Step 6.6: Seed/smoke for intake flow.
-6. S1-08 Step 6.7: Invoice cycle foundation model.
-7. S1-08 Step 6.8: Invoice generation route (basic).
-8. S1-08 Step 6.9: End-to-end invoice smoke validation.
+1. S1-08 Step 6.3: Seed/smoke for dispatch flow.
+2. S1-08 Step 6.4: Plant intake model.
+3. S1-08 Step 6.5: Intake routes + app wiring.
+4. S1-08 Step 6.6: Seed/smoke for intake flow.
+5. S1-08 Step 6.7: Invoice cycle foundation model.
+6. S1-08 Step 6.8: Invoice generation route (basic).
+7. S1-08 Step 6.9: End-to-end invoice smoke validation.
 9. Frontend feature pages beyond starter template.
 
 ### Next Target
 1. Continue S1-08:
-   - Add dispatch routes and app wiring (step 6.2).
    - Add dispatch seed/smoke coverage (step 6.3).
 
 ---

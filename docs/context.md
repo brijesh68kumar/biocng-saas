@@ -119,7 +119,12 @@ CRUD + deactivate for:
    - source references (`collectionCenterId`, `landParcelId`)
    - lot-wise plan (`plannedLots`)
    - status lifecycle (`planned`, `dispatched`, `in_transit`, `arrived`, `closed`, `cancelled`)
-2. Dispatch routes and seed/smoke integration are pending next steps.
+2. Dispatch routes are added and wired:
+   - `GET/POST /api/dispatch-trips`
+   - `GET/PATCH /api/dispatch-trips/:id`
+   - `PATCH /api/dispatch-trips/:id/status`
+   - `PATCH /api/dispatch-trips/:id/deactivate`
+3. Dispatch seed/smoke integration is pending next step.
 
 ### Rate Cards (S1-04 Implemented)
 
@@ -193,7 +198,13 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
+1. S1-08 Step 6.3: Seed/smoke for dispatch.
+2. S1-08 Step 6.4: Plant intake model.
+3. S1-08 Step 6.5: Intake routes + app wiring.
+4. S1-08 Step 6.6: Seed/smoke for intake.
+5. S1-08 Step 6.7: Invoice cycle foundation model.
+6. S1-08 Step 6.8: Invoice generation route (basic).
+7. S1-08 Step 6.9: End-to-end invoice smoke validation.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -217,7 +228,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, and center flow (models+routes+seed+smoke) are implemented. S1-08 step 6.1 DispatchTrip model is done. Next do step 6.2 dispatch routes+wiring, then follow steps 6.3 to 6.9 in order, validating with smoke and updating docs/timeline each commit.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, and center flow (models+routes+seed+smoke) are implemented. S1-08 step 6.1 and 6.2 are done (DispatchTrip model + routes+wiring). Next do step 6.3 dispatch seed/smoke, then continue 6.4 to 6.9 in order with validation and docs updates per commit.`
 
 ## 11) Mandatory Process For Every Future Change
 

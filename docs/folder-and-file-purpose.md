@@ -133,6 +133,9 @@ Purpose: Collection center receipt lot CRUD routes with automatic `IN` ledger po
 - `centerStockLedger.js`
 Purpose: Center stock ledger list endpoint and `OUT` movement posting endpoint.
 
+- `dispatchTrips.js`
+Purpose: Dispatch trip CRUD, status transition API, and trip listing filters.
+
 ## Folder: `scripts` (Utility Scripts)
 
 - `scripts/seed.js`
