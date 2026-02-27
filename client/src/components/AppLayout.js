@@ -9,6 +9,7 @@ const links = [
   { to: '/collection-centers', label: 'Collection Centers' },
   { to: '/vehicles', label: 'Vehicles' },
   { to: '/land-parcels', label: 'Land Parcels' },
+  { to: '/crop-plans', label: 'Crop Plans' },
 ];
 
 // Reusable protected shell for all authenticated pages.

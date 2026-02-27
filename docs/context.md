@@ -273,6 +273,20 @@ CRUD + deactivate for:
    - numeric validation for area and rent
    - responsive list table
 
+### Frontend Crop Plans Module Integration (Current)
+
+1. Crop plans page is now connected to backend:
+   - `GET /api/crop-plans` listing
+   - `POST /api/crop-plans` create form
+2. Crop plan form includes:
+   - planCode, landParcelId, feedstockTypeId
+   - sowingDate, expectedHarvestDate, expectedYieldTon
+   - estimatedCost, notes
+3. Crop plans screen includes:
+   - dropdown options from land parcels and feedstock types
+   - success/error message handling
+   - responsive list table
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -337,7 +351,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement crop plans page list + create integration.
+   - Implement harvest batches page list + create integration.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 

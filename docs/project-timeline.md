@@ -58,6 +58,10 @@ Update rule:
    - Land parcels page now supports API-based list and create flow
    - Parcel fields covered: parcelCode, landType, village, district, areaAcres, lease dates, rent
    - Uses centralized frontend authenticated request helper
+10. Frontend Step 8 completed:
+   - Crop plans page now supports API-based list and create flow
+   - Plan fields covered: planCode, parcel/feedstock mapping, sowing/harvest dates, yield and cost
+   - Uses dropdown options loaded from land parcels and feedstock masters
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -158,11 +162,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Crop plans, harvest batches, center receipt, stock ledger, dispatch, intake, and invoices pages.
+   - Harvest batches, center receipt, stock ledger, dispatch, intake, and invoices pages.
 
 ### Next Target
 1. Start next phase:
-   - Build crop plans page with list + create integration.
+   - Build harvest batches page with list + create integration.
 
 ---
 

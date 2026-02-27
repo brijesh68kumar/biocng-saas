@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from './auth/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 import CollectionCentersPage from './pages/CollectionCentersPage';
+import CropPlansPage from './pages/CropPlansPage';
 import DashboardPage from './pages/DashboardPage';
 import FarmersPage from './pages/FarmersPage';
 import FeedstockTypesPage from './pages/FeedstockTypesPage';
@@ -33,6 +34,7 @@ function AppRoutes() {
         <Route path="collection-centers" element={<CollectionCentersPage />} />
         <Route path="vehicles" element={<VehiclesPage />} />
         <Route path="land-parcels" element={<LandParcelsPage />} />
+        <Route path="crop-plans" element={<CropPlansPage />} />
         <Route index element={<Navigate to="/dashboard" replace />} />
       </Route>
       <Route path="*" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />

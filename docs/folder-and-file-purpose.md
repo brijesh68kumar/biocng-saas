@@ -259,6 +259,9 @@ Purpose: Vehicles module page with backend-integrated list and create flow.
 - `pages/LandParcelsPage.js`
 Purpose: Land parcels module page with backend-integrated list and create flow.
 
+- `pages/CropPlansPage.js`
+Purpose: Crop plans module page with backend-integrated list and create flow.
+
 - `reportWebVitals.js`
 Purpose: Optional frontend performance metrics helper.
 
