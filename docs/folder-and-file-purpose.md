@@ -125,7 +125,10 @@ Purpose: Crop plan CRUD routes.
 Purpose: Harvest batch CRUD routes (auto lot/batch code behavior comes from model).
 
 - `centerReceiptLots.js`
-Purpose: Collection center receipt lot CRUD routes.
+Purpose: Collection center receipt lot CRUD routes with automatic `IN` ledger posting.
+
+- `centerStockLedger.js`
+Purpose: Center stock ledger list endpoint and `OUT` movement posting endpoint.
 
 ## Folder: `scripts` (Utility Scripts)
 
