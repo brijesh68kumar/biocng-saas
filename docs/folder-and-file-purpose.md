@@ -265,6 +265,9 @@ Purpose: Crop plans module page with backend-integrated list and create flow.
 - `pages/HarvestBatchesPage.js`
 Purpose: Harvest batches module page with backend-integrated list and create flow.
 
+- `pages/CenterReceiptLotsPage.js`
+Purpose: Center receipt lots module page with backend-integrated list and create flow.
+
 - `reportWebVitals.js`
 Purpose: Optional frontend performance metrics helper.
 

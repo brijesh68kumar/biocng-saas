@@ -66,6 +66,10 @@ Update rule:
    - Harvest batches page now supports API-based list and create flow
    - Batch fields covered: land/crop/feedstock mapping, harvest date, quantity and quality fields
    - Uses dropdown options loaded from land parcels, crop plans, and feedstock masters
+12. Frontend Step 10 completed:
+   - Center receipt lots page now supports API-based list and create flow
+   - Receipt fields covered: center, source, feedstock, date, quantity and quality fields
+   - Uses dropdown options loaded from collection centers and feedstock masters
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -166,11 +170,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Center receipt, stock ledger, dispatch, intake, and invoices pages.
+   - Stock ledger, dispatch, intake, and invoices pages.
 
 ### Next Target
 1. Start next phase:
-   - Build center receipt lots page with list + create integration.
+   - Build center stock ledger page with list + OUT posting integration.
 
 ---
 

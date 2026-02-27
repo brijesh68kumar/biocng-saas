@@ -300,6 +300,19 @@ CRUD + deactivate for:
    - success/error message handling
    - responsive list table
 
+### Frontend Center Receipt Lots Module Integration (Current)
+
+1. Center receipt lots page is now connected to backend:
+   - `GET /api/center-receipt-lots` listing
+   - `POST /api/center-receipt-lots` create form
+2. Center receipt form includes:
+   - collectionCenterId, sourceType, sourceRefId, feedstockTypeId
+   - receiptDate, grossQtyTon, moisturePercent, qualityGrade, notes
+3. Center receipt screen includes:
+   - dropdown options from collection centers and feedstock types
+   - success/error message handling
+   - responsive list table
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -364,7 +377,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement center receipt lots page list + create integration.
+   - Implement center stock ledger page with list + OUT posting.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
