@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 
 // Land parcels module page: list and create parcel master records.
 export default function LandParcelsPage() {
@@ -18,6 +19,7 @@ export default function LandParcelsPage() {
   const [leaseStartDate, setLeaseStartDate] = useState('');
   const [leaseEndDate, setLeaseEndDate] = useState('');
   const [rentPerAcrePerYear, setRentPerAcrePerYear] = useState('0');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load parcel list from backend.
@@ -88,6 +90,17 @@ export default function LandParcelsPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    parcelCode: item.parcelCode,
+    landType: item.landType,
+    village: item.village || '',
+    district: item.district || '',
+    areaAcres: item.areaAcres,
+    status: item.isActive ? 'Active' : 'Inactive',
+  }));
 
   return (
     <div>
@@ -214,9 +227,16 @@ export default function LandParcelsPage() {
 
       <section className="card">
         <h2>Land Parcels List</h2>
+        <ListToolbar
+          title="Land Parcels Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="land-parcels.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading land parcels...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No land parcels found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No land parcels found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -230,7 +250,7 @@ export default function LandParcelsPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.parcelCode}</td>
                     <td>{item.landType || '-'}</td>
@@ -248,4 +268,3 @@ export default function LandParcelsPage() {
     </div>
   );
 }
-

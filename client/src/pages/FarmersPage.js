@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 
 // Farmers module page: list and create farmer master records.
 export default function FarmersPage() {
@@ -13,6 +14,7 @@ export default function FarmersPage() {
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState('');
   const [village, setVillage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load farmer list from backend.
@@ -66,6 +68,16 @@ export default function FarmersPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    code: item.code,
+    name: item.name,
+    mobile: item.mobile || '',
+    village: item.village || '',
+    status: item.isActive ? 'Active' : 'Inactive',
+  }));
 
   return (
     <div>
@@ -138,9 +150,16 @@ export default function FarmersPage() {
 
       <section className="card">
         <h2>Farmers List</h2>
+        <ListToolbar
+          title="Farmers List Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="farmers.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading farmers...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No farmers found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No farmers found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -153,7 +172,7 @@ export default function FarmersPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.code}</td>
                     <td>{item.name}</td>

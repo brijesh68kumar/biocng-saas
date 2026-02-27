@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 
 // Vehicles module page: list and create vehicle master records.
 export default function VehiclesPage() {
@@ -12,6 +13,7 @@ export default function VehiclesPage() {
   const [number, setNumber] = useState('');
   const [capacityTon, setCapacityTon] = useState('0');
   const [ownerType, setOwnerType] = useState('contracted');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load vehicle list from backend.
@@ -68,6 +70,15 @@ export default function VehiclesPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    number: item.number,
+    capacityTon: item.capacityTon,
+    ownerType: item.ownerType,
+    status: item.isActive ? 'Active' : 'Inactive',
+  }));
 
   return (
     <div>
@@ -133,9 +144,16 @@ export default function VehiclesPage() {
 
       <section className="card">
         <h2>Vehicles List</h2>
+        <ListToolbar
+          title="Vehicles List Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="vehicles.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading vehicles...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No vehicles found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No vehicles found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -147,7 +165,7 @@ export default function VehiclesPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.number}</td>
                     <td>{item.capacityTon}</td>

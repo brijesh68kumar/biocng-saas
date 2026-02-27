@@ -402,6 +402,31 @@ CRUD + deactivate for:
    - recent dispatch trips table
    - recent invoices table
 
+### Frontend Shared Search And CSV Export (Current)
+
+1. Reusable list toolbar component added:
+   - `client/src/components/ListToolbar.js`
+   - shared search input and CSV export action
+2. Shared CSV utility added:
+   - `client/src/utils/csv.js`
+   - browser-safe CSV generation and file download helper
+3. Module list screens now support:
+   - client-side search filtering
+   - one-click CSV export for current filtered rows
+4. Implemented across operational module pages:
+   - Feedstock Types
+   - Farmers
+   - Collection Centers
+   - Vehicles
+   - Land Parcels
+   - Crop Plans
+   - Harvest Batches
+   - Center Receipt Lots
+   - Center Stock Ledger
+   - Dispatch Trips
+   - Plant Intake Entries
+   - Invoices
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -461,12 +486,12 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. Frontend Step 2:
-   - Completed (layout shell + module routes).
-2. Frontend Step 3:
-   - Completed (feedstock list + create form).
-3. Next:
-   - Add shared advanced filters and CSV exports for module list pages.
+1. Frontend Step 1-18:
+   - Completed (auth, layout shell, all operational module pages, dashboard widgets, search/filter and CSV export).
+2. Next:
+   - Build Rate Cards frontend module and wire resolve helper flow.
+3. Then:
+   - Add invoice detail view and printable invoice layout.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -490,7 +515,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend operational module pages are implemented through invoices, plus shared auth request helper, formatting utilities, and polished UI. Dashboard KPI widgets and recent operational snapshots are now implemented. Next add shared advanced filters and CSV export actions across list pages.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend operational module pages are implemented through invoices, plus shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, and recent operational snapshots. Shared search/filter and CSV export controls are now implemented across module list pages. Next build Rate Cards frontend module and then invoice detail/print layout.`
 
 ## 11) Mandatory Process For Every Future Change
 

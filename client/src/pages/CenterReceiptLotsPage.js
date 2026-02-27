@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 import { formatDate } from '../utils/formatters';
 
 // Center receipt lots page: list and create lot entries at collection centers.
@@ -22,6 +23,7 @@ export default function CenterReceiptLotsPage() {
   const [moisturePercent, setMoisturePercent] = useState('');
   const [qualityGrade, setQualityGrade] = useState('');
   const [notes, setNotes] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load dropdown options.
@@ -109,6 +111,17 @@ export default function CenterReceiptLotsPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    receiptLotCode: item.receiptLotCode,
+    sourceType: item.sourceType,
+    receiptDate: formatDate(item.receiptDate),
+    grossQtyTon: item.grossQtyTon,
+    availableQtyTon: item.availableQtyTon,
+    qualityGrade: item.qualityGrade || '',
+  }));
 
   return (
     <div>
@@ -252,9 +265,16 @@ export default function CenterReceiptLotsPage() {
 
       <section className="card">
         <h2>Center Receipt Lots List</h2>
+        <ListToolbar
+          title="Center Receipt Lots Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="center-receipt-lots.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading center receipt lots...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No center receipt lots found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No center receipt lots found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -268,7 +288,7 @@ export default function CenterReceiptLotsPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.receiptLotCode}</td>
                     <td>{item.sourceType}</td>

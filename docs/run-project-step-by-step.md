@@ -102,6 +102,9 @@ You should now see:
 3. Dashboard plus module pages (feedstock + farmers + collection centers + vehicles + land parcels + crop plans + harvest batches + center receipt lots + center stock ledger + dispatch trips + plant intake entries + invoices live)
 4. Logout button to end session
 5. In `Feedstock Types`, `Farmers`, `Collection Centers`, `Vehicles`, `Land Parcels`, `Crop Plans`, `Harvest Batches`, `Center Receipt Lots`, `Center Stock Ledger`, `Dispatch Trips`, `Plant Intake Entries`, and `Invoices` pages you can create/list operational records from backend API
+6. Each module list now has:
+   - Search box to filter visible rows
+   - Export CSV button to download current filtered rows
 
 Default demo login:
 1. Email: `admin@biocng.local`

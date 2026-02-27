@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 
 // First real module page: list and create feedstock master records.
 export default function FeedstockTypesPage() {
@@ -12,6 +13,7 @@ export default function FeedstockTypesPage() {
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
   const [uom, setUom] = useState('ton');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load current feedstock list from backend.
@@ -63,6 +65,15 @@ export default function FeedstockTypesPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    code: item.code,
+    name: item.name,
+    uom: item.uom,
+    status: item.isActive ? 'Active' : 'Inactive',
+  }));
 
   return (
     <div>
@@ -122,9 +133,16 @@ export default function FeedstockTypesPage() {
 
       <section className="card">
         <h2>Feedstock List</h2>
+        <ListToolbar
+          title="Feedstock List Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="feedstock-types.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading feedstock types...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No feedstock types found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No feedstock types found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -136,7 +154,7 @@ export default function FeedstockTypesPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.code}</td>
                     <td>{item.name}</td>

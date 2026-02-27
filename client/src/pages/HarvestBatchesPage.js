@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 import { formatDate } from '../utils/formatters';
 
 // Harvest batches module page: list and create lot/batch records.
@@ -22,6 +23,7 @@ export default function HarvestBatchesPage() {
   const [moisturePercent, setMoisturePercent] = useState('');
   const [qualityGrade, setQualityGrade] = useState('');
   const [notes, setNotes] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load list dependencies for dropdowns.
@@ -113,6 +115,16 @@ export default function HarvestBatchesPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    batchCode: item.batchCode,
+    lotNo: item.lotNo,
+    harvestDate: formatDate(item.harvestDate),
+    grossQtyTon: item.grossQtyTon,
+    qualityGrade: item.qualityGrade || '',
+  }));
 
   return (
     <div>
@@ -248,9 +260,16 @@ export default function HarvestBatchesPage() {
 
       <section className="card">
         <h2>Harvest Batches List</h2>
+        <ListToolbar
+          title="Harvest Batches Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="harvest-batches.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading harvest batches...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No harvest batches found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No harvest batches found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -263,7 +282,7 @@ export default function HarvestBatchesPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.batchCode}</td>
                     <td>{item.lotNo}</td>

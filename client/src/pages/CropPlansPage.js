@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 import { formatDate } from '../utils/formatters';
 
 // Crop plans module page: list and create crop planning records.
@@ -21,6 +22,7 @@ export default function CropPlansPage() {
   const [expectedYieldTon, setExpectedYieldTon] = useState('0');
   const [estimatedCost, setEstimatedCost] = useState('0');
   const [notes, setNotes] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load list dependencies for dropdowns.
@@ -111,6 +113,17 @@ export default function CropPlansPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    planCode: item.planCode,
+    landParcelId: item.landParcelId,
+    feedstockTypeId: item.feedstockTypeId,
+    sowingDate: formatDate(item.sowingDate),
+    expectedHarvestDate: formatDate(item.expectedHarvestDate),
+    expectedYieldTon: item.expectedYieldTon,
+  }));
 
   return (
     <div>
@@ -246,9 +259,16 @@ export default function CropPlansPage() {
 
       <section className="card">
         <h2>Crop Plans List</h2>
+        <ListToolbar
+          title="Crop Plans Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="crop-plans.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading crop plans...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No crop plans found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No crop plans found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -262,7 +282,7 @@ export default function CropPlansPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.planCode}</td>
                     <td>{item.landParcelId}</td>

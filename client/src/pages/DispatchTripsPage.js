@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 
 const statusOptions = ['planned', 'dispatched', 'in_transit', 'arrived', 'closed', 'cancelled'];
 
@@ -25,6 +26,7 @@ export default function DispatchTripsPage() {
   const [plannedLotSourceType, setPlannedLotSourceType] = useState('center-receipt');
   const [plannedLotRefId, setPlannedLotRefId] = useState('');
   const [plannedLotQtyTon, setPlannedLotQtyTon] = useState('0');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [statusDrafts, setStatusDrafts] = useState({});
 
@@ -151,6 +153,15 @@ export default function DispatchTripsPage() {
       setErrorText(error.message || 'Unable to update trip status');
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    tripCode: item.tripCode,
+    sourceType: item.sourceType,
+    status: item.status,
+    vehicleId: item.vehicleId || '',
+  }));
 
   return (
     <div>
@@ -285,9 +296,16 @@ export default function DispatchTripsPage() {
 
       <section className="card">
         <h2>Dispatch Trips List</h2>
+        <ListToolbar
+          title="Dispatch Trips Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="dispatch-trips.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading dispatch trips...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No dispatch trips found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No dispatch trips found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -300,7 +318,7 @@ export default function DispatchTripsPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.tripCode}</td>
                     <td>{item.sourceType}</td>
@@ -339,4 +357,3 @@ export default function DispatchTripsPage() {
     </div>
   );
 }
-

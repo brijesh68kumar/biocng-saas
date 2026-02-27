@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 import { formatDateTime } from '../utils/formatters';
 
 // Center stock ledger page: list movements and post OUT transactions.
@@ -17,6 +18,7 @@ export default function CenterStockLedgerPage() {
   const [refType, setRefType] = useState('manual-out');
   const [refId, setRefId] = useState('');
   const [remarks, setRemarks] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load receipt lots for OUT posting dropdown.
@@ -93,6 +95,17 @@ export default function CenterStockLedgerPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    movementType: item.movementType,
+    qtyTon: item.qtyTon,
+    balanceAfterTon: item.balanceAfterTon,
+    refType: item.refType || '',
+    refId: item.refId || '',
+    createdAt: formatDateTime(item.createdAt),
+  }));
 
   return (
     <div>
@@ -184,9 +197,16 @@ export default function CenterStockLedgerPage() {
 
       <section className="card">
         <h2>Ledger Movements</h2>
+        <ListToolbar
+          title="Center Stock Ledger Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="center-stock-ledger.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading ledger rows...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No stock movements found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No stock movements found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -200,7 +220,7 @@ export default function CenterStockLedgerPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.movementType}</td>
                     <td>{item.qtyTon}</td>

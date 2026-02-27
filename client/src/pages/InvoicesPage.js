@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 import { formatDate } from '../utils/formatters';
 
 // Invoices page: generate weekly invoices and list generated invoice documents.
@@ -15,6 +16,7 @@ export default function InvoicesPage() {
   const [partyType, setPartyType] = useState('collection-center');
   const [forceRegen, setForceRegen] = useState(true);
   const [notes, setNotes] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load generated invoices list.
@@ -63,6 +65,19 @@ export default function InvoicesPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    invoiceNo: item.invoiceNo,
+    partyType: item.partyType,
+    partyRefId: item.partyRefId,
+    weekStartDate: formatDate(item.weekStartDate),
+    weekEndDate: formatDate(item.weekEndDate),
+    totalQtyTon: item.totalQtyTon,
+    totalAmount: item.totalAmount,
+    status: item.status,
+  }));
 
   return (
     <div>
@@ -144,9 +159,16 @@ export default function InvoicesPage() {
 
       <section className="card">
         <h2>Generated Invoices</h2>
+        <ListToolbar
+          title="Invoices List Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="invoices.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading invoices...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No invoices found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No invoices found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -162,7 +184,7 @@ export default function InvoicesPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.invoiceNo}</td>
                     <td>{item.partyType}</td>

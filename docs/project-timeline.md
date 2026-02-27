@@ -99,6 +99,11 @@ Update rule:
    - Dashboard now shows KPI cards from live backend data
    - Added recent dispatch and recent invoice operational snapshots
    - Added dashboard refresh action for quick metric reload
+20. Frontend Phase-2 Step 18 completed (shared search/filter + CSV export):
+   - Added reusable list toolbar component for module list controls
+   - Added client-side search across module list pages
+   - Added CSV export action across operational list pages
+   - Added shared CSV utility for consistent browser downloads
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -197,13 +202,14 @@ Update rule:
    - Collection-center rate card path added in smoke flow for invoice calculation
 
 ### Planned / Pending
-1. Frontend feature pages beyond starter template.
-2. Next frontend module integrations:
-   - Advanced filters/search and CSV export actions across modules.
+1. Frontend Step 19:
+   - Add rate card management UI (list/create/update/deactivate + resolve helper).
+2. Frontend Step 20:
+   - Add invoice detail view and printable invoice layout.
 
 ### Next Target
 1. Start next phase:
-   - Add shared search/filter and CSV export controls for module pages.
+   - Build Rate Cards frontend module and connect it to backend APIs.
 
 ---
 

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 import { formatDate } from '../utils/formatters';
 
 // Plant intake entries page: list and create intake/weighbridge records.
@@ -28,6 +29,7 @@ export default function PlantIntakeEntriesPage() {
   const [rejectionReason, setRejectionReason] = useState('');
   const [intakeDate, setIntakeDate] = useState('');
   const [notes, setNotes] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Auto-calculate net weight for easier manual entry.
@@ -137,6 +139,19 @@ export default function PlantIntakeEntriesPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    intakeCode: item.intakeCode,
+    sourceType: item.sourceType,
+    intakeDate: formatDate(item.intakeDate),
+    grossWeightTon: item.grossWeightTon,
+    tareWeightTon: item.tareWeightTon,
+    netWeightTon: item.netWeightTon,
+    acceptedQtyTon: item.acceptedQtyTon,
+    rejectedQtyTon: item.rejectedQtyTon,
+  }));
 
   return (
     <div>
@@ -338,9 +353,16 @@ export default function PlantIntakeEntriesPage() {
 
       <section className="card">
         <h2>Plant Intake Entries List</h2>
+        <ListToolbar
+          title="Plant Intake Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="plant-intake-entries.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading intake entries...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No intake entries found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No intake entries found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -356,7 +378,7 @@ export default function PlantIntakeEntriesPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.intakeCode}</td>
                     <td>{item.sourceType}</td>

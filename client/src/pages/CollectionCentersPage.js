@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import ListToolbar from '../components/ListToolbar';
 
 // Collection centers module page: list and create center master records.
 export default function CollectionCentersPage() {
@@ -13,6 +14,7 @@ export default function CollectionCentersPage() {
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [managerName, setManagerName] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load center list from backend.
@@ -66,6 +68,16 @@ export default function CollectionCentersPage() {
       setIsSubmitting(false);
     }
   };
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => JSON.stringify(item || {}).toLowerCase().includes(normalizedSearch));
+  const exportRows = filteredItems.map((item) => ({
+    code: item.code,
+    name: item.name,
+    location: item.location || '',
+    managerName: item.managerName || '',
+    status: item.isActive ? 'Active' : 'Inactive',
+  }));
 
   return (
     <div>
@@ -138,9 +150,16 @@ export default function CollectionCentersPage() {
 
       <section className="card">
         <h2>Collection Centers List</h2>
+        <ListToolbar
+          title="Collection Centers Controls"
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          exportRows={exportRows}
+          exportFile="collection-centers.csv"
+        />
         {isLoading ? <p className="dashboard-meta">Loading collection centers...</p> : null}
-        {!isLoading && items.length === 0 ? <p className="dashboard-meta">No collection centers found.</p> : null}
-        {!isLoading && items.length > 0 ? (
+        {!isLoading && filteredItems.length === 0 ? <p className="dashboard-meta">No collection centers found.</p> : null}
+        {!isLoading && filteredItems.length > 0 ? (
           <div className="table-wrap">
             <table className="module-table">
               <thead>
@@ -153,7 +172,7 @@ export default function CollectionCentersPage() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <tr key={item._id}>
                     <td>{item.code}</td>
                     <td>{item.name}</td>

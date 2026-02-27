@@ -295,6 +295,29 @@
   min-width: 140px;
 }
 
+.list-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.list-toolbar-left {
+  display: grid;
+  gap: 6px;
+}
+
+.list-toolbar-left h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #52624f;
+}
+
+.list-search-input {
+  min-width: 260px;
+}
+
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;
@@ -307,6 +330,15 @@
 
   .layout-nav {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .list-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .list-search-input {
+    min-width: 0;
   }
 }
 

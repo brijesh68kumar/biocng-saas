@@ -229,6 +229,9 @@ Purpose: Frontend API base URL configuration (`REACT_APP_API_BASE_URL` fallback 
 - `utils/formatters.js`
 Purpose: Shared frontend date/time formatting helpers used by module tables.
 
+- `utils/csv.js`
+Purpose: Shared frontend CSV export helper used by list toolbar and module pages.
+
 - `auth/storage.js`
 Purpose: Local storage helpers for token and user session persistence.
 
@@ -240,6 +243,9 @@ Purpose: Route guard that redirects unauthenticated users to login.
 
 - `components/AppLayout.js`
 Purpose: Protected app shell with sidebar navigation and top header used by module pages.
+
+- `components/ListToolbar.js`
+Purpose: Reusable list control bar with search input and CSV export action for module pages.
 
 - `pages/LoginPage.js`
 Purpose: Login form page integrated with backend auth API.
