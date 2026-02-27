@@ -248,6 +248,18 @@ CRUD + deactivate for:
    - success/error message handling
    - responsive list table
 
+### Frontend Vehicles Module Integration (Current)
+
+1. Vehicles page is now connected to backend:
+   - `GET /api/vehicles` listing
+   - `POST /api/vehicles` create form
+2. Vehicle form includes:
+   - number, capacityTon, ownerType
+3. Vehicles screen includes:
+   - success/error message handling
+   - numeric validation for capacityTon
+   - responsive list table
+
 ## 5) Local Environment State
 
 1. MongoDB service is installed and can run locally.
@@ -299,7 +311,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement vehicles page list + create integration.
+   - Implement land parcels page list + create integration.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -323,7 +335,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend Step 1 (auth foundation), Step 2 (layout shell/routes), Step 3 (feedstock list/create), Step 4 (farmers list/create), and Step 5 (collection centers list/create) are implemented. Next build vehicles page list/create integration.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend Step 1 (auth foundation), Step 2 (layout shell/routes), Step 3 (feedstock list/create), Step 4 (farmers list/create), Step 5 (collection centers list/create), and Step 6 (vehicles list/create) are implemented. Next build land parcels page list/create integration, then crop plans page.`
 
 ## 11) Mandatory Process For Every Future Change
 

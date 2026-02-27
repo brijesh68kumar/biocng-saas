@@ -251,7 +251,7 @@ Purpose: Farmers module page with backend-integrated list and create flow.
 Purpose: Collection centers module page with backend-integrated list and create flow.
 
 - `pages/VehiclesPage.js`
-Purpose: Placeholder route page for vehicle module.
+Purpose: Vehicles module page with backend-integrated list and create flow.
 
 - `reportWebVitals.js`
 Purpose: Optional frontend performance metrics helper.
