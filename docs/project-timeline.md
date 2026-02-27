@@ -211,15 +211,20 @@ Update rule:
    - Smoke script extended for end-to-end weekly invoice generation and listing validation
    - Collection-center rate card path added in smoke flow for invoice calculation
 
+23. Frontend Phase-2 Step 21 completed (operational reports page):
+   - Added date-range report page for intake, center receipt, dispatch, and invoice summaries
+   - Added KPI summary cards and top invoice-party ranking table
+   - Added recent invoice snapshot table in selected range
+   - Wired reports page in protected route and sidebar navigation
+
 ### Planned / Pending
-1. Frontend Step 21:
-   - Add export-ready operational reports page (date range + module-wise summaries).
-2. Frontend Step 22:
+1. No mandatory MVP feature steps pending in current frontend plan.
+2. Optional next improvement:
    - Add backend/frontend quality-adjustment editor for rate card rules.
 
 ### Next Target
 1. Start next phase:
-   - Add operational reports page with date-range summary metrics.
+   - Start production hardening and integration testing pass.
 
 ---
 

@@ -17,6 +17,7 @@ const links = [
   { to: '/plant-intake-entries', label: 'Plant Intake Entries' },
   { to: '/rate-cards', label: 'Rate Cards' },
   { to: '/invoices', label: 'Invoices' },
+  { to: '/reports', label: 'Reports' },
 ];
 
 // Reusable protected shell for all authenticated pages.

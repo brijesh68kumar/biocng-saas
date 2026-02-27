@@ -289,6 +289,9 @@ Purpose: Plant intake entries module page with backend-integrated list and creat
 - `pages/RateCardsPage.js`
 Purpose: Rate cards module page with backend-integrated list/create/update/deactivate/resolve flows.
 
+- `pages/ReportsPage.js`
+Purpose: Operational reporting page with date-range summaries across intake, dispatch, receipts, and invoices.
+
 - `pages/InvoicesPage.js`
 Purpose: Invoices module page with backend-integrated weekly generate/list flow plus invoice detail and print layout.
 

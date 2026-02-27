@@ -99,15 +99,18 @@ Frontend opens on:
 You should now see:
 1. Login page (`BioCNG SaaS Login`)
 2. After login, protected layout with sidebar navigation
-3. Dashboard plus module pages (feedstock + farmers + collection centers + vehicles + land parcels + crop plans + harvest batches + center receipt lots + center stock ledger + dispatch trips + plant intake entries + rate cards + invoices live)
+3. Dashboard plus module pages (feedstock + farmers + collection centers + vehicles + land parcels + crop plans + harvest batches + center receipt lots + center stock ledger + dispatch trips + plant intake entries + rate cards + invoices + reports live)
 4. Logout button to end session
-5. In `Feedstock Types`, `Farmers`, `Collection Centers`, `Vehicles`, `Land Parcels`, `Crop Plans`, `Harvest Batches`, `Center Receipt Lots`, `Center Stock Ledger`, `Dispatch Trips`, `Plant Intake Entries`, `Rate Cards`, and `Invoices` pages you can create/list operational records from backend API
+5. In `Feedstock Types`, `Farmers`, `Collection Centers`, `Vehicles`, `Land Parcels`, `Crop Plans`, `Harvest Batches`, `Center Receipt Lots`, `Center Stock Ledger`, `Dispatch Trips`, `Plant Intake Entries`, `Rate Cards`, `Invoices`, and `Reports` pages you can create/list/view operational data from backend API
 6. Each module list now has:
    - Search box to filter visible rows
    - Export CSV button to download current filtered rows
 7. In `Invoices` page:
    - Use `View` on a row to open invoice detail sheet
    - Use `Print Invoice` to print/download invoice as PDF from browser
+8. In `Reports` page:
+   - Choose `Date From` and `Date To`
+   - Click `Load Report` to see summary cards and top invoice parties
 
 Default demo login:
 1. Email: `admin@biocng.local`
