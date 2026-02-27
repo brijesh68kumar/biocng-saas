@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 
+// Main React component currently showing starter UI.
+// You will replace this with your BioCNG dashboard screens.
 function App() {
   return (
     <div className="App">

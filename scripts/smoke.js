@@ -1,19 +1,26 @@
+// Smoke test purpose:
+// Quickly verify that core backend APIs are alive and behaving correctly.
+// This is not a full test suite; it is a "basic health + happy path" check.
 const dotenv = require('dotenv');
 
 dotenv.config();
 
+// Configurable target URL and login credentials.
 const baseUrl = process.env.SMOKE_BASE_URL || 'http://localhost:5000';
 const email = process.env.SMOKE_ADMIN_EMAIL || 'admin@biocng.local';
 const password = process.env.SMOKE_ADMIN_PASSWORD || 'Admin@123';
 
+// Timestamp helps create unique codes in each run.
 const now = Date.now();
 
+// Small assertion helper for readable failures.
 const assert = (condition, message) => {
   if (!condition) {
     throw new Error(message);
   }
 };
 
+// Tiny HTTP helper with JSON parsing fallback.
 async function request(path, options = {}) {
   const response = await fetch(`${baseUrl}${path}`, options);
   const text = await response.text();
@@ -31,6 +38,7 @@ async function request(path, options = {}) {
 async function main() {
   console.log(`Smoke test base URL: ${baseUrl}`);
 
+  // 1) Login and get token.
   const login = await request('/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -46,12 +54,14 @@ async function main() {
     'Content-Type': 'application/json',
   };
 
+  // 2) Verify token can access /me.
   const me = await request('/api/auth/me', {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   });
   assert(me.ok, `Me failed (${me.status}): ${JSON.stringify(me.body)}`);
 
+  // 3) Feedstock create/list.
   const feedstockCreate = await request('/api/feedstock-types', {
     method: 'POST',
     headers: authHeaders,
@@ -71,6 +81,7 @@ async function main() {
   const feedstockTypeId = feedstockCreate.body && feedstockCreate.body._id;
   assert(feedstockTypeId, 'Create feedstock response missing _id');
 
+  // 4) Farmer create/list.
   const farmerCreate = await request('/api/farmers', {
     method: 'POST',
     headers: authHeaders,
@@ -91,6 +102,7 @@ async function main() {
   const farmerId = farmerCreate.body && farmerCreate.body._id;
   assert(farmerId, 'Create farmer response missing _id');
 
+  // 5) Collection center create/list.
   const centerCreate = await request('/api/collection-centers', {
     method: 'POST',
     headers: authHeaders,
@@ -109,6 +121,7 @@ async function main() {
   });
   assert(centerList.ok, `List centers failed (${centerList.status}): ${JSON.stringify(centerList.body)}`);
 
+  // 6) Vehicle create/list.
   const vehicleCreate = await request('/api/vehicles', {
     method: 'POST',
     headers: authHeaders,
@@ -126,6 +139,7 @@ async function main() {
   });
   assert(vehicleList.ok, `List vehicles failed (${vehicleList.status}): ${JSON.stringify(vehicleList.body)}`);
 
+  // 7) Rate card create/list.
   const currentRate = await request('/api/rate-cards', {
     method: 'POST',
     headers: authHeaders,
@@ -161,6 +175,7 @@ async function main() {
   assert(rateList.ok, `List rate cards failed (${rateList.status}): ${JSON.stringify(rateList.body)}`);
   assert(Array.isArray(rateList.body) && rateList.body.length >= 2, 'Expected at least 2 rate cards for smoke entity');
 
+  // 8) Verify resolve endpoint chooses correct row by date.
   const resolvedCurrent = await request(
     `/api/rate-cards/resolve?partyType=farmer&partyId=${encodeURIComponent(farmerId)}&feedstockTypeId=${encodeURIComponent(feedstockTypeId)}&asOf=2026-06-01T00:00:00.000Z`,
     {
@@ -184,6 +199,7 @@ async function main() {
   console.log('Smoke test passed');
 }
 
+// Exit with non-zero code if anything fails (useful for CI pipelines).
 main().catch((error) => {
   console.error(`Smoke test failed: ${error.message}`);
   process.exit(1);

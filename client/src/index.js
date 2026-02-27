@@ -4,14 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Entry point of React app: mount <App /> into <div id="root"></div> in public/index.html
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // StrictMode helps catch common issues in development.
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Optional performance metrics hook.
 reportWebVitals();

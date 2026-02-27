@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Collection centers receive feedstock from local farmers.
 const collectionCenterSchema = new mongoose.Schema(
   {
     tenantId: { type: String, required: true, index: true },
@@ -12,6 +13,7 @@ const collectionCenterSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Center code is unique per tenant.
 collectionCenterSchema.index({ tenantId: 1, code: 1 }, { unique: true });
 
 module.exports = mongoose.model('CollectionCenter', collectionCenterSchema);

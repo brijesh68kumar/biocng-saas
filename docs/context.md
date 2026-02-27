@@ -1,75 +1,168 @@
-# BioCNG SaaS Context
+# BioCNG SaaS Context (AI Restart Memory)
 
-## Decisions
-- Single plant per customer.
-- Web-only platform for MVP.
-- Manual weighbridge entry at plant intake.
-- Weekly farmer invoices.
-- Lot/batch-wise inventory tracking and lineage.
-- Sourcing mix includes own cultivated feedstock (rented land) and farmer procurement through collection centers.
+This file is meant for fast recovery after IDE/computer restart.
+Any AI assistant should read this file first before coding.
 
-## Current Architecture
-- Frontend: React app in `client` (currently CRA baseline).
-- Backend: Node.js + Express modular monolith.
-- Database: MongoDB with tenant-scoped data (`tenantId` on business entities).
-- Auth: JWT with role-based authorization.
+## 1) Product Vision
 
-## Implemented Backend Scope
-- Auth APIs:
-  - `POST /api/auth/register`
-  - `POST /api/auth/login`
-  - `GET /api/auth/me`
-- Tenant guard middleware for request scoping.
-- Role middleware for protected write endpoints.
-- Master CRUD APIs implemented:
-  - Feedstock Types
-  - Farmers
-  - Collection Centers
-  - Vehicles
-- Seed utility:
-  - `npm run seed`
-- Automated API smoke test:
-  - `npm run smoke`
-- Dev server with autoreload:
-  - `npm run dev`
+Build a SaaS platform for BioCNG plant operations where feedstock is managed as a service.
 
-## Key Files Added/Updated
-- `index.js`
-- `src/app.js`
-- `src/config/db.js`
-- `src/middleware/*`
-- `src/models/*`
-- `src/routes/*`
-- `scripts/seed.js`
-- `scripts/smoke.js`
-- `postman/BioCNG-Sprint1.postman_collection.json`
-- `postman/BioCNG-local.postman_environment.json`
-- `.env.example`
-- `nodemon.json`
-- `package.json`
+Business model includes:
+1. Own cultivation on rented land.
+2. Farmer procurement via collection centers.
+3. Manual weighbridge intake at plant.
+4. Weekly farmer invoicing.
+5. Lot/batch-wise traceability.
 
-## Local Runbook
-1. Ensure MongoDB service is running.
+## 1.1) User Profile And Working Preferences (Important)
+
+This section describes how the user wants the project handled.
+
+1. User is beginner-friendly and wants simple explanations.
+2. User prefers step-by-step commands over abstract guidance.
+3. User asked that code files include strong explanatory comments.
+4. User expects docs to be updated with every meaningful change.
+5. User specifically wants these docs always maintained:
+   - `docs/context.md`
+   - `docs/folder-and-file-purpose.md`
+   - `docs/run-project-step-by-step.md`
+   - `docs/documentation-maintenance-rules.md`
+6. User wants restart-safe context so AI can continue quickly after computer restart.
+
+## 2) Locked Business Decisions
+
+1. Single plant per customer (tenant model still enforced in data).
+2. Web-only first (no mobile app in current scope).
+3. Weighbridge entries are manual for MVP.
+4. Invoicing in MVP is generation only (no full payment reconciliation yet).
+5. Farmer invoices are weekly.
+6. Inventory/stock lineage is lot/batch wise.
+
+## 3) Current Technical Architecture
+
+1. Frontend:
+   - React app in `client` (currently mostly starter CRA template).
+2. Backend:
+   - Node.js + Express modular monolith in `src`.
+3. Database:
+   - MongoDB local (`mongodb://localhost:27017/biogas` default).
+4. Security:
+   - JWT auth and role-based route restrictions.
+5. Multi-tenancy:
+   - `tenantId` on business entities + tenant middleware for query scoping.
+
+## 4) What Is Implemented (Ground Truth)
+
+### Auth + Access
+
+1. `POST /api/auth/register`
+2. `POST /api/auth/login`
+3. `GET /api/auth/me`
+4. Auth middleware:
+   - `protect` for token validation.
+   - `authorize` for role checks.
+
+### Tenant Guard
+
+1. `requireTenant` middleware.
+2. `tenantFilter` helper used in DB queries.
+
+### Master Modules
+
+CRUD + deactivate for:
+1. Feedstock Types
+2. Farmers
+3. Collection Centers
+4. Vehicles
+
+### Rate Cards (S1-04 Implemented)
+
+1. RateCard schema with:
+   - `partyType`
+   - `partyId`
+   - `feedstockTypeId`
+   - `effectiveFrom`
+   - `ratePerTon`
+   - optional `qualityAdjustments`
+2. APIs:
+   - `GET /api/rate-cards`
+   - `POST /api/rate-cards`
+   - `GET /api/rate-cards/:id`
+   - `PATCH /api/rate-cards/:id`
+   - `PATCH /api/rate-cards/:id/deactivate`
+   - `GET /api/rate-cards/resolve?...` (effective-date lookup)
+
+### Tooling/Utilities
+
+1. Seed script:
+   - `npm run seed`
+2. Smoke test script:
+   - `npm run smoke`
+3. Backend dev autoreload:
+   - `npm run dev`
+4. Postman assets exist in `postman/`.
+
+## 5) Local Environment State
+
+1. MongoDB service is installed and can run locally.
+2. `mongosh` is installed and callable.
+3. Git repo initialized and linked to:
+   - `https://github.com/brijesh68kumar/biocng-saas.git`
+4. Branch in use:
+   - `master`
+
+## 6) Run Commands (Most Important)
+
+From project root:
+
+1. Start MongoDB:
+   - `Start-Service MongoDB`
 2. Seed demo data:
    - `npm run seed`
-3. Start backend in dev mode:
+3. Start backend:
    - `npm run dev`
-4. Validate baseline APIs:
+4. Validate backend:
    - `npm run smoke`
+5. Start frontend:
+   - `cd client`
+   - `npm start`
 
-## Default Demo Credentials
-- Email: `admin@biocng.local`
-- Password: `Admin@123`
-- Tenant: `tenant-demo-plant-1`
+Detailed beginner steps:
+- `docs/run-project-step-by-step.md`
 
-## Next Sprint Items
-- S1-04: Rate Cards (schema + CRUD + effective-date resolution). (Implemented)
-- S1-05: Land Parcel and Crop Plan masters.
-- S1-06: Harvest batches with lot generation and stock-in ledger hooks.
+## 7) Demo Credentials (Seed Defaults)
 
-## Known Notes
-- MongoDB server is installed and reachable on `mongodb://localhost:27017`.
-- `mongosh` command path has been corrected on this machine.
+1. Email: `admin@biocng.local`
+2. Password: `Admin@123`
+3. Tenant: `tenant-demo-plant-1`
 
-## Resume Prompt
-Continue BioCNG SaaS backend from S1-04 (Rate Cards). Existing auth, tenant guard, masters, seed, smoke, and dev tooling are already implemented.
+## 8) Folder/File Orientation
+
+Read:
+1. `docs/folder-and-file-purpose.md`
+2. `docs/documentation-maintenance-rules.md`
+3. `docs/project-timeline.md`
+
+This explains purpose of every important folder and file.
+
+## 9) Next Development Priorities
+
+1. S1-05: Land Parcel and Crop Plan masters.
+2. S1-06: Harvest batches + lot generation + stock-in hooks.
+3. S1-07: Collection center receipt lots + center stock ledger.
+4. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
+
+## 10) Resume Prompt For AI
+
+Use this exact prompt after restart:
+
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles), and rate cards are implemented with seed and smoke scripts. Start S1-05 (LandParcel + CropPlan models/routes + seed/smoke updates), then run smoke and commit changes.`
+
+## 11) Mandatory Process For Every Future Change
+
+1. Add/update comments in every touched code file.
+2. Update `docs/context.md` with latest state.
+3. Update `docs/folder-and-file-purpose.md` when files/folders change.
+4. Update `docs/run-project-step-by-step.md` if commands/flow change.
+5. Update `docs/project-timeline.md` date-wise (completed + pending + next target).
+6. Run validation (`npm run smoke`) for backend-impacting changes.

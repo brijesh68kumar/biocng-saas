@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Farmer master used for procurement and weekly invoicing.
 const farmerSchema = new mongoose.Schema(
   {
     tenantId: { type: String, required: true, index: true },
@@ -12,6 +13,7 @@ const farmerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Farmer code is unique per tenant.
 farmerSchema.index({ tenantId: 1, code: 1 }, { unique: true });
 
 module.exports = mongoose.model('Farmer', farmerSchema);

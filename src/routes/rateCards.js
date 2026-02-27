@@ -8,6 +8,7 @@ const { requireTenant, tenantFilter } = require('../middleware/tenant');
 
 const router = express.Router();
 
+// List rate cards for current tenant, with optional query filters.
 router.get(
   '/',
   protect,
@@ -32,6 +33,7 @@ router.get(
   })
 );
 
+// Create a new rate card version (effective date based).
 router.post(
   '/',
   protect,
@@ -63,6 +65,8 @@ router.post(
   })
 );
 
+// Resolve active rate card as of a given date.
+// Example use: invoicing engine asks "what price was valid on delivery date?"
 router.get(
   '/resolve',
   protect,
@@ -103,6 +107,7 @@ router.get(
   })
 );
 
+// Get one rate card row by ID.
 router.get(
   '/:id',
   protect,
@@ -117,6 +122,7 @@ router.get(
   })
 );
 
+// Update editable fields in one rate card.
 router.patch(
   '/:id',
   protect,
@@ -136,6 +142,7 @@ router.patch(
   })
 );
 
+// Deactivate a rate card without hard deleting historical data.
 router.patch(
   '/:id/deactivate',
   protect,

@@ -1,3 +1,4 @@
+// Reads tenantId either from logged-in user or fallback request header.
 const getTenantId = (req) => {
   if (req.user && req.user.tenantId) {
     return String(req.user.tenantId);
@@ -8,6 +9,7 @@ const getTenantId = (req) => {
   return null;
 };
 
+// Ensures every multi-tenant request has tenant context.
 const requireTenant = (req, res, next) => {
   const tenantId = getTenantId(req);
   if (!tenantId) {
@@ -18,6 +20,7 @@ const requireTenant = (req, res, next) => {
   next();
 };
 
+// Helper used in queries: always applies tenant filter first.
 const tenantFilter = (req, extra = {}) => ({
   tenantId: req.tenantId,
   ...extra,

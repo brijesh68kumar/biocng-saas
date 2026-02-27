@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Vehicle master for dispatch and transport operations.
 const vehicleSchema = new mongoose.Schema(
   {
     tenantId: { type: String, required: true, index: true },
@@ -11,6 +12,7 @@ const vehicleSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Vehicle number is unique per tenant.
 vehicleSchema.index({ tenantId: 1, number: 1 }, { unique: true });
 
 module.exports = mongoose.model('Vehicle', vehicleSchema);

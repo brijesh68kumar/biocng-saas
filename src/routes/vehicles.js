@@ -1,3 +1,4 @@
+// Vehicle routes use shared master CRUD behavior.
 const createMasterRouter = require('./masterCrudFactory');
 const Vehicle = require('../models/Vehicle');
 

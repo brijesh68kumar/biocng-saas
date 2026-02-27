@@ -8,10 +8,12 @@ const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
+// Creates JWT token used by frontend/clients to call protected routes.
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET || 'dev-secret', { expiresIn: '7d' });
 };
 
+// Register user for a tenant (basic bootstrap endpoint for now).
 router.post('/register', asyncHandler(async (req, res) => {
   const { tenantId, name, email, password, role } = req.body;
 
@@ -44,6 +46,7 @@ router.post('/register', asyncHandler(async (req, res) => {
   });
 }));
 
+// Login endpoint: validates credentials and returns token + user info.
 router.post('/login', asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -76,6 +79,7 @@ router.post('/login', asyncHandler(async (req, res) => {
   });
 }));
 
+// Returns profile of currently authenticated user.
 router.get('/me', protect, asyncHandler(async (req, res) => {
   res.json({
     id: req.user._id,

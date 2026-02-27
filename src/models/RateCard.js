@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Optional quality-based adjustment rules for final payable rate.
 const qualityAdjustmentSchema = new mongoose.Schema(
   {
     metric: { type: String, required: true, trim: true },
@@ -10,8 +11,10 @@ const qualityAdjustmentSchema = new mongoose.Schema(
   { _id: false }
 );
 
+// Price master for a party + feedstock combination with effective dates.
 const rateCardSchema = new mongoose.Schema(
   {
+    // Tenant boundary for strict data isolation
     tenantId: { type: String, required: true, index: true },
     partyType: {
       type: String,
@@ -28,6 +31,7 @@ const rateCardSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// One unique rate row per exact effective date for a given party/feedstock.
 rateCardSchema.index(
   { tenantId: 1, partyType: 1, partyId: 1, feedstockTypeId: 1, effectiveFrom: 1 },
   { unique: true }

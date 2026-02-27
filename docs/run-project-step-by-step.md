@@ -1,0 +1,144 @@
+# Run Project Step By Step (Beginner Guide)
+
+This guide is written for first-time users.
+You can copy and run each command exactly as shown.
+
+## 1. Open Terminal In Project Folder
+
+In VS Code:
+1. Open folder `e:\Workspace for coding`
+2. Open terminal: `Terminal -> New Terminal`
+
+Check current folder:
+
+```powershell
+pwd
+```
+
+You should see `E:\Workspace for coding`.
+
+## 2. Start MongoDB Database
+
+Start MongoDB service:
+
+```powershell
+Start-Service MongoDB
+```
+
+Optional: confirm status:
+
+```powershell
+Get-Service MongoDB
+```
+
+Expected: status should be `Running`.
+
+## 3. Install Backend Dependencies (Only First Time)
+
+```powershell
+npm install
+```
+
+If this already ran earlier, you can skip.
+
+## 4. Seed Demo Data (Create Sample Users And Masters)
+
+```powershell
+npm run seed
+```
+
+Expected output includes:
+- `Seed completed`
+- `Admin Email: admin@biocng.local`
+- `Admin Password: Admin@123`
+
+## 5. Start Backend API Server
+
+Development mode (auto-restart when code changes):
+
+```powershell
+npm run dev
+```
+
+Keep this terminal running.
+
+Expected message:
+- `Connected to MongoDB`
+- `Server running on port 5000`
+
+## 6. Test Backend Quickly (Smoke Test)
+
+Open a second terminal in same folder and run:
+
+```powershell
+npm run smoke
+```
+
+Expected:
+- `Smoke test passed`
+
+If smoke fails, ensure step 5 server is running.
+
+## 7. Start Frontend (React UI)
+
+Open a third terminal:
+
+```powershell
+cd client
+npm install
+npm start
+```
+
+Frontend opens on:
+- `http://localhost:3000`
+
+Backend API runs on:
+- `http://localhost:5000`
+
+## 8. Common Daily Workflow
+
+Every day, usually run:
+
+1. `Start-Service MongoDB`
+2. `npm run dev` (backend)
+3. `cd client` then `npm start` (frontend)
+
+## 9. Useful Commands
+
+Stop running server in terminal:
+- Press `Ctrl + C`
+
+Check backend root route:
+
+```powershell
+Invoke-WebRequest -Uri http://localhost:5000/ -UseBasicParsing
+```
+
+## 10. If Something Breaks
+
+Try this reset:
+
+```powershell
+cd "e:\Workspace for coding"
+npm install
+npm run seed
+npm run dev
+```
+
+Then in second terminal:
+
+```powershell
+npm run smoke
+```
+
+If still failing, share the full terminal error text.
+
+## 11. After Any Code Change (Documentation Habit)
+
+Always do this update cycle:
+
+1. Update comments in files you changed.
+2. Update `docs/context.md` with latest status.
+3. Update `docs/folder-and-file-purpose.md` if structure changed.
+4. Update this runbook if command flow changed.
+5. Run `npm run smoke` to verify backend still works.

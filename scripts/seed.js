@@ -1,3 +1,8 @@
+// Seed script purpose:
+// 1) Ensure one demo admin user exists
+// 2) Populate baseline masters (feedstock, farmers, centers, vehicles)
+// 3) Add sample rate cards for effective-date testing
+// This lets a beginner run the API quickly without manual data entry.
 const dotenv = require('dotenv');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
@@ -11,17 +16,22 @@ const RateCard = require('../src/models/RateCard');
 
 dotenv.config();
 
+// Local fallback DB string if .env is not set.
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/biogas';
 
 async function runSeed() {
+  // Connect once, then reuse the same connection for all inserts/updates.
   await mongoose.connect(mongoURI);
 
+  // Read seed defaults from env (with safe fallback values).
   const tenantId = process.env.SEED_TENANT_ID || 'tenant-demo-plant-1';
   const adminEmail = process.env.SEED_ADMIN_EMAIL || 'admin@biocng.local';
   const adminPassword = process.env.SEED_ADMIN_PASSWORD || 'Admin@123';
 
+  // Never store plain password in DB.
   const adminPasswordHash = await bcrypt.hash(adminPassword, 10);
 
+  // Upsert means: create if missing, otherwise update existing record.
   await User.findOneAndUpdate(
     { email: adminEmail.toLowerCase() },
     {
@@ -41,6 +51,7 @@ async function runSeed() {
     { code: 'AGRI_RESIDUE', name: 'Agri Residue', uom: 'ton' },
   ];
 
+  // Seed feedstock type master records.
   for (const row of feedstockTypes) {
     await FeedstockType.findOneAndUpdate(
       { tenantId, code: row.code },
@@ -54,6 +65,7 @@ async function runSeed() {
     { code: 'FARM002', name: 'Suresh Patel', mobile: '9990002222', village: 'Kheda' },
   ];
 
+  // Seed farmer master records.
   for (const row of farmers) {
     await Farmer.findOneAndUpdate(
       { tenantId, code: row.code },
@@ -67,6 +79,7 @@ async function runSeed() {
     { code: 'CC-SOUTH', name: 'South Collection Center', location: 'Zone South', managerName: 'Vijay' },
   ];
 
+  // Seed collection center master records.
   for (const row of centers) {
     await CollectionCenter.findOneAndUpdate(
       { tenantId, code: row.code },
@@ -80,6 +93,7 @@ async function runSeed() {
     { number: 'GJ01CD5678', capacityTon: 12, ownerType: 'contracted' },
   ];
 
+  // Seed transport vehicle master records.
   for (const row of vehicles) {
     await Vehicle.findOneAndUpdate(
       { tenantId, number: row.number },
@@ -88,10 +102,12 @@ async function runSeed() {
     );
   }
 
+  // Lookup seeded references needed for rate card records.
   const pressmud = await FeedstockType.findOne({ tenantId, code: 'PRESSMUD' });
   const farm001 = await Farmer.findOne({ tenantId, code: 'FARM001' });
 
   if (pressmud && farm001) {
+    // Current effective rate example.
     await RateCard.findOneAndUpdate(
       {
         tenantId,
@@ -113,6 +129,7 @@ async function runSeed() {
       { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );
 
+    // Future effective rate example for date-based resolution.
     await RateCard.findOneAndUpdate(
       {
         tenantId,
@@ -141,6 +158,7 @@ async function runSeed() {
   console.log(`Admin Password: ${adminPassword}`);
 }
 
+// Standard script exit pattern: fail fast on error, always close DB connection.
 runSeed()
   .catch((error) => {
     console.error('Seed failed:', error);

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
+// Route modules grouped by business area
 const authRoutes = require('./routes/auth');
 const feedstockTypeRoutes = require('./routes/feedstockTypes');
 const farmerRoutes = require('./routes/farmers');
@@ -11,13 +12,16 @@ const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 
+// Global middleware: allow cross-origin calls and JSON request bodies
 app.use(cors());
 app.use(express.json());
 
+// Basic health route to verify API is up
 app.get('/', (req, res) => {
   res.send('BioCNG SaaS API is running');
 });
 
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/feedstock-types', feedstockTypeRoutes);
 app.use('/api/farmers', farmerRoutes);
@@ -25,6 +29,7 @@ app.use('/api/collection-centers', collectionCenterRoutes);
 app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/rate-cards', rateCardRoutes);
 
+// Error handling should be last
 app.use(notFound);
 app.use(errorHandler);
 

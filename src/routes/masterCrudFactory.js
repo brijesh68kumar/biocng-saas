@@ -4,14 +4,17 @@ const asyncHandler = require('../middleware/asyncHandler');
 const { protect, authorize } = require('../middleware/auth');
 const { requireTenant, tenantFilter } = require('../middleware/tenant');
 
+// Reusable CRUD router builder for simple master entities.
 const createMasterRouter = (Model, requiredFields = []) => {
   const router = express.Router();
 
+  // List all records for the current tenant.
   router.get('/', protect, requireTenant, asyncHandler(async (req, res) => {
     const items = await Model.find(tenantFilter(req)).sort({ createdAt: -1 });
     res.json(items);
   }));
 
+  // Create record (restricted to admin/procurement roles).
   router.post('/', protect, requireTenant, authorize('admin', 'procurement'), asyncHandler(async (req, res) => {
     for (const field of requiredFields) {
       if (!req.body[field]) {
@@ -24,6 +27,7 @@ const createMasterRouter = (Model, requiredFields = []) => {
     res.status(201).json(item);
   }));
 
+  // Fetch one record by ID inside current tenant scope.
   router.get('/:id', protect, requireTenant, asyncHandler(async (req, res) => {
     const item = await Model.findOne(tenantFilter(req, { _id: req.params.id }));
     if (!item) {
@@ -33,6 +37,7 @@ const createMasterRouter = (Model, requiredFields = []) => {
     res.json(item);
   }));
 
+  // Partial update for one record.
   router.patch('/:id', protect, requireTenant, authorize('admin', 'procurement'), asyncHandler(async (req, res) => {
     delete req.body.tenantId;
     const item = await Model.findOneAndUpdate(
@@ -49,6 +54,7 @@ const createMasterRouter = (Model, requiredFields = []) => {
     res.json(item);
   }));
 
+  // Soft delete pattern by setting isActive=false.
   router.patch('/:id/deactivate', protect, requireTenant, authorize('admin', 'procurement'), asyncHandler(async (req, res) => {
     const item = await Model.findOneAndUpdate(
       tenantFilter(req, { _id: req.params.id }),

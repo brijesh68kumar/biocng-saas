@@ -1,3 +1,4 @@
+// Farmer routes use shared master CRUD behavior.
 const createMasterRouter = require('./masterCrudFactory');
 const Farmer = require('../models/Farmer');
 
