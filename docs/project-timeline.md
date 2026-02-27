@@ -21,6 +21,9 @@ Update rule:
 4. Overall MVP pending estimate: ~40-50%.
 
 ### Completed
+1. Tooling strategy document added:
+   - `docs/tooling-strategy-and-execution.md`
+   - Includes phased adoption plan (now/soon/later) and weekly execution process
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first

@@ -223,6 +223,7 @@ Read:
 1. `docs/folder-and-file-purpose.md`
 2. `docs/documentation-maintenance-rules.md`
 3. `docs/project-timeline.md`
+4. `docs/tooling-strategy-and-execution.md`
 
 This explains purpose of every important folder and file.
 

@@ -177,6 +177,9 @@ Purpose: Permanent checklist for comments + docs updates after every code change
 - `docs/project-timeline.md`
 Purpose: Date-wise timeline of what is completed and what is pending; must be updated every commit.
 
+- `docs/tooling-strategy-and-execution.md`
+Purpose: Tool adoption roadmap (what to use now vs later) with phase-wise execution strategy.
+
 ## Folder: `postman`
 
 - `BioCNG-Sprint1.postman_collection.json`
