@@ -72,17 +72,18 @@ Update rule:
 19. S1-07 Step 5.1 completed:
    - `CenterReceiptLot` model added
    - `CenterStockLedger` model added
+20. S1-07 Step 5.2 completed:
+   - `CenterReceiptLot` routes added
+   - `/api/center-receipt-lots` wired into app
 
 ### Planned / Pending
-1. S1-07 Step 5.2: Routes and API wiring for CenterReceiptLot.
-2. S1-07 Step 5.3: Center stock ledger posting + list APIs.
-3. S1-07 Step 5.4: Seed/smoke coverage for center flow.
+1. S1-07 Step 5.3: Center stock ledger posting + list APIs.
+2. S1-07 Step 5.4: Seed/smoke coverage for center flow.
 4. S1-08: Dispatch + manual intake + weekly invoice generation flow.
 5. Frontend feature pages beyond starter template.
 
 ### Next Target
 1. Start S1-07:
-   - Add CenterReceiptLot routes and app wiring (step 5.2).
    - Add center stock ledger posting/list APIs (step 5.3).
    - Extend seed/smoke for center receipt and stock movement (step 5.4).
 

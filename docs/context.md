@@ -100,7 +100,11 @@ CRUD + deactivate for:
    - lot-wise movement records
    - movement types (`IN`, `OUT`, `ADJUST`)
    - running balance storage
-3. Routes and posting logic are pending in next steps.
+3. `CenterReceiptLot` routes are added and wired:
+   - `GET/POST /api/center-receipt-lots`
+   - `GET/PATCH /api/center-receipt-lots/:id`
+   - `PATCH /api/center-receipt-lots/:id/deactivate`
+4. Center stock ledger posting logic is pending next step.
 
 ### Rate Cards (S1-04 Implemented)
 
@@ -174,16 +178,15 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. S1-07 Step 5.2: Routes and API wiring for CenterReceiptLot.
-2. S1-07 Step 5.3: Center stock ledger posting + list APIs.
-3. S1-07 Step 5.4: Seed/smoke coverage for center receipt and ledger flow.
+1. S1-07 Step 5.3: Center stock ledger posting + list APIs.
+2. S1-07 Step 5.4: Seed/smoke coverage for center receipt and ledger flow.
 4. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
 
 ## 10) Resume Prompt For AI
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, and harvest batch flow (model+routes+seed+smoke) are implemented. S1-07 step 5.1 models are added (CenterReceiptLot and CenterStockLedger). Next do step 5.2 routes+wiring, then step 5.3 ledger posting APIs, then step 5.4 seed/smoke + docs + commit.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, and harvest batch flow (model+routes+seed+smoke) are implemented. S1-07 step 5.1 and 5.2 are done (center models + center receipt lot routes). Next do step 5.3 ledger posting/list APIs, then step 5.4 seed/smoke + docs + commit.`
 
 ## 11) Mandatory Process For Every Future Change
 

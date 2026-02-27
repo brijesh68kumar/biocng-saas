@@ -124,6 +124,9 @@ Purpose: Crop plan CRUD routes.
 - `harvestBatches.js`
 Purpose: Harvest batch CRUD routes (auto lot/batch code behavior comes from model).
 
+- `centerReceiptLots.js`
+Purpose: Collection center receipt lot CRUD routes.
+
 ## Folder: `scripts` (Utility Scripts)
 
 - `scripts/seed.js`
