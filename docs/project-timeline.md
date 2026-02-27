@@ -109,6 +109,11 @@ Update rule:
    - Added inline update and deactivate actions for existing rate rows
    - Added active-rate resolve helper form for party/feedstock/as-of lookup
    - Wired new module into protected route and sidebar navigation
+22. Frontend Phase-2 Step 20 completed (invoice detail and print layout):
+   - Added invoice row action to open detailed invoice view
+   - Added invoice detail sheet with line items and totals
+   - Added print action from invoice detail view
+   - Added print CSS rules for clean invoice-only output
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -207,14 +212,14 @@ Update rule:
    - Collection-center rate card path added in smoke flow for invoice calculation
 
 ### Planned / Pending
-1. Frontend Step 20:
-   - Add invoice detail view and printable invoice layout.
-2. Frontend Step 21:
+1. Frontend Step 21:
    - Add export-ready operational reports page (date range + module-wise summaries).
+2. Frontend Step 22:
+   - Add backend/frontend quality-adjustment editor for rate card rules.
 
 ### Next Target
 1. Start next phase:
-   - Add invoice detail view with print-friendly layout.
+   - Add operational reports page with date-range summary metrics.
 
 ---
 

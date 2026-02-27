@@ -367,6 +367,10 @@ CRUD + deactivate for:
 3. Invoices screen includes:
    - generation success/error feedback
    - responsive list table with totals and status
+4. Invoice detail and print support includes:
+   - row-level `View` action in invoice list
+   - detailed invoice sheet with lines and totals
+   - print-friendly invoice-only output via print CSS
 
 ### Frontend Shared Utility Cleanup (Current)
 
@@ -504,12 +508,12 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. Frontend Step 1-19:
-   - Completed (auth, layout shell, all operational module pages, dashboard widgets, search/filter, CSV export, and rate cards module).
+1. Frontend Step 1-20:
+   - Completed (auth, layout shell, all operational module pages, dashboard widgets, search/filter, CSV export, rate cards module, and invoice detail print view).
 2. Next:
-   - Add invoice detail view and printable invoice layout.
-3. Then:
    - Add export-ready operational reports page with date-range summaries.
+3. Then:
+   - Add rate-card quality-adjustment editor flow in frontend and backend.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -533,7 +537,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend operational module pages are implemented through invoices plus rate cards, with shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, and recent operational snapshots. Shared search/filter and CSV export controls are implemented across module list pages. Next add invoice detail/print layout and operational reports page.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend operational module pages are implemented through invoices plus rate cards, with shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, recent operational snapshots, shared search/CSV controls, and invoice detail print view. Next add operational reports page and rate-card quality-adjustment editor flow.`
 
 ## 11) Mandatory Process For Every Future Change
 

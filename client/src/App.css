@@ -318,6 +318,13 @@
   min-width: 260px;
 }
 
+.invoice-sheet {
+  border: 1px solid #d8e1d5;
+  border-radius: 10px;
+  padding: 14px;
+  background: #ffffff;
+}
+
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;
@@ -353,5 +360,33 @@
   .auth-error,
   .module-success {
     grid-column: 1 / -1;
+  }
+}
+
+@media print {
+  .layout-sidebar,
+  .layout-header,
+  .no-print,
+  .card:not(.invoice-print-area) {
+    display: none !important;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .layout-content {
+    padding: 0;
+  }
+
+  .invoice-print-area {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .invoice-sheet {
+    border: none;
+    padding: 0;
   }
 }

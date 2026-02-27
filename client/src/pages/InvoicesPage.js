@@ -17,6 +17,7 @@ export default function InvoicesPage() {
   const [forceRegen, setForceRegen] = useState(true);
   const [notes, setNotes] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedInvoiceId, setSelectedInvoiceId] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load generated invoices list.
@@ -25,13 +26,17 @@ export default function InvoicesPage() {
     setErrorText('');
     try {
       const payload = await authRequest('/api/invoices');
-      setItems(Array.isArray(payload) ? payload : []);
+      const arr = Array.isArray(payload) ? payload : [];
+      setItems(arr);
+      if (arr.length > 0 && !selectedInvoiceId) {
+        setSelectedInvoiceId(arr[0]._id);
+      }
     } catch (error) {
       setErrorText(error.message || 'Unable to load invoices');
     } finally {
       setIsLoading(false);
     }
-  }, [authRequest]);
+  }, [authRequest, selectedInvoiceId]);
 
   useEffect(() => {
     loadInvoices();
@@ -78,6 +83,7 @@ export default function InvoicesPage() {
     totalAmount: item.totalAmount,
     status: item.status,
   }));
+  const selectedInvoice = items.find((item) => item._id === selectedInvoiceId);
 
   return (
     <div>
@@ -181,6 +187,7 @@ export default function InvoicesPage() {
                   <th>Total Qty</th>
                   <th>Total Amount</th>
                   <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -194,6 +201,11 @@ export default function InvoicesPage() {
                     <td>{item.totalQtyTon}</td>
                     <td>{item.totalAmount}</td>
                     <td>{item.status}</td>
+                    <td>
+                      <button className="secondary-button" type="button" onClick={() => setSelectedInvoiceId(item._id)}>
+                        View
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -201,6 +213,61 @@ export default function InvoicesPage() {
           </div>
         ) : null}
       </section>
+
+      {selectedInvoice ? (
+        <section className="card invoice-print-area">
+          <div className="dashboard-header">
+            <div>
+              <h2>Invoice Detail</h2>
+              <p className="dashboard-meta">Use print to generate paper/PDF copy.</p>
+            </div>
+            <div className="dashboard-actions no-print">
+              <button className="secondary-button" type="button" onClick={() => window.print()}>
+                Print Invoice
+              </button>
+            </div>
+          </div>
+
+          <div className="invoice-sheet">
+            <h3>{selectedInvoice.invoiceNo}</h3>
+            <p className="dashboard-meta">
+              Party: {selectedInvoice.partyType} | {selectedInvoice.partyRefId}
+            </p>
+            <p className="dashboard-meta">
+              Week: {formatDate(selectedInvoice.weekStartDate)} to {formatDate(selectedInvoice.weekEndDate)}
+            </p>
+            <p className="dashboard-meta">Status: {selectedInvoice.status}</p>
+
+            <div className="table-wrap">
+              <table className="module-table">
+                <thead>
+                  <tr>
+                    <th>Feedstock Type ID</th>
+                    <th>Intake Entry ID</th>
+                    <th>Qty (Ton)</th>
+                    <th>Rate Per Ton</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(selectedInvoice.lines || []).map((line, index) => (
+                    <tr key={`${selectedInvoice._id}-line-${index}`}>
+                      <td>{line.feedstockTypeId}</td>
+                      <td>{line.intakeEntryId}</td>
+                      <td>{line.qtyTon}</td>
+                      <td>{line.ratePerTon}</td>
+                      <td>{line.amount}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="dashboard-meta">Total Qty: {selectedInvoice.totalQtyTon}</p>
+            <p className="dashboard-meta">Total Amount: {selectedInvoice.totalAmount}</p>
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

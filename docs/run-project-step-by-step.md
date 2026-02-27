@@ -105,6 +105,9 @@ You should now see:
 6. Each module list now has:
    - Search box to filter visible rows
    - Export CSV button to download current filtered rows
+7. In `Invoices` page:
+   - Use `View` on a row to open invoice detail sheet
+   - Use `Print Invoice` to print/download invoice as PDF from browser
 
 Default demo login:
 1. Email: `admin@biocng.local`
