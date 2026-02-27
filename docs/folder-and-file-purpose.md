@@ -277,6 +277,9 @@ Purpose: Dispatch trips module page with backend-integrated list/create flow and
 - `pages/PlantIntakeEntriesPage.js`
 Purpose: Plant intake entries module page with backend-integrated list and create flow.
 
+- `pages/InvoicesPage.js`
+Purpose: Invoices module page with backend-integrated weekly generate and invoice listing flow.
+
 - `reportWebVitals.js`
 Purpose: Optional frontend performance metrics helper.
 

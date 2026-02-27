@@ -355,6 +355,18 @@ CRUD + deactivate for:
    - success/error message handling
    - responsive list table
 
+### Frontend Invoices Module Integration (Current)
+
+1. Invoices page is now connected to backend:
+   - `POST /api/invoices/generate-weekly` generation
+   - `GET /api/invoices` listing
+2. Weekly generation form includes:
+   - weekStartDate, weekEndDate, partyType
+   - forceRegen and notes
+3. Invoices screen includes:
+   - generation success/error feedback
+   - responsive list table with totals and status
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -419,7 +431,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement invoices page with weekly generation + list integration.
+   - Perform shared frontend utility cleanup and UI polish pass.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 

@@ -82,6 +82,10 @@ Update rule:
    - Plant intake entries page now supports API-based list and create flow
    - Intake fields covered: dispatch/feedstock/source mapping, weighbridge values, quality and acceptance details
    - Uses dropdown options loaded from dispatch trips and feedstock masters
+16. Frontend Step 14 completed:
+   - Invoices page now supports weekly invoice generation and generated invoice listing
+   - Weekly generation fields covered: week dates, party type, force regenerate, notes
+   - Invoice list includes totals and status for generated documents
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -182,11 +186,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Invoices page.
+   - UI polishing and shared component refactor.
 
 ### Next Target
 1. Start next phase:
-   - Build invoices page with weekly generate + list integration.
+   - Perform shared frontend utility cleanup and UI polish pass.
 
 ---
 

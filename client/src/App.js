@@ -15,6 +15,7 @@ import FeedstockTypesPage from './pages/FeedstockTypesPage';
 import HarvestBatchesPage from './pages/HarvestBatchesPage';
 import LandParcelsPage from './pages/LandParcelsPage';
 import LoginPage from './pages/LoginPage';
+import InvoicesPage from './pages/InvoicesPage';
 import PlantIntakeEntriesPage from './pages/PlantIntakeEntriesPage';
 import VehiclesPage from './pages/VehiclesPage';
 
@@ -45,6 +46,7 @@ function AppRoutes() {
         <Route path="center-stock-ledger" element={<CenterStockLedgerPage />} />
         <Route path="dispatch-trips" element={<DispatchTripsPage />} />
         <Route path="plant-intake-entries" element={<PlantIntakeEntriesPage />} />
+        <Route path="invoices" element={<InvoicesPage />} />
         <Route index element={<Navigate to="/dashboard" replace />} />
       </Route>
       <Route path="*" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />
