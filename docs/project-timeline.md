@@ -104,6 +104,11 @@ Update rule:
    - Added client-side search across module list pages
    - Added CSV export action across operational list pages
    - Added shared CSV utility for consistent browser downloads
+21. Frontend Phase-2 Step 19 completed (rate cards module UI):
+   - Added Rate Cards frontend page with backend-integrated list/create flow
+   - Added inline update and deactivate actions for existing rate rows
+   - Added active-rate resolve helper form for party/feedstock/as-of lookup
+   - Wired new module into protected route and sidebar navigation
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -202,14 +207,14 @@ Update rule:
    - Collection-center rate card path added in smoke flow for invoice calculation
 
 ### Planned / Pending
-1. Frontend Step 19:
-   - Add rate card management UI (list/create/update/deactivate + resolve helper).
-2. Frontend Step 20:
+1. Frontend Step 20:
    - Add invoice detail view and printable invoice layout.
+2. Frontend Step 21:
+   - Add export-ready operational reports page (date range + module-wise summaries).
 
 ### Next Target
 1. Start next phase:
-   - Build Rate Cards frontend module and connect it to backend APIs.
+   - Add invoice detail view with print-friendly layout.
 
 ---
 

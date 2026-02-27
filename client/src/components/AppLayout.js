@@ -15,6 +15,7 @@ const links = [
   { to: '/center-stock-ledger', label: 'Center Stock Ledger' },
   { to: '/dispatch-trips', label: 'Dispatch Trips' },
   { to: '/plant-intake-entries', label: 'Plant Intake Entries' },
+  { to: '/rate-cards', label: 'Rate Cards' },
   { to: '/invoices', label: 'Invoices' },
 ];
 

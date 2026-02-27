@@ -286,6 +286,9 @@ Purpose: Dispatch trips module page with backend-integrated list/create flow and
 - `pages/PlantIntakeEntriesPage.js`
 Purpose: Plant intake entries module page with backend-integrated list and create flow.
 
+- `pages/RateCardsPage.js`
+Purpose: Rate cards module page with backend-integrated list/create/update/deactivate/resolve flows.
+
 - `pages/InvoicesPage.js`
 Purpose: Invoices module page with backend-integrated weekly generate and invoice listing flow.
 

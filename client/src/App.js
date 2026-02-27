@@ -17,6 +17,7 @@ import LandParcelsPage from './pages/LandParcelsPage';
 import LoginPage from './pages/LoginPage';
 import InvoicesPage from './pages/InvoicesPage';
 import PlantIntakeEntriesPage from './pages/PlantIntakeEntriesPage';
+import RateCardsPage from './pages/RateCardsPage';
 import VehiclesPage from './pages/VehiclesPage';
 
 // App routes are wrapped by auth provider so every page can access auth state.
@@ -46,6 +47,7 @@ function AppRoutes() {
         <Route path="center-stock-ledger" element={<CenterStockLedgerPage />} />
         <Route path="dispatch-trips" element={<DispatchTripsPage />} />
         <Route path="plant-intake-entries" element={<PlantIntakeEntriesPage />} />
+        <Route path="rate-cards" element={<RateCardsPage />} />
         <Route path="invoices" element={<InvoicesPage />} />
         <Route index element={<Navigate to="/dashboard" replace />} />
       </Route>

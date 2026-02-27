@@ -211,6 +211,7 @@ CRUD + deactivate for:
    - `/farmers`
    - `/collection-centers`
    - `/vehicles`
+   - `/rate-cards`
 3. Placeholder pages are added for master modules to allow progressive implementation.
 
 ### Frontend First Module Integration (Current)
@@ -427,6 +428,23 @@ CRUD + deactivate for:
    - Plant Intake Entries
    - Invoices
 
+### Frontend Rate Cards Module Integration (Current)
+
+1. Rate cards page is now connected to backend:
+   - `GET /api/rate-cards` listing
+   - `POST /api/rate-cards` create flow
+   - `PATCH /api/rate-cards/:id` row update flow
+   - `PATCH /api/rate-cards/:id/deactivate` deactivate action
+   - `GET /api/rate-cards/resolve` active-rate lookup helper
+2. Rate cards screen includes:
+   - create form for effective-date-based pricing rows
+   - inline row editing for `effectiveFrom` and `ratePerTon`
+   - deactivate action for historical retention
+   - resolve helper to test active rate as-of date
+3. Navigation/route updates:
+   - new sidebar item: `Rate Cards`
+   - new protected route: `/rate-cards`
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -486,12 +504,12 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. Frontend Step 1-18:
-   - Completed (auth, layout shell, all operational module pages, dashboard widgets, search/filter and CSV export).
+1. Frontend Step 1-19:
+   - Completed (auth, layout shell, all operational module pages, dashboard widgets, search/filter, CSV export, and rate cards module).
 2. Next:
-   - Build Rate Cards frontend module and wire resolve helper flow.
-3. Then:
    - Add invoice detail view and printable invoice layout.
+3. Then:
+   - Add export-ready operational reports page with date-range summaries.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -515,7 +533,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend operational module pages are implemented through invoices, plus shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, and recent operational snapshots. Shared search/filter and CSV export controls are now implemented across module list pages. Next build Rate Cards frontend module and then invoice detail/print layout.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend operational module pages are implemented through invoices plus rate cards, with shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, and recent operational snapshots. Shared search/filter and CSV export controls are implemented across module list pages. Next add invoice detail/print layout and operational reports page.`
 
 ## 11) Mandatory Process For Every Future Change
 
