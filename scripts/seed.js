@@ -18,6 +18,7 @@ const CropPlan = require('../src/models/CropPlan');
 const HarvestBatch = require('../src/models/HarvestBatch');
 const CenterReceiptLot = require('../src/models/CenterReceiptLot');
 const CenterStockLedger = require('../src/models/CenterStockLedger');
+const DispatchTrip = require('../src/models/DispatchTrip');
 const RateCard = require('../src/models/RateCard');
 
 dotenv.config();
@@ -295,6 +296,64 @@ async function runSeed() {
         refId: String(lot._id),
         remarks: lot.notes || undefined,
       },
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    );
+  }
+
+  // Seed dispatch trips using existing harvest and center lots.
+  const harvestLot001 = await HarvestBatch.findOne({ tenantId, batchCode: 'HB-SEED-001' });
+  const centerLot001 = await CenterReceiptLot.findOne({ tenantId, receiptLotCode: 'CRL-SEED-001' });
+  const vehicle001 = await Vehicle.findOne({ tenantId, number: 'GJ01AB1234' });
+
+  const dispatchTrips = [];
+  if (centerNorth && vehicle001 && centerLot001) {
+    dispatchTrips.push({
+      tripCode: 'DT-SEED-001',
+      sourceType: 'collection-center',
+      collectionCenterId: centerNorth._id,
+      vehicleId: vehicle001._id,
+      driverName: 'Seed Driver 1',
+      driverPhone: '9991110001',
+      destinationPlantName: 'Main Plant',
+      plannedLots: [
+        {
+          lotSourceType: 'center-receipt',
+          lotRefId: String(centerLot001._id),
+          qtyTon: 10,
+        },
+      ],
+      status: 'dispatched',
+      dispatchDate: new Date('2026-10-10T08:00:00.000Z'),
+      notes: 'Seed dispatch trip from center',
+    });
+  }
+
+  if (parcel001 && vehicle001 && harvestLot001) {
+    dispatchTrips.push({
+      tripCode: 'DT-SEED-002',
+      sourceType: 'own-farm',
+      landParcelId: parcel001._id,
+      vehicleId: vehicle001._id,
+      driverName: 'Seed Driver 2',
+      driverPhone: '9991110002',
+      destinationPlantName: 'Main Plant',
+      plannedLots: [
+        {
+          lotSourceType: 'harvest-batch',
+          lotRefId: String(harvestLot001._id),
+          qtyTon: 12,
+        },
+      ],
+      status: 'in_transit',
+      dispatchDate: new Date('2026-10-11T09:00:00.000Z'),
+      notes: 'Seed dispatch trip from farm',
+    });
+  }
+
+  for (const row of dispatchTrips) {
+    await DispatchTrip.findOneAndUpdate(
+      { tenantId, tripCode: row.tripCode },
+      { ...row, tenantId, isActive: true },
       { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );
   }

@@ -219,6 +219,8 @@ async function main() {
     harvestBatchCreate.body && harvestBatchCreate.body.lotNo,
     'Expected auto-generated lotNo in harvest batch response'
   );
+  const harvestBatchId = harvestBatchCreate.body && harvestBatchCreate.body._id;
+  assert(harvestBatchId, 'Create harvest batch response missing _id');
 
   const harvestBatchList = await request('/api/harvest-batches', {
     method: 'GET',
@@ -289,7 +291,59 @@ async function main() {
   assert(outPost.body.movementType === 'OUT', 'Expected OUT movement type');
   assert(outPost.body.balanceAfterTon === 17, `Expected balanceAfterTon 17, got ${outPost.body.balanceAfterTon}`);
 
-  // 12) Rate card create/list.
+  // 12) Dispatch trip create/list/status transition.
+  const dispatchCreate = await request('/api/dispatch-trips', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      sourceType: 'mixed',
+      collectionCenterId: centerId,
+      landParcelId,
+      vehicleId: vehicleCreate.body && vehicleCreate.body._id,
+      driverName: 'Smoke Dispatch Driver',
+      driverPhone: '9993332211',
+      destinationPlantName: 'Main Plant',
+      plannedLots: [
+        {
+          lotSourceType: 'center-receipt',
+          lotRefId: centerReceiptLotId,
+          qtyTon: 5,
+        },
+        {
+          lotSourceType: 'harvest-batch',
+          lotRefId: harvestBatchId,
+          qtyTon: 7,
+        },
+      ],
+      status: 'planned',
+      notes: 'Smoke dispatch trip',
+    }),
+  });
+  assert(dispatchCreate.ok, `Create dispatch trip failed (${dispatchCreate.status}): ${JSON.stringify(dispatchCreate.body)}`);
+  const dispatchTripId = dispatchCreate.body && dispatchCreate.body._id;
+  assert(dispatchTripId, 'Create dispatch trip response missing _id');
+
+  const dispatchList = await request('/api/dispatch-trips?status=planned', {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  assert(dispatchList.ok, `List dispatch trips failed (${dispatchList.status}): ${JSON.stringify(dispatchList.body)}`);
+
+  const dispatchStatusUpdate = await request(`/api/dispatch-trips/${dispatchTripId}/status`, {
+    method: 'PATCH',
+    headers: authHeaders,
+    body: JSON.stringify({
+      status: 'dispatched',
+      dispatchDate: '2026-10-12T10:00:00.000Z',
+    }),
+  });
+  assert(
+    dispatchStatusUpdate.ok,
+    `Update dispatch status failed (${dispatchStatusUpdate.status}): ${JSON.stringify(dispatchStatusUpdate.body)}`
+  );
+  assert(dispatchStatusUpdate.body.status === 'dispatched', 'Expected dispatch status to become dispatched');
+
+  // 13) Rate card create/list.
   const currentRate = await request('/api/rate-cards', {
     method: 'POST',
     headers: authHeaders,
@@ -325,7 +379,7 @@ async function main() {
   assert(rateList.ok, `List rate cards failed (${rateList.status}): ${JSON.stringify(rateList.body)}`);
   assert(Array.isArray(rateList.body) && rateList.body.length >= 2, 'Expected at least 2 rate cards for smoke entity');
 
-  // 13) Verify resolve endpoint chooses correct row by date.
+  // 14) Verify resolve endpoint chooses correct row by date.
   const resolvedCurrent = await request(
     `/api/rate-cards/resolve?partyType=farmer&partyId=${encodeURIComponent(farmerId)}&feedstockTypeId=${encodeURIComponent(feedstockTypeId)}&asOf=2026-06-01T00:00:00.000Z`,
     {

@@ -90,10 +90,12 @@ Update rule:
    - `DispatchTrip` routes added
    - `/api/dispatch-trips` wired into app
    - status transition endpoint added (`PATCH /api/dispatch-trips/:id/status`)
+25. S1-08 Step 6.3 completed:
+   - Seed script extended for dispatch trips
+   - Smoke script extended for dispatch create/list/status transition
 
 ### Planned / Pending
-1. S1-08 Step 6.3: Seed/smoke for dispatch flow.
-2. S1-08 Step 6.4: Plant intake model.
+1. S1-08 Step 6.4: Plant intake model.
 3. S1-08 Step 6.5: Intake routes + app wiring.
 4. S1-08 Step 6.6: Seed/smoke for intake flow.
 5. S1-08 Step 6.7: Invoice cycle foundation model.
@@ -103,7 +105,7 @@ Update rule:
 
 ### Next Target
 1. Continue S1-08:
-   - Add dispatch seed/smoke coverage (step 6.3).
+   - Add PlantIntakeEntry model (step 6.4).
 
 ---
 

@@ -139,11 +139,11 @@ Purpose: Dispatch trip CRUD, status transition API, and trip listing filters.
 ## Folder: `scripts` (Utility Scripts)
 
 - `scripts/seed.js`
-Purpose: Inserts demo data (admin, masters, land/crop, harvest batches, sample rate cards).
+Purpose: Inserts demo data (admin, masters, land/crop, harvest, center, dispatch, sample rate cards).
 Run when setting up local environment.
 
 - `scripts/smoke.js`
-Purpose: End-to-end API sanity check (login + create/list across masters/land/crop/harvest/center flow + rate resolution).
+Purpose: End-to-end API sanity check (login + create/list across masters/land/crop/harvest/center/dispatch flow + rate resolution).
 
 ## Folder: `docs` (Project Documentation)
 
