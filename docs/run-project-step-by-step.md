@@ -76,7 +76,10 @@ npm run smoke
 
 Expected:
 - `Smoke test passed`
-- This now validates masters including land parcels and crop plans too.
+- This now validates full backend path including:
+  - masters + land/crop + harvest + center + dispatch + intake
+  - rate card resolution
+  - weekly invoice generation and invoice listing
 
 If smoke fails, ensure step 5 server is running.
 

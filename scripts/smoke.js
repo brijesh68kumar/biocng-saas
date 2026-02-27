@@ -435,6 +435,54 @@ async function main() {
   assert(resolvedFuture.ok, `Resolve future rate failed (${resolvedFuture.status}): ${JSON.stringify(resolvedFuture.body)}`);
   assert(resolvedFuture.body.ratePerTon === 1750, `Expected rate 1750, got ${resolvedFuture.body.ratePerTon}`);
 
+  // 16) Add collection-center rate card and generate weekly invoice from intake rows.
+  const centerRateCreate = await request('/api/rate-cards', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      partyType: 'collection-center',
+      partyId: centerId,
+      feedstockTypeId,
+      effectiveFrom: '2026-01-01T00:00:00.000Z',
+      ratePerTon: 1625,
+      qualityAdjustments: [],
+    }),
+  });
+  assert(
+    centerRateCreate.ok,
+    `Create collection-center rate card failed (${centerRateCreate.status}): ${JSON.stringify(centerRateCreate.body)}`
+  );
+
+  const invoiceGenerate = await request('/api/invoices/generate-weekly', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      weekStartDate: '2026-10-06T00:00:00.000Z',
+      weekEndDate: '2026-10-13T23:59:59.999Z',
+      partyType: 'collection-center',
+      forceRegen: true,
+      notes: 'Smoke weekly invoice generation',
+    }),
+  });
+  assert(
+    invoiceGenerate.ok,
+    `Generate weekly invoice failed (${invoiceGenerate.status}): ${JSON.stringify(invoiceGenerate.body)}`
+  );
+  assert(
+    invoiceGenerate.body && typeof invoiceGenerate.body.generatedCount === 'number',
+    'Generate invoice response missing generatedCount'
+  );
+  assert(invoiceGenerate.body.generatedCount >= 1, 'Expected at least one generated invoice');
+
+  const invoiceList = await request('/api/invoices?partyType=collection-center', {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  assert(invoiceList.ok, `List invoices failed (${invoiceList.status}): ${JSON.stringify(invoiceList.body)}`);
+  assert(Array.isArray(invoiceList.body) && invoiceList.body.length >= 1, 'Expected at least one invoice in list');
+  const hasGeneratedInvoice = invoiceList.body.some((x) => x.status === 'generated');
+  assert(hasGeneratedInvoice, 'Expected generated invoice status in invoice list');
+
   console.log('Smoke test passed');
 }
 

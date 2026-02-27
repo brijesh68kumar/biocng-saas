@@ -108,14 +108,16 @@ Update rule:
 30. S1-08 Step 6.8 completed:
    - `Invoice` model added
    - `/api/invoices/generate-weekly` and `/api/invoices` routes added
+31. S1-08 Step 6.9 completed:
+   - Smoke script extended for end-to-end weekly invoice generation and listing validation
+   - Collection-center rate card path added in smoke flow for invoice calculation
 
 ### Planned / Pending
-1. S1-08 Step 6.9: End-to-end invoice smoke validation.
-9. Frontend feature pages beyond starter template.
+1. Frontend feature pages beyond starter template.
 
 ### Next Target
-1. Continue S1-08:
-   - Add end-to-end invoice smoke validation (step 6.9).
+1. Start next phase:
+   - Build first functional frontend pages for login and core operational modules.
 
 ---
 

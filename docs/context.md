@@ -143,7 +143,7 @@ CRUD + deactivate for:
    - `seed.js` inserts sample intake records linked to dispatch trips
    - `smoke.js` validates intake create/list flow
 
-### Invoice Module (S1-08 In Progress)
+### Invoice Module (S1-08 Completed)
 
 1. `InvoiceCycle` model is added with:
    - weekly date range (`weekStartDate`, `weekEndDate`)
@@ -153,7 +153,8 @@ CRUD + deactivate for:
 3. Invoice routes are added and wired:
    - `POST /api/invoices/generate-weekly` (basic generation)
    - `GET /api/invoices` (list generated invoices)
-4. End-to-end invoice smoke integration is pending next step.
+4. End-to-end invoice smoke integration is implemented:
+   - `smoke.js` generates weekly collection-center invoices and verifies invoice list output.
 
 ### Rate Cards (S1-04 Implemented)
 
@@ -227,7 +228,8 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. S1-08 Step 6.9: End-to-end invoice smoke validation.
+1. Build first frontend functional screens beyond starter template.
+2. Start with login + protected layout + initial master listing pages.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -251,7 +253,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, center flow, dispatch flow, and intake flow (model+routes+seed+smoke) are implemented. InvoiceCycle + Invoice models and invoice routes are added (step 6.7 and 6.8). Next do step 6.9 end-to-end invoice smoke, validate, and update docs/timeline.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, center flow, dispatch flow, intake flow, and invoice flow (models+routes+smoke) are implemented through S1-08 step 6.9. Next build frontend functional pages starting from login and protected module navigation.`
 
 ## 11) Mandatory Process For Every Future Change
 
