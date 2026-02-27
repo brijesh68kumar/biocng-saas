@@ -378,6 +378,17 @@ CRUD + deactivate for:
    - less duplicate date rendering logic
    - more consistent table date formatting across modules
 
+### Frontend UI Polish Pass (Current)
+
+1. Table usability improved:
+   - zebra row pattern and hover highlighting
+   - bordered wrapper for better visual grouping
+2. Form usability improved:
+   - two-column responsive layout on large screens
+   - unchanged single-column layout on smaller screens
+3. Intake usability improved:
+   - net weight now auto-calculates from gross and tare values
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -442,7 +453,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Perform final UI polish pass for usability improvements.
+   - Build reporting/dashboard widgets and advanced filters.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 

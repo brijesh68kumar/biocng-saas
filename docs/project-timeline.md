@@ -90,6 +90,11 @@ Update rule:
    - Added shared date formatter utility for frontend list screens
    - Refactored module pages to use centralized `formatDate` / `formatDateTime`
    - Reduced repeated date formatting code across modules
+18. Frontend Step 16 completed (UI polish pass):
+   - Improved list table readability with hover and zebra row styles
+   - Added bordered table wrappers for cleaner visual separation
+   - Added responsive two-column form layout for large screens
+   - Added plant intake auto net-weight calculation from gross and tare values
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -190,11 +195,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Final UI polish pass.
+   - Dashboard/reporting widgets and advanced filters.
 
 ### Next Target
 1. Start next phase:
-   - Perform final UI polish pass for usability improvements.
+   - Build reporting/dashboard views and search/filter improvements.
 
 ---
 

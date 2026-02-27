@@ -30,6 +30,16 @@ export default function PlantIntakeEntriesPage() {
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Auto-calculate net weight for easier manual entry.
+  useEffect(() => {
+    const gross = Number(grossWeightTon);
+    const tare = Number(tareWeightTon);
+    if (!Number.isNaN(gross) && !Number.isNaN(tare)) {
+      const net = Math.max(gross - tare, 0);
+      setNetWeightTon(String(net));
+    }
+  }, [grossWeightTon, tareWeightTon]);
+
   // Load dropdown options.
   const loadOptions = useCallback(async () => {
     setIsOptionsLoading(true);
