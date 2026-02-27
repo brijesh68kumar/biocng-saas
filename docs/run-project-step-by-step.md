@@ -98,8 +98,9 @@ Frontend opens on:
 
 You should now see:
 1. Login page (`BioCNG SaaS Login`)
-2. After login, protected dashboard page
-3. Logout button to end session
+2. After login, protected layout with sidebar navigation
+3. Dashboard plus module placeholder pages (feedstock, farmers, centers, vehicles)
+4. Logout button to end session
 
 Default demo login:
 1. Email: `admin@biocng.local`

@@ -30,6 +30,10 @@ Update rule:
    - Protected route guard added
    - Logout flow added
    - Basic protected dashboard placeholder added
+3. Frontend Step 2 completed (layout shell + module navigation):
+   - Protected layout component with sidebar and top header
+   - Module navigation routes added (dashboard, feedstock, farmers, centers, vehicles)
+   - Module placeholder pages added for next integration steps
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -129,12 +133,12 @@ Update rule:
 
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
-2. Frontend Step 2:
-   - Layout shell (sidebar/header) and module navigation.
+2. Frontend Step 3:
+   - Feedstock module page with list + create integration.
 
 ### Next Target
 1. Start next phase:
-   - Build frontend Step 2 layout shell and route structure.
+   - Build frontend Step 3 feedstock list/create integration.
 
 ---
 

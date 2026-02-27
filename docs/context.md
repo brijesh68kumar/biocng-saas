@@ -200,6 +200,19 @@ CRUD + deactivate for:
    - Displays user/tenant info
    - Has backend connectivity check button
 
+### Frontend Layout Shell (Current)
+
+1. Protected app layout is implemented with:
+   - sidebar navigation
+   - top header with tenant/user context and logout
+2. Route structure now includes:
+   - `/dashboard`
+   - `/feedstock-types`
+   - `/farmers`
+   - `/collection-centers`
+   - `/vehicles`
+3. Placeholder pages are added for master modules to allow progressive implementation.
+
 ## 5) Local Environment State
 
 1. MongoDB service is installed and can run locally.
@@ -247,7 +260,7 @@ This explains purpose of every important folder and file.
 ## 9) Next Development Priorities
 
 1. Frontend Step 2:
-   - Build layout shell (sidebar/header) and module navigation routes.
+   - Completed (layout shell + module routes).
 2. Frontend Step 3:
    - Implement first module page (feedstock list + create form).
 

@@ -232,11 +232,26 @@ Purpose: Shared auth provider (login, logout, session bootstrap/validation, auth
 - `components/ProtectedRoute.js`
 Purpose: Route guard that redirects unauthenticated users to login.
 
+- `components/AppLayout.js`
+Purpose: Protected app shell with sidebar navigation and top header used by module pages.
+
 - `pages/LoginPage.js`
 Purpose: Login form page integrated with backend auth API.
 
 - `pages/DashboardPage.js`
-Purpose: First protected placeholder page with user info and backend connectivity check.
+Purpose: Protected dashboard page with user info and backend connectivity check.
+
+- `pages/FeedstockTypesPage.js`
+Purpose: Feedstock module page (placeholder in step 2; API list/create integration in step 3).
+
+- `pages/FarmersPage.js`
+Purpose: Placeholder route page for farmer module.
+
+- `pages/CollectionCentersPage.js`
+Purpose: Placeholder route page for collection center module.
+
+- `pages/VehiclesPage.js`
+Purpose: Placeholder route page for vehicle module.
 
 - `reportWebVitals.js`
 Purpose: Optional frontend performance metrics helper.
