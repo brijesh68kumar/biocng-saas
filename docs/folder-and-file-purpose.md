@@ -245,7 +245,7 @@ Purpose: Protected app shell with sidebar navigation and top header used by modu
 Purpose: Login form page integrated with backend auth API.
 
 - `pages/DashboardPage.js`
-Purpose: Protected dashboard page with user info and backend connectivity check.
+Purpose: Protected dashboard page with live KPI cards and recent operational snapshots.
 
 - `pages/FeedstockTypesPage.js`
 Purpose: Feedstock module page with backend-integrated list and create flow.

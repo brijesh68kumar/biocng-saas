@@ -95,6 +95,10 @@ Update rule:
    - Added bordered table wrappers for cleaner visual separation
    - Added responsive two-column form layout for large screens
    - Added plant intake auto net-weight calculation from gross and tare values
+19. Frontend Phase-2 Step 17 completed (dashboard/reporting widgets):
+   - Dashboard now shows KPI cards from live backend data
+   - Added recent dispatch and recent invoice operational snapshots
+   - Added dashboard refresh action for quick metric reload
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -195,11 +199,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Dashboard/reporting widgets and advanced filters.
+   - Advanced filters/search and CSV export actions across modules.
 
 ### Next Target
 1. Start next phase:
-   - Build reporting/dashboard views and search/filter improvements.
+   - Add shared search/filter and CSV export controls for module pages.
 
 ---
 

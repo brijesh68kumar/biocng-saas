@@ -389,6 +389,19 @@ CRUD + deactivate for:
 3. Intake usability improved:
    - net weight now auto-calculates from gross and tare values
 
+### Frontend Dashboard And Reporting Snapshot (Current)
+
+1. Dashboard now fetches live module data and computes KPI cards.
+2. KPI cards include:
+   - intake count today
+   - accepted intake quantity today
+   - pending dispatch trip count
+   - generated invoice count
+   - farmer and collection center counts
+3. Dashboard also shows:
+   - recent dispatch trips table
+   - recent invoices table
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -453,7 +466,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Build reporting/dashboard widgets and advanced filters.
+   - Add shared advanced filters and CSV exports for module list pages.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -477,7 +490,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend Step 1 (auth foundation), Step 2 (layout shell/routes), Step 3 (feedstock list/create), Step 4 (farmers list/create), Step 5 (collection centers list/create), and Step 6 (vehicles list/create) are implemented. Next build land parcels page list/create integration, then crop plans page.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend operational module pages are implemented through invoices, plus shared auth request helper, formatting utilities, and polished UI. Dashboard KPI widgets and recent operational snapshots are now implemented. Next add shared advanced filters and CSV export actions across list pages.`
 
 ## 11) Mandatory Process For Every Future Change
 
