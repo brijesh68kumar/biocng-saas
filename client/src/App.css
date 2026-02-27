@@ -204,6 +204,51 @@
   padding: 16px;
 }
 
+.module-form {
+  display: grid;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.module-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.module-success {
+  margin: 0;
+  color: #1f5e23;
+  background: #e7f6e8;
+  border: 1px solid #bad9bd;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.module-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+.module-table th,
+.module-table td {
+  text-align: left;
+  border-bottom: 1px solid #d8e1d5;
+  padding: 10px 8px;
+  font-size: 0.92rem;
+}
+
+.module-table thead th {
+  background: #f5faf3;
+  font-weight: 700;
+}
+
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;

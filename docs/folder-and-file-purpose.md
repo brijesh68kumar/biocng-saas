@@ -242,7 +242,7 @@ Purpose: Login form page integrated with backend auth API.
 Purpose: Protected dashboard page with user info and backend connectivity check.
 
 - `pages/FeedstockTypesPage.js`
-Purpose: Feedstock module page (placeholder in step 2; API list/create integration in step 3).
+Purpose: Feedstock module page with backend-integrated list and create flow.
 
 - `pages/FarmersPage.js`
 Purpose: Placeholder route page for farmer module.

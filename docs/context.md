@@ -213,6 +213,19 @@ CRUD + deactivate for:
    - `/vehicles`
 3. Placeholder pages are added for master modules to allow progressive implementation.
 
+### Frontend First Module Integration (Current)
+
+1. Feedstock Types page is now connected to backend:
+   - `GET /api/feedstock-types` listing
+   - `POST /api/feedstock-types` create form
+2. Frontend now sends both:
+   - `Authorization: Bearer <token>`
+   - `x-tenant-id: <tenantId>`
+3. Feedstock screen includes:
+   - create form (code, name, uom)
+   - success/error message handling
+   - responsive list table
+
 ## 5) Local Environment State
 
 1. MongoDB service is installed and can run locally.
@@ -262,7 +275,9 @@ This explains purpose of every important folder and file.
 1. Frontend Step 2:
    - Completed (layout shell + module routes).
 2. Frontend Step 3:
-   - Implement first module page (feedstock list + create form).
+   - Completed (feedstock list + create form).
+3. Next:
+   - Implement farmers page list + create integration.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 

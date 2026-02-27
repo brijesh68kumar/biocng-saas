@@ -34,6 +34,10 @@ Update rule:
    - Protected layout component with sidebar and top header
    - Module navigation routes added (dashboard, feedstock, farmers, centers, vehicles)
    - Module placeholder pages added for next integration steps
+4. Frontend Step 3 completed (first real module integration):
+   - Feedstock Types page now supports API-based list and create flow
+   - Auth + tenant headers are sent from frontend session for protected backend routes
+   - UI form and table layout added for feedstock module
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -133,12 +137,12 @@ Update rule:
 
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
-2. Frontend Step 3:
-   - Feedstock module page with list + create integration.
+2. Next frontend module integrations:
+   - Farmers, collection centers, and vehicles pages.
 
 ### Next Target
 1. Start next phase:
-   - Build frontend Step 3 feedstock list/create integration.
+   - Build farmers page with list + create integration.
 
 ---
 
