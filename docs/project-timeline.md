@@ -105,15 +105,17 @@ Update rule:
 29. S1-08 Step 6.7 completed:
    - `InvoiceCycle` model added
    - weekly cycle status and code generation foundation added
+30. S1-08 Step 6.8 completed:
+   - `Invoice` model added
+   - `/api/invoices/generate-weekly` and `/api/invoices` routes added
 
 ### Planned / Pending
-1. S1-08 Step 6.8: Invoice generation route (basic).
-7. S1-08 Step 6.9: End-to-end invoice smoke validation.
+1. S1-08 Step 6.9: End-to-end invoice smoke validation.
 9. Frontend feature pages beyond starter template.
 
 ### Next Target
 1. Continue S1-08:
-   - Add invoice generation route (step 6.8).
+   - Add end-to-end invoice smoke validation (step 6.9).
 
 ---
 

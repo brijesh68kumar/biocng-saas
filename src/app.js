@@ -15,6 +15,7 @@ const centerReceiptLotRoutes = require('./routes/centerReceiptLots');
 const centerStockLedgerRoutes = require('./routes/centerStockLedger');
 const dispatchTripRoutes = require('./routes/dispatchTrips');
 const plantIntakeEntryRoutes = require('./routes/plantIntakeEntries');
+const invoiceRoutes = require('./routes/invoices');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -42,6 +43,7 @@ app.use('/api/center-receipt-lots', centerReceiptLotRoutes);
 app.use('/api/center-stock-ledger', centerStockLedgerRoutes);
 app.use('/api/dispatch-trips', dispatchTripRoutes);
 app.use('/api/plant-intake-entries', plantIntakeEntryRoutes);
+app.use('/api/invoices', invoiceRoutes);
 
 // Error handling should be last
 app.use(notFound);

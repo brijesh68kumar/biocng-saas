@@ -101,6 +101,9 @@ Purpose: Plant weighbridge and quality intake record model with accepted/rejecte
 - `InvoiceCycle.js`
 Purpose: Weekly invoice cycle foundation model to control invoice generation windows and status.
 
+- `Invoice.js`
+Purpose: Generated invoice document model with invoice lines, totals, and cycle/party linkage.
+
 ### Folder: `src/routes` (API Endpoints)
 
 - `auth.js`
@@ -144,6 +147,9 @@ Purpose: Dispatch trip CRUD, status transition API, and trip listing filters.
 
 - `plantIntakeEntries.js`
 Purpose: Plant intake entry CRUD routes with weighbridge and quality intake validation.
+
+- `invoices.js`
+Purpose: Basic weekly invoice generation API and invoice listing endpoints.
 
 ## Folder: `scripts` (Utility Scripts)
 
