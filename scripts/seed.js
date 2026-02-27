@@ -15,6 +15,7 @@ const CollectionCenter = require('../src/models/CollectionCenter');
 const Vehicle = require('../src/models/Vehicle');
 const LandParcel = require('../src/models/LandParcel');
 const CropPlan = require('../src/models/CropPlan');
+const HarvestBatch = require('../src/models/HarvestBatch');
 const RateCard = require('../src/models/RateCard');
 
 dotenv.config();
@@ -177,6 +178,50 @@ async function runSeed() {
   for (const row of cropPlans) {
     await CropPlan.findOneAndUpdate(
       { tenantId, planCode: row.planCode },
+      { ...row, tenantId, isActive: true },
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    );
+  }
+
+  // Lookup references needed for harvest batches.
+  const cropPlan001 = await CropPlan.findOne({ tenantId, planCode: 'CP-2026-001' });
+  const cropPlan002 = await CropPlan.findOne({ tenantId, planCode: 'CP-2026-002' });
+
+  const harvestBatches = [];
+  if (parcel001 && cattleDung) {
+    harvestBatches.push({
+      batchCode: 'HB-SEED-001',
+      lotNo: 'LOT-SEED-001',
+      landParcelId: parcel001._id,
+      cropPlanId: cropPlan001 ? cropPlan001._id : undefined,
+      feedstockTypeId: cattleDung._id,
+      harvestDate: new Date('2026-10-18T00:00:00.000Z'),
+      grossQtyTon: 58,
+      moisturePercent: 21,
+      qualityGrade: 'A',
+      notes: 'Seed harvest batch 1',
+    });
+  }
+
+  if (parcel002 && agriResidue) {
+    harvestBatches.push({
+      batchCode: 'HB-SEED-002',
+      lotNo: 'LOT-SEED-002',
+      landParcelId: parcel002._id,
+      cropPlanId: cropPlan002 ? cropPlan002._id : undefined,
+      feedstockTypeId: agriResidue._id,
+      harvestDate: new Date('2026-12-02T00:00:00.000Z'),
+      grossQtyTon: 43,
+      moisturePercent: 24,
+      qualityGrade: 'B',
+      notes: 'Seed harvest batch 2',
+    });
+  }
+
+  // Seed harvest batch records.
+  for (const row of harvestBatches) {
+    await HarvestBatch.findOneAndUpdate(
+      { tenantId, batchCode: row.batchCode },
       { ...row, tenantId, isActive: true },
       { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );

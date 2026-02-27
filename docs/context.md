@@ -87,7 +87,9 @@ CRUD + deactivate for:
    - `GET/POST /api/harvest-batches`
    - `GET/PATCH /api/harvest-batches/:id`
    - `PATCH /api/harvest-batches/:id/deactivate`
-3. Harvest seed/smoke integration is pending next step.
+3. Harvest seed/smoke integration is implemented:
+   - `seed.js` creates sample harvest batches
+   - `smoke.js` validates harvest create/list and auto code generation
 
 ### Rate Cards (S1-04 Implemented)
 
@@ -161,15 +163,14 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. S1-06 Step 4.3: Seed and smoke coverage for HarvestBatch flow.
-3. S1-07: Collection center receipt lots + center stock ledger.
-4. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
+1. S1-07: Collection center receipt lots + center stock ledger.
+2. S1-08+: Dispatch, intake, and weekly invoice generation workflow.
 
 ## 10) Resume Prompt For AI
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), and rate cards are implemented with seed and smoke scripts. HarvestBatch model and routes are added (S1-06 step 4.1 and 4.2). Next do step 4.3 seed/smoke, run smoke, update docs, and commit.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, and harvest batch flow (model+routes+seed+smoke) are implemented. Next start S1-07 collection center receipt lots and stock ledger, then validate with smoke and update docs.`
 
 ## 11) Mandatory Process For Every Future Change
 

@@ -44,14 +44,13 @@ const harvestBatchSchema = new mongoose.Schema(
 );
 
 // Auto-generate codes if caller does not provide them.
-harvestBatchSchema.pre('validate', function setCodes(next) {
+harvestBatchSchema.pre('validate', function setCodes() {
   if (!this.batchCode) {
     this.batchCode = buildCode('HB', this.harvestDate || new Date());
   }
   if (!this.lotNo) {
     this.lotNo = buildCode('LOT', this.harvestDate || new Date());
   }
-  next();
 });
 
 // Enforce uniqueness per tenant.

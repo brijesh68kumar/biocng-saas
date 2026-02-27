@@ -187,8 +187,47 @@ async function main() {
     headers: { Authorization: `Bearer ${token}` },
   });
   assert(cropPlanList.ok, `List crop plans failed (${cropPlanList.status}): ${JSON.stringify(cropPlanList.body)}`);
+  const cropPlanId = cropPlanCreate.body && cropPlanCreate.body._id;
+  assert(cropPlanId, 'Create crop plan response missing _id');
 
-  // 9) Rate card create/list.
+  // 9) Harvest batch create/list (batch and lot should auto-generate).
+  const harvestBatchCreate = await request('/api/harvest-batches', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      landParcelId,
+      cropPlanId,
+      feedstockTypeId,
+      harvestDate: '2026-10-10T00:00:00.000Z',
+      grossQtyTon: 33,
+      moisturePercent: 19,
+      qualityGrade: 'A',
+      notes: 'Smoke harvest batch',
+    }),
+  });
+  assert(
+    harvestBatchCreate.ok,
+    `Create harvest batch failed (${harvestBatchCreate.status}): ${JSON.stringify(harvestBatchCreate.body)}`
+  );
+  assert(
+    harvestBatchCreate.body && harvestBatchCreate.body.batchCode,
+    'Expected auto-generated batchCode in harvest batch response'
+  );
+  assert(
+    harvestBatchCreate.body && harvestBatchCreate.body.lotNo,
+    'Expected auto-generated lotNo in harvest batch response'
+  );
+
+  const harvestBatchList = await request('/api/harvest-batches', {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  assert(
+    harvestBatchList.ok,
+    `List harvest batches failed (${harvestBatchList.status}): ${JSON.stringify(harvestBatchList.body)}`
+  );
+
+  // 10) Rate card create/list.
   const currentRate = await request('/api/rate-cards', {
     method: 'POST',
     headers: authHeaders,
@@ -224,7 +263,7 @@ async function main() {
   assert(rateList.ok, `List rate cards failed (${rateList.status}): ${JSON.stringify(rateList.body)}`);
   assert(Array.isArray(rateList.body) && rateList.body.length >= 2, 'Expected at least 2 rate cards for smoke entity');
 
-  // 10) Verify resolve endpoint chooses correct row by date.
+  // 11) Verify resolve endpoint chooses correct row by date.
   const resolvedCurrent = await request(
     `/api/rate-cards/resolve?partyType=farmer&partyId=${encodeURIComponent(farmerId)}&feedstockTypeId=${encodeURIComponent(feedstockTypeId)}&asOf=2026-06-01T00:00:00.000Z`,
     {
