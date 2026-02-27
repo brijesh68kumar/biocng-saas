@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import { formatDate } from '../utils/formatters';
 
 // Plant intake entries page: list and create intake/weighbridge records.
 export default function PlantIntakeEntriesPage() {
@@ -349,7 +350,7 @@ export default function PlantIntakeEntriesPage() {
                   <tr key={item._id}>
                     <td>{item.intakeCode}</td>
                     <td>{item.sourceType}</td>
-                    <td>{item.intakeDate ? new Date(item.intakeDate).toLocaleDateString() : '-'}</td>
+                    <td>{formatDate(item.intakeDate)}</td>
                     <td>{item.grossWeightTon}</td>
                     <td>{item.tareWeightTon}</td>
                     <td>{item.netWeightTon}</td>
@@ -365,4 +366,3 @@ export default function PlantIntakeEntriesPage() {
     </div>
   );
 }
-

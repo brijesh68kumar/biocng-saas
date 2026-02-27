@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import { formatDate } from '../utils/formatters';
 
 // Crop plans module page: list and create crop planning records.
 export default function CropPlansPage() {
@@ -266,8 +267,8 @@ export default function CropPlansPage() {
                     <td>{item.planCode}</td>
                     <td>{item.landParcelId}</td>
                     <td>{item.feedstockTypeId}</td>
-                    <td>{item.sowingDate ? new Date(item.sowingDate).toLocaleDateString() : '-'}</td>
-                    <td>{item.expectedHarvestDate ? new Date(item.expectedHarvestDate).toLocaleDateString() : '-'}</td>
+                    <td>{formatDate(item.sowingDate)}</td>
+                    <td>{formatDate(item.expectedHarvestDate)}</td>
                     <td>{item.expectedYieldTon}</td>
                   </tr>
                 ))}
@@ -279,4 +280,3 @@ export default function CropPlansPage() {
     </div>
   );
 }
-

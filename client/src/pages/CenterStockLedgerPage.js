@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import { formatDateTime } from '../utils/formatters';
 
 // Center stock ledger page: list movements and post OUT transactions.
 export default function CenterStockLedgerPage() {
@@ -206,7 +207,7 @@ export default function CenterStockLedgerPage() {
                     <td>{item.balanceAfterTon}</td>
                     <td>{item.refType || '-'}</td>
                     <td>{item.refId || '-'}</td>
-                    <td>{item.createdAt ? new Date(item.createdAt).toLocaleString() : '-'}</td>
+                    <td>{formatDateTime(item.createdAt)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -217,4 +218,3 @@ export default function CenterStockLedgerPage() {
     </div>
   );
 }
-

@@ -367,6 +367,17 @@ CRUD + deactivate for:
    - generation success/error feedback
    - responsive list table with totals and status
 
+### Frontend Shared Utility Cleanup (Current)
+
+1. Shared formatter utility added:
+   - `client/src/utils/formatters.js`
+2. Module pages refactored to use:
+   - `formatDate`
+   - `formatDateTime`
+3. Result:
+   - less duplicate date rendering logic
+   - more consistent table date formatting across modules
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -431,7 +442,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Perform shared frontend utility cleanup and UI polish pass.
+   - Perform final UI polish pass for usability improvements.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 

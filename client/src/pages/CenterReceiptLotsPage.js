@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import { formatDate } from '../utils/formatters';
 
 // Center receipt lots page: list and create lot entries at collection centers.
 export default function CenterReceiptLotsPage() {
@@ -271,7 +272,7 @@ export default function CenterReceiptLotsPage() {
                   <tr key={item._id}>
                     <td>{item.receiptLotCode}</td>
                     <td>{item.sourceType}</td>
-                    <td>{item.receiptDate ? new Date(item.receiptDate).toLocaleDateString() : '-'}</td>
+                    <td>{formatDate(item.receiptDate)}</td>
                     <td>{item.grossQtyTon}</td>
                     <td>{item.availableQtyTon}</td>
                     <td>{item.qualityGrade || '-'}</td>
@@ -285,4 +286,3 @@ export default function CenterReceiptLotsPage() {
     </div>
   );
 }
-

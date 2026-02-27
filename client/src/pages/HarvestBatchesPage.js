@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import { formatDate } from '../utils/formatters';
 
 // Harvest batches module page: list and create lot/batch records.
 export default function HarvestBatchesPage() {
@@ -266,7 +267,7 @@ export default function HarvestBatchesPage() {
                   <tr key={item._id}>
                     <td>{item.batchCode}</td>
                     <td>{item.lotNo}</td>
-                    <td>{item.harvestDate ? new Date(item.harvestDate).toLocaleDateString() : '-'}</td>
+                    <td>{formatDate(item.harvestDate)}</td>
                     <td>{item.grossQtyTon}</td>
                     <td>{item.qualityGrade || '-'}</td>
                   </tr>
@@ -279,4 +280,3 @@ export default function HarvestBatchesPage() {
     </div>
   );
 }
-

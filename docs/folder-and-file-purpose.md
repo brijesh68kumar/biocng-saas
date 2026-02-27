@@ -226,6 +226,9 @@ Purpose: Global and page styling for auth and dashboard starter pages.
 - `config/api.js`
 Purpose: Frontend API base URL configuration (`REACT_APP_API_BASE_URL` fallback support).
 
+- `utils/formatters.js`
+Purpose: Shared frontend date/time formatting helpers used by module tables.
+
 - `auth/storage.js`
 Purpose: Local storage helpers for token and user session persistence.
 

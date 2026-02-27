@@ -86,6 +86,10 @@ Update rule:
    - Invoices page now supports weekly invoice generation and generated invoice listing
    - Weekly generation fields covered: week dates, party type, force regenerate, notes
    - Invoice list includes totals and status for generated documents
+17. Frontend Step 15 completed (shared utility cleanup):
+   - Added shared date formatter utility for frontend list screens
+   - Refactored module pages to use centralized `formatDate` / `formatDateTime`
+   - Reduced repeated date formatting code across modules
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -186,11 +190,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - UI polishing and shared component refactor.
+   - Final UI polish pass.
 
 ### Next Target
 1. Start next phase:
-   - Perform shared frontend utility cleanup and UI polish pass.
+   - Perform final UI polish pass for usability improvements.
 
 ---
 

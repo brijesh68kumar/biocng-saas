@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '../auth/AuthContext';
+import { formatDate } from '../utils/formatters';
 
 // Invoices page: generate weekly invoices and list generated invoice documents.
 export default function InvoicesPage() {
@@ -166,8 +167,8 @@ export default function InvoicesPage() {
                     <td>{item.invoiceNo}</td>
                     <td>{item.partyType}</td>
                     <td>{item.partyRefId}</td>
-                    <td>{item.weekStartDate ? new Date(item.weekStartDate).toLocaleDateString() : '-'}</td>
-                    <td>{item.weekEndDate ? new Date(item.weekEndDate).toLocaleDateString() : '-'}</td>
+                    <td>{formatDate(item.weekStartDate)}</td>
+                    <td>{formatDate(item.weekEndDate)}</td>
                     <td>{item.totalQtyTon}</td>
                     <td>{item.totalAmount}</td>
                     <td>{item.status}</td>
@@ -181,4 +182,3 @@ export default function InvoicesPage() {
     </div>
   );
 }
-
