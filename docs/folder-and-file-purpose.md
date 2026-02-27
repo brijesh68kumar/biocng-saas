@@ -115,6 +115,9 @@ Purpose: Land parcel CRUD routes.
 - `cropPlans.js`
 Purpose: Crop plan CRUD routes.
 
+- `harvestBatches.js`
+Purpose: Harvest batch CRUD routes (auto lot/batch code behavior comes from model).
+
 ## Folder: `scripts` (Utility Scripts)
 
 - `scripts/seed.js`

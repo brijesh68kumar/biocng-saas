@@ -10,6 +10,7 @@ const vehicleRoutes = require('./routes/vehicles');
 const rateCardRoutes = require('./routes/rateCards');
 const landParcelRoutes = require('./routes/landParcels');
 const cropPlanRoutes = require('./routes/cropPlans');
+const harvestBatchRoutes = require('./routes/harvestBatches');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -32,6 +33,7 @@ app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/rate-cards', rateCardRoutes);
 app.use('/api/land-parcels', landParcelRoutes);
 app.use('/api/crop-plans', cropPlanRoutes);
+app.use('/api/harvest-batches', harvestBatchRoutes);
 
 // Error handling should be last
 app.use(notFound);
