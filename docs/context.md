@@ -287,6 +287,19 @@ CRUD + deactivate for:
    - success/error message handling
    - responsive list table
 
+### Frontend Harvest Batches Module Integration (Current)
+
+1. Harvest batches page is now connected to backend:
+   - `GET /api/harvest-batches` listing
+   - `POST /api/harvest-batches` create form
+2. Harvest batch form includes:
+   - landParcelId, cropPlanId (optional), feedstockTypeId
+   - harvestDate, grossQtyTon, moisturePercent, qualityGrade, notes
+3. Harvest batches screen includes:
+   - dropdown options from land parcels, crop plans, and feedstock types
+   - success/error message handling
+   - responsive list table
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -351,7 +364,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement harvest batches page list + create integration.
+   - Implement center receipt lots page list + create integration.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 

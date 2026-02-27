@@ -10,6 +10,7 @@ const links = [
   { to: '/vehicles', label: 'Vehicles' },
   { to: '/land-parcels', label: 'Land Parcels' },
   { to: '/crop-plans', label: 'Crop Plans' },
+  { to: '/harvest-batches', label: 'Harvest Batches' },
 ];
 
 // Reusable protected shell for all authenticated pages.

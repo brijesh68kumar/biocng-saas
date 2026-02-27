@@ -9,6 +9,7 @@ import CropPlansPage from './pages/CropPlansPage';
 import DashboardPage from './pages/DashboardPage';
 import FarmersPage from './pages/FarmersPage';
 import FeedstockTypesPage from './pages/FeedstockTypesPage';
+import HarvestBatchesPage from './pages/HarvestBatchesPage';
 import LandParcelsPage from './pages/LandParcelsPage';
 import LoginPage from './pages/LoginPage';
 import VehiclesPage from './pages/VehiclesPage';
@@ -35,6 +36,7 @@ function AppRoutes() {
         <Route path="vehicles" element={<VehiclesPage />} />
         <Route path="land-parcels" element={<LandParcelsPage />} />
         <Route path="crop-plans" element={<CropPlansPage />} />
+        <Route path="harvest-batches" element={<HarvestBatchesPage />} />
         <Route index element={<Navigate to="/dashboard" replace />} />
       </Route>
       <Route path="*" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />
