@@ -19,6 +19,7 @@ const HarvestBatch = require('../src/models/HarvestBatch');
 const CenterReceiptLot = require('../src/models/CenterReceiptLot');
 const CenterStockLedger = require('../src/models/CenterStockLedger');
 const DispatchTrip = require('../src/models/DispatchTrip');
+const PlantIntakeEntry = require('../src/models/PlantIntakeEntry');
 const RateCard = require('../src/models/RateCard');
 
 dotenv.config();
@@ -353,6 +354,61 @@ async function runSeed() {
   for (const row of dispatchTrips) {
     await DispatchTrip.findOneAndUpdate(
       { tenantId, tripCode: row.tripCode },
+      { ...row, tenantId, isActive: true },
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    );
+  }
+
+  // Seed plant intake entries linked to seeded dispatch trips.
+  const trip001 = await DispatchTrip.findOne({ tenantId, tripCode: 'DT-SEED-001' });
+  const trip002 = await DispatchTrip.findOne({ tenantId, tripCode: 'DT-SEED-002' });
+
+  const intakeEntries = [];
+  if (trip001 && cattleDung && centerNorth) {
+    intakeEntries.push({
+      intakeCode: 'PIE-SEED-001',
+      dispatchTripId: trip001._id,
+      feedstockTypeId: cattleDung._id,
+      sourceType: 'collection-center',
+      sourceRefId: String(centerNorth._id),
+      grossWeightTon: 14,
+      tareWeightTon: 2,
+      netWeightTon: 12,
+      moisturePercent: 18,
+      contaminationPercent: 2,
+      qualityGrade: 'A',
+      acceptedQtyTon: 11.5,
+      rejectedQtyTon: 0.5,
+      rejectionReason: 'Minor contamination',
+      intakeDate: new Date('2026-10-12T12:00:00.000Z'),
+      notes: 'Seed intake from center trip',
+    });
+  }
+
+  if (trip002 && agriResidue && parcel001) {
+    intakeEntries.push({
+      intakeCode: 'PIE-SEED-002',
+      dispatchTripId: trip002._id,
+      feedstockTypeId: agriResidue._id,
+      sourceType: 'own-farm',
+      sourceRefId: String(parcel001._id),
+      grossWeightTon: 16,
+      tareWeightTon: 3,
+      netWeightTon: 13,
+      moisturePercent: 24,
+      contaminationPercent: 3,
+      qualityGrade: 'B',
+      acceptedQtyTon: 12.2,
+      rejectedQtyTon: 0.8,
+      rejectionReason: 'Moisture above threshold',
+      intakeDate: new Date('2026-10-13T11:00:00.000Z'),
+      notes: 'Seed intake from farm trip',
+    });
+  }
+
+  for (const row of intakeEntries) {
+    await PlantIntakeEntry.findOneAndUpdate(
+      { tenantId, intakeCode: row.intakeCode },
       { ...row, tenantId, isActive: true },
       { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );

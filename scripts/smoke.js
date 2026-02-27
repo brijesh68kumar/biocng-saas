@@ -343,7 +343,42 @@ async function main() {
   );
   assert(dispatchStatusUpdate.body.status === 'dispatched', 'Expected dispatch status to become dispatched');
 
-  // 13) Rate card create/list.
+  // 13) Plant intake create/list linked to dispatch trip.
+  const intakeCreate = await request('/api/plant-intake-entries', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      dispatchTripId,
+      feedstockTypeId,
+      sourceType: 'collection-center',
+      sourceRefId: centerId,
+      grossWeightTon: 11,
+      tareWeightTon: 2,
+      netWeightTon: 9,
+      moisturePercent: 18,
+      contaminationPercent: 1,
+      qualityGrade: 'A',
+      acceptedQtyTon: 8.7,
+      rejectedQtyTon: 0.3,
+      rejectionReason: 'Minor impurity',
+      intakeDate: '2026-10-12T14:00:00.000Z',
+      notes: 'Smoke intake entry',
+    }),
+  });
+  assert(
+    intakeCreate.ok,
+    `Create plant intake failed (${intakeCreate.status}): ${JSON.stringify(intakeCreate.body)}`
+  );
+  assert(intakeCreate.body && intakeCreate.body.intakeCode, 'Expected auto-generated intakeCode');
+
+  const intakeList = await request(`/api/plant-intake-entries?dispatchTripId=${encodeURIComponent(dispatchTripId)}`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  assert(intakeList.ok, `List intake entries failed (${intakeList.status}): ${JSON.stringify(intakeList.body)}`);
+  assert(Array.isArray(intakeList.body) && intakeList.body.length >= 1, 'Expected at least one intake entry');
+
+  // 14) Rate card create/list.
   const currentRate = await request('/api/rate-cards', {
     method: 'POST',
     headers: authHeaders,
@@ -379,7 +414,7 @@ async function main() {
   assert(rateList.ok, `List rate cards failed (${rateList.status}): ${JSON.stringify(rateList.body)}`);
   assert(Array.isArray(rateList.body) && rateList.body.length >= 2, 'Expected at least 2 rate cards for smoke entity');
 
-  // 14) Verify resolve endpoint chooses correct row by date.
+  // 15) Verify resolve endpoint chooses correct row by date.
   const resolvedCurrent = await request(
     `/api/rate-cards/resolve?partyType=farmer&partyId=${encodeURIComponent(farmerId)}&feedstockTypeId=${encodeURIComponent(feedstockTypeId)}&asOf=2026-06-01T00:00:00.000Z`,
     {

@@ -139,7 +139,9 @@ CRUD + deactivate for:
    - `GET/POST /api/plant-intake-entries`
    - `GET/PATCH /api/plant-intake-entries/:id`
    - `PATCH /api/plant-intake-entries/:id/deactivate`
-3. Intake seed/smoke integration is pending next step.
+3. Intake seed/smoke integration is implemented:
+   - `seed.js` inserts sample intake records linked to dispatch trips
+   - `smoke.js` validates intake create/list flow
 
 ### Rate Cards (S1-04 Implemented)
 
@@ -213,8 +215,7 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. S1-08 Step 6.6: Seed/smoke for intake.
-5. S1-08 Step 6.7: Invoice cycle foundation model.
+1. S1-08 Step 6.7: Invoice cycle foundation model.
 6. S1-08 Step 6.8: Invoice generation route (basic).
 7. S1-08 Step 6.9: End-to-end invoice smoke validation.
 
@@ -240,7 +241,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, center flow, and dispatch flow (model+routes+seed+smoke) are implemented. S1-08 step 6.4 and 6.5 are done (PlantIntakeEntry model + routes+wiring). Next do step 6.6 intake seed/smoke, then continue 6.7 to 6.9 with validation and docs updates per commit.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, center flow, dispatch flow, and intake flow (model+routes+seed+smoke) are implemented. Next do step 6.7 invoice cycle model, then continue 6.8 and 6.9 with validation and docs updates per commit.`
 
 ## 11) Mandatory Process For Every Future Change
 
