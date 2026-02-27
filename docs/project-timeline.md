@@ -102,16 +102,18 @@ Update rule:
 28. S1-08 Step 6.6 completed:
    - Seed script extended for intake entries linked to dispatch
    - Smoke script extended for intake create/list validation
+29. S1-08 Step 6.7 completed:
+   - `InvoiceCycle` model added
+   - weekly cycle status and code generation foundation added
 
 ### Planned / Pending
-1. S1-08 Step 6.7: Invoice cycle foundation model.
-6. S1-08 Step 6.8: Invoice generation route (basic).
+1. S1-08 Step 6.8: Invoice generation route (basic).
 7. S1-08 Step 6.9: End-to-end invoice smoke validation.
 9. Frontend feature pages beyond starter template.
 
 ### Next Target
 1. Continue S1-08:
-   - Add invoice cycle foundation model (step 6.7).
+   - Add invoice generation route (step 6.8).
 
 ---
 

@@ -98,6 +98,9 @@ Purpose: Trip planning and status lifecycle model for transport from source lots
 - `PlantIntakeEntry.js`
 Purpose: Plant weighbridge and quality intake record model with accepted/rejected quantity outcomes.
 
+- `InvoiceCycle.js`
+Purpose: Weekly invoice cycle foundation model to control invoice generation windows and status.
+
 ### Folder: `src/routes` (API Endpoints)
 
 - `auth.js`

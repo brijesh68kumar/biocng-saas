@@ -143,6 +143,14 @@ CRUD + deactivate for:
    - `seed.js` inserts sample intake records linked to dispatch trips
    - `smoke.js` validates intake create/list flow
 
+### Invoice Module (S1-08 In Progress)
+
+1. `InvoiceCycle` model is added with:
+   - weekly date range (`weekStartDate`, `weekEndDate`)
+   - cycle status (`open`, `generated`, `closed`)
+   - auto `cycleCode` generation
+2. Invoice generation route and smoke integration are pending next steps.
+
 ### Rate Cards (S1-04 Implemented)
 
 1. RateCard schema with:
@@ -215,8 +223,7 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. S1-08 Step 6.7: Invoice cycle foundation model.
-6. S1-08 Step 6.8: Invoice generation route (basic).
+1. S1-08 Step 6.8: Invoice generation route (basic).
 7. S1-08 Step 6.9: End-to-end invoice smoke validation.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
@@ -241,7 +248,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, center flow, dispatch flow, and intake flow (model+routes+seed+smoke) are implemented. Next do step 6.7 invoice cycle model, then continue 6.8 and 6.9 with validation and docs updates per commit.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, center flow, dispatch flow, and intake flow (model+routes+seed+smoke) are implemented. InvoiceCycle model is added (step 6.7). Next do step 6.8 invoice generation route, then step 6.9 end-to-end invoice smoke with docs updates per commit.`
 
 ## 11) Mandatory Process For Every Future Change
 
