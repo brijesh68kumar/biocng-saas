@@ -139,6 +139,9 @@ Purpose: Center stock ledger list endpoint and `OUT` movement posting endpoint.
 - `dispatchTrips.js`
 Purpose: Dispatch trip CRUD, status transition API, and trip listing filters.
 
+- `plantIntakeEntries.js`
+Purpose: Plant intake entry CRUD routes with weighbridge and quality intake validation.
+
 ## Folder: `scripts` (Utility Scripts)
 
 - `scripts/seed.js`

@@ -96,10 +96,12 @@ Update rule:
 26. S1-08 Step 6.4 completed:
    - `PlantIntakeEntry` model added
    - intake code auto-generation and weighbridge/quality fields added
+27. S1-08 Step 6.5 completed:
+   - `PlantIntakeEntry` routes added
+   - `/api/plant-intake-entries` wired into app
 
 ### Planned / Pending
-1. S1-08 Step 6.5: Intake routes + app wiring.
-4. S1-08 Step 6.6: Seed/smoke for intake flow.
+1. S1-08 Step 6.6: Seed/smoke for intake flow.
 5. S1-08 Step 6.7: Invoice cycle foundation model.
 6. S1-08 Step 6.8: Invoice generation route (basic).
 7. S1-08 Step 6.9: End-to-end invoice smoke validation.
@@ -107,7 +109,7 @@ Update rule:
 
 ### Next Target
 1. Continue S1-08:
-   - Add PlantIntakeEntry routes and app wiring (step 6.5).
+   - Add intake seed/smoke coverage (step 6.6).
 
 ---
 

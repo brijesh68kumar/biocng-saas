@@ -14,6 +14,7 @@ const harvestBatchRoutes = require('./routes/harvestBatches');
 const centerReceiptLotRoutes = require('./routes/centerReceiptLots');
 const centerStockLedgerRoutes = require('./routes/centerStockLedger');
 const dispatchTripRoutes = require('./routes/dispatchTrips');
+const plantIntakeEntryRoutes = require('./routes/plantIntakeEntries');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -40,6 +41,7 @@ app.use('/api/harvest-batches', harvestBatchRoutes);
 app.use('/api/center-receipt-lots', centerReceiptLotRoutes);
 app.use('/api/center-stock-ledger', centerStockLedgerRoutes);
 app.use('/api/dispatch-trips', dispatchTripRoutes);
+app.use('/api/plant-intake-entries', plantIntakeEntryRoutes);
 
 // Error handling should be last
 app.use(notFound);
