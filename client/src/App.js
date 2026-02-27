@@ -8,6 +8,7 @@ import CollectionCentersPage from './pages/CollectionCentersPage';
 import DashboardPage from './pages/DashboardPage';
 import FarmersPage from './pages/FarmersPage';
 import FeedstockTypesPage from './pages/FeedstockTypesPage';
+import LandParcelsPage from './pages/LandParcelsPage';
 import LoginPage from './pages/LoginPage';
 import VehiclesPage from './pages/VehiclesPage';
 
@@ -31,6 +32,7 @@ function AppRoutes() {
         <Route path="farmers" element={<FarmersPage />} />
         <Route path="collection-centers" element={<CollectionCentersPage />} />
         <Route path="vehicles" element={<VehiclesPage />} />
+        <Route path="land-parcels" element={<LandParcelsPage />} />
         <Route index element={<Navigate to="/dashboard" replace />} />
       </Route>
       <Route path="*" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />

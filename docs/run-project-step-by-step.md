@@ -99,9 +99,9 @@ Frontend opens on:
 You should now see:
 1. Login page (`BioCNG SaaS Login`)
 2. After login, protected layout with sidebar navigation
-3. Dashboard plus module pages (feedstock + farmers + collection centers + vehicles live)
+3. Dashboard plus module pages (feedstock + farmers + collection centers + vehicles + land parcels live)
 4. Logout button to end session
-5. In `Feedstock Types`, `Farmers`, `Collection Centers`, and `Vehicles` pages you can create records and see list from backend API
+5. In `Feedstock Types`, `Farmers`, `Collection Centers`, `Vehicles`, and `Land Parcels` pages you can create records and see list from backend API
 
 Default demo login:
 1. Email: `admin@biocng.local`

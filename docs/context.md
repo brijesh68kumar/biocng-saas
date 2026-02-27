@@ -260,6 +260,19 @@ CRUD + deactivate for:
    - numeric validation for capacityTon
    - responsive list table
 
+### Frontend Land Parcels Module Integration (Current)
+
+1. Land parcels page is now connected to backend:
+   - `GET /api/land-parcels` listing
+   - `POST /api/land-parcels` create form
+2. Land parcel form includes:
+   - parcelCode, landType, lessorName, village, district, areaAcres
+   - leaseStartDate, leaseEndDate, rentPerAcrePerYear
+3. Land parcels screen includes:
+   - success/error message handling
+   - numeric validation for area and rent
+   - responsive list table
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -324,7 +337,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement land parcels page list + create integration.
+   - Implement crop plans page list + create integration.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 

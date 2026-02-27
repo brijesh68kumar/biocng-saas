@@ -8,6 +8,7 @@ const links = [
   { to: '/farmers', label: 'Farmers' },
   { to: '/collection-centers', label: 'Collection Centers' },
   { to: '/vehicles', label: 'Vehicles' },
+  { to: '/land-parcels', label: 'Land Parcels' },
 ];
 
 // Reusable protected shell for all authenticated pages.
@@ -59,4 +60,3 @@ export default function AppLayout() {
     </div>
   );
 }
-

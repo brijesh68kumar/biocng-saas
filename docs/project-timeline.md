@@ -54,6 +54,10 @@ Update rule:
    - Central authenticated request helper added in frontend auth context
    - Automatic logout on backend `401 Unauthorized`
    - Frontend `.env.example` added for API base URL configuration
+9. Frontend Step 7 completed:
+   - Land parcels page now supports API-based list and create flow
+   - Parcel fields covered: parcelCode, landType, village, district, areaAcres, lease dates, rent
+   - Uses centralized frontend authenticated request helper
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -154,11 +158,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Land parcels and crop plans pages.
+   - Crop plans, harvest batches, center receipt, stock ledger, dispatch, intake, and invoices pages.
 
 ### Next Target
 1. Start next phase:
-   - Build land parcels page with list + create integration.
+   - Build crop plans page with list + create integration.
 
 ---
 
