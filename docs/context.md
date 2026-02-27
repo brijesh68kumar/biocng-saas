@@ -237,6 +237,17 @@ CRUD + deactivate for:
    - success/error message handling
    - responsive list table
 
+### Frontend Collection Centers Module Integration (Current)
+
+1. Collection centers page is now connected to backend:
+   - `GET /api/collection-centers` listing
+   - `POST /api/collection-centers` create form
+2. Collection center form includes:
+   - code, name, location, managerName
+3. Collection centers screen includes:
+   - success/error message handling
+   - responsive list table
+
 ## 5) Local Environment State
 
 1. MongoDB service is installed and can run locally.
@@ -288,7 +299,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement collection centers page list + create integration.
+   - Implement vehicles page list + create integration.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -312,7 +323,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend Step 1 (auth foundation), Step 2 (layout shell/routes), Step 3 (feedstock list/create), and Step 4 (farmers list/create) are implemented. Next build collection centers page with list/create integration, then vehicles page.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend Step 1 (auth foundation), Step 2 (layout shell/routes), Step 3 (feedstock list/create), Step 4 (farmers list/create), and Step 5 (collection centers list/create) are implemented. Next build vehicles page list/create integration.`
 
 ## 11) Mandatory Process For Every Future Change
 

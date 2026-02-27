@@ -248,7 +248,7 @@ Purpose: Feedstock module page with backend-integrated list and create flow.
 Purpose: Farmers module page with backend-integrated list and create flow.
 
 - `pages/CollectionCentersPage.js`
-Purpose: Placeholder route page for collection center module.
+Purpose: Collection centers module page with backend-integrated list and create flow.
 
 - `pages/VehiclesPage.js`
 Purpose: Placeholder route page for vehicle module.

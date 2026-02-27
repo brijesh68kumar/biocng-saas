@@ -42,6 +42,10 @@ Update rule:
    - Farmers page now supports API-based list and create flow
    - Farmer fields covered: code, name, mobile, village
    - Uses auth + tenant headers from frontend session
+6. Frontend Step 5 completed:
+   - Collection centers page now supports API-based list and create flow
+   - Center fields covered: code, name, location, managerName
+   - Uses auth + tenant headers from frontend session
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -142,11 +146,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Collection centers and vehicles pages.
+   - Vehicles page.
 
 ### Next Target
 1. Start next phase:
-   - Build collection centers page with list + create integration.
+   - Build vehicles page with list + create integration.
 
 ---
 
