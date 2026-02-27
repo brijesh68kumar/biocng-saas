@@ -93,10 +93,12 @@ Update rule:
 25. S1-08 Step 6.3 completed:
    - Seed script extended for dispatch trips
    - Smoke script extended for dispatch create/list/status transition
+26. S1-08 Step 6.4 completed:
+   - `PlantIntakeEntry` model added
+   - intake code auto-generation and weighbridge/quality fields added
 
 ### Planned / Pending
-1. S1-08 Step 6.4: Plant intake model.
-3. S1-08 Step 6.5: Intake routes + app wiring.
+1. S1-08 Step 6.5: Intake routes + app wiring.
 4. S1-08 Step 6.6: Seed/smoke for intake flow.
 5. S1-08 Step 6.7: Invoice cycle foundation model.
 6. S1-08 Step 6.8: Invoice generation route (basic).
@@ -105,7 +107,7 @@ Update rule:
 
 ### Next Target
 1. Continue S1-08:
-   - Add PlantIntakeEntry model (step 6.4).
+   - Add PlantIntakeEntry routes and app wiring (step 6.5).
 
 ---
 

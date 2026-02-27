@@ -128,6 +128,15 @@ CRUD + deactivate for:
    - `seed.js` inserts sample dispatch trips
    - `smoke.js` validates dispatch create/list/status update flow
 
+### Plant Intake Module (S1-08 In Progress)
+
+1. `PlantIntakeEntry` model is added with:
+   - auto `intakeCode` generation
+   - weighbridge fields (`gross`, `tare`, `net`)
+   - quality and acceptance fields (`acceptedQty`, `rejectedQty`, grade, moisture)
+   - source and dispatch linkage fields
+2. Intake routes and seed/smoke integration are pending next steps.
+
 ### Rate Cards (S1-04 Implemented)
 
 1. RateCard schema with:
@@ -200,8 +209,7 @@ This explains purpose of every important folder and file.
 
 ## 9) Next Development Priorities
 
-1. S1-08 Step 6.4: Plant intake model.
-3. S1-08 Step 6.5: Intake routes + app wiring.
+1. S1-08 Step 6.5: Intake routes + app wiring.
 4. S1-08 Step 6.6: Seed/smoke for intake.
 5. S1-08 Step 6.7: Invoice cycle foundation model.
 6. S1-08 Step 6.8: Invoice generation route (basic).
@@ -229,7 +237,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, center flow, and dispatch flow (model+routes+seed+smoke) are implemented. Next do step 6.4 PlantIntakeEntry model, then continue 6.5 to 6.9 in order with validation and docs updates per commit.`
+`Continue BioCNG SaaS from current master branch. Auth, tenant guard, masters (feedstock/farmers/centers/vehicles/land-parcels/crop-plans), rate cards, harvest flow, center flow, and dispatch flow (model+routes+seed+smoke) are implemented. S1-08 step 6.4 PlantIntakeEntry model is done. Next do step 6.5 intake routes+wiring, then continue 6.6 to 6.9 in order with validation and docs updates per commit.`
 
 ## 11) Mandatory Process For Every Future Change
 

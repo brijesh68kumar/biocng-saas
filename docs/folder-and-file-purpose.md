@@ -95,6 +95,9 @@ Purpose: Lot-wise center stock movement ledger (IN/OUT/ADJUST) for auditable sto
 - `DispatchTrip.js`
 Purpose: Trip planning and status lifecycle model for transport from source lots to plant.
 
+- `PlantIntakeEntry.js`
+Purpose: Plant weighbridge and quality intake record model with accepted/rejected quantity outcomes.
+
 ### Folder: `src/routes` (API Endpoints)
 
 - `auth.js`
