@@ -14,6 +14,12 @@ Update rule:
 
 ## 2026-02-27
 
+### Status Snapshot (Discussion Update)
+1. Backend core flow status: Mostly complete for MVP.
+2. Backend pending estimate: ~20-30% (hardening + production-ready improvements).
+3. Frontend pending estimate: ~80-90% (functional screens still pending).
+4. Overall MVP pending estimate: ~40-50%.
+
 ### Completed
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer

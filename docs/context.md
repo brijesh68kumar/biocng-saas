@@ -233,9 +233,9 @@ This explains purpose of every important folder and file.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
-1. Backend remaining for MVP: ~25-35%
+1. Backend remaining for MVP: ~20-30%
 2. Frontend remaining for MVP: ~80-90%
-3. Overall MVP remaining: ~45-55%
+3. Overall MVP remaining: ~40-50%
 
 ## 9.2) S1-08 Step Breakdown
 
