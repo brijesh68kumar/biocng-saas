@@ -68,6 +68,8 @@ async function main() {
     headers: { Authorization: `Bearer ${token}` },
   });
   assert(feedstockList.ok, `List feedstock failed (${feedstockList.status}): ${JSON.stringify(feedstockList.body)}`);
+  const feedstockTypeId = feedstockCreate.body && feedstockCreate.body._id;
+  assert(feedstockTypeId, 'Create feedstock response missing _id');
 
   const farmerCreate = await request('/api/farmers', {
     method: 'POST',
@@ -86,6 +88,8 @@ async function main() {
     headers: { Authorization: `Bearer ${token}` },
   });
   assert(farmerList.ok, `List farmers failed (${farmerList.status}): ${JSON.stringify(farmerList.body)}`);
+  const farmerId = farmerCreate.body && farmerCreate.body._id;
+  assert(farmerId, 'Create farmer response missing _id');
 
   const centerCreate = await request('/api/collection-centers', {
     method: 'POST',
@@ -121,6 +125,61 @@ async function main() {
     headers: { Authorization: `Bearer ${token}` },
   });
   assert(vehicleList.ok, `List vehicles failed (${vehicleList.status}): ${JSON.stringify(vehicleList.body)}`);
+
+  const currentRate = await request('/api/rate-cards', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      partyType: 'farmer',
+      partyId: farmerId,
+      feedstockTypeId,
+      effectiveFrom: '2026-01-01T00:00:00.000Z',
+      ratePerTon: 1550,
+      qualityAdjustments: [],
+    }),
+  });
+  assert(currentRate.ok, `Create current rate card failed (${currentRate.status}): ${JSON.stringify(currentRate.body)}`);
+
+  const futureRate = await request('/api/rate-cards', {
+    method: 'POST',
+    headers: authHeaders,
+    body: JSON.stringify({
+      partyType: 'farmer',
+      partyId: farmerId,
+      feedstockTypeId,
+      effectiveFrom: '2027-01-01T00:00:00.000Z',
+      ratePerTon: 1750,
+      qualityAdjustments: [],
+    }),
+  });
+  assert(futureRate.ok, `Create future rate card failed (${futureRate.status}): ${JSON.stringify(futureRate.body)}`);
+
+  const rateList = await request(`/api/rate-cards?partyType=farmer&partyId=${encodeURIComponent(farmerId)}&feedstockTypeId=${encodeURIComponent(feedstockTypeId)}`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  assert(rateList.ok, `List rate cards failed (${rateList.status}): ${JSON.stringify(rateList.body)}`);
+  assert(Array.isArray(rateList.body) && rateList.body.length >= 2, 'Expected at least 2 rate cards for smoke entity');
+
+  const resolvedCurrent = await request(
+    `/api/rate-cards/resolve?partyType=farmer&partyId=${encodeURIComponent(farmerId)}&feedstockTypeId=${encodeURIComponent(feedstockTypeId)}&asOf=2026-06-01T00:00:00.000Z`,
+    {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  assert(resolvedCurrent.ok, `Resolve current rate failed (${resolvedCurrent.status}): ${JSON.stringify(resolvedCurrent.body)}`);
+  assert(resolvedCurrent.body.ratePerTon === 1550, `Expected rate 1550, got ${resolvedCurrent.body.ratePerTon}`);
+
+  const resolvedFuture = await request(
+    `/api/rate-cards/resolve?partyType=farmer&partyId=${encodeURIComponent(farmerId)}&feedstockTypeId=${encodeURIComponent(feedstockTypeId)}&asOf=2027-06-01T00:00:00.000Z`,
+    {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  assert(resolvedFuture.ok, `Resolve future rate failed (${resolvedFuture.status}): ${JSON.stringify(resolvedFuture.body)}`);
+  assert(resolvedFuture.body.ratePerTon === 1750, `Expected rate 1750, got ${resolvedFuture.body.ratePerTon}`);
 
   console.log('Smoke test passed');
 }

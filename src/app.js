@@ -6,6 +6,7 @@ const feedstockTypeRoutes = require('./routes/feedstockTypes');
 const farmerRoutes = require('./routes/farmers');
 const collectionCenterRoutes = require('./routes/collectionCenters');
 const vehicleRoutes = require('./routes/vehicles');
+const rateCardRoutes = require('./routes/rateCards');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/feedstock-types', feedstockTypeRoutes);
 app.use('/api/farmers', farmerRoutes);
 app.use('/api/collection-centers', collectionCenterRoutes);
 app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/rate-cards', rateCardRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

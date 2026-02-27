@@ -63,7 +63,7 @@
 - Tenant: `tenant-demo-plant-1`
 
 ## Next Sprint Items
-- S1-04: Rate Cards (schema + CRUD + effective-date resolution).
+- S1-04: Rate Cards (schema + CRUD + effective-date resolution). (Implemented)
 - S1-05: Land Parcel and Crop Plan masters.
 - S1-06: Harvest batches with lot generation and stock-in ledger hooks.
 

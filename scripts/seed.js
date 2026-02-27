@@ -7,6 +7,7 @@ const FeedstockType = require('../src/models/FeedstockType');
 const Farmer = require('../src/models/Farmer');
 const CollectionCenter = require('../src/models/CollectionCenter');
 const Vehicle = require('../src/models/Vehicle');
+const RateCard = require('../src/models/RateCard');
 
 dotenv.config();
 
@@ -31,7 +32,7 @@ async function runSeed() {
       role: 'admin',
       isActive: true,
     },
-    { upsert: true, new: true, setDefaultsOnInsert: true }
+    { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
   );
 
   const feedstockTypes = [
@@ -44,7 +45,7 @@ async function runSeed() {
     await FeedstockType.findOneAndUpdate(
       { tenantId, code: row.code },
       { ...row, tenantId, isActive: true },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );
   }
 
@@ -57,7 +58,7 @@ async function runSeed() {
     await Farmer.findOneAndUpdate(
       { tenantId, code: row.code },
       { ...row, tenantId, isActive: true },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );
   }
 
@@ -70,7 +71,7 @@ async function runSeed() {
     await CollectionCenter.findOneAndUpdate(
       { tenantId, code: row.code },
       { ...row, tenantId, isActive: true },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );
   }
 
@@ -83,7 +84,54 @@ async function runSeed() {
     await Vehicle.findOneAndUpdate(
       { tenantId, number: row.number },
       { ...row, tenantId, isActive: true },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    );
+  }
+
+  const pressmud = await FeedstockType.findOne({ tenantId, code: 'PRESSMUD' });
+  const farm001 = await Farmer.findOne({ tenantId, code: 'FARM001' });
+
+  if (pressmud && farm001) {
+    await RateCard.findOneAndUpdate(
+      {
+        tenantId,
+        partyType: 'farmer',
+        partyId: String(farm001._id),
+        feedstockTypeId: pressmud._id,
+        effectiveFrom: new Date('2026-01-01T00:00:00.000Z'),
+      },
+      {
+        tenantId,
+        partyType: 'farmer',
+        partyId: String(farm001._id),
+        feedstockTypeId: pressmud._id,
+        effectiveFrom: new Date('2026-01-01T00:00:00.000Z'),
+        ratePerTon: 1500,
+        qualityAdjustments: [],
+        isActive: true,
+      },
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    );
+
+    await RateCard.findOneAndUpdate(
+      {
+        tenantId,
+        partyType: 'farmer',
+        partyId: String(farm001._id),
+        feedstockTypeId: pressmud._id,
+        effectiveFrom: new Date('2027-01-01T00:00:00.000Z'),
+      },
+      {
+        tenantId,
+        partyType: 'farmer',
+        partyId: String(farm001._id),
+        feedstockTypeId: pressmud._id,
+        effectiveFrom: new Date('2027-01-01T00:00:00.000Z'),
+        ratePerTon: 1650,
+        qualityAdjustments: [],
+        isActive: true,
+      },
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     );
   }
 
