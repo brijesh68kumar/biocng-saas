@@ -339,6 +339,22 @@ CRUD + deactivate for:
    - success/error message handling
    - responsive list table with inline status update controls
 
+### Frontend Plant Intake Entries Module Integration (Current)
+
+1. Plant intake entries page is now connected to backend:
+   - `GET /api/plant-intake-entries` listing
+   - `POST /api/plant-intake-entries` create form
+2. Intake form includes:
+   - dispatchTripId, feedstockTypeId, sourceType, sourceRefId
+   - gross/tare/net weights
+   - accepted/rejected quantities
+   - quality and rejection details
+   - intakeDate and notes
+3. Intake screen includes:
+   - dropdown options from dispatch trips and feedstock types
+   - success/error message handling
+   - responsive list table
+
 ### Frontend Token And Session Strategy (Implemented)
 
 1. Browser token persistence:
@@ -403,7 +419,7 @@ This explains purpose of every important folder and file.
 2. Frontend Step 3:
    - Completed (feedstock list + create form).
 3. Next:
-   - Implement plant intake entries page with list + create integration.
+   - Implement invoices page with weekly generation + list integration.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 

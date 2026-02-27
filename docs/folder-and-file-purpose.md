@@ -274,6 +274,9 @@ Purpose: Center stock ledger module page with backend-integrated list and OUT po
 - `pages/DispatchTripsPage.js`
 Purpose: Dispatch trips module page with backend-integrated list/create flow and status update action.
 
+- `pages/PlantIntakeEntriesPage.js`
+Purpose: Plant intake entries module page with backend-integrated list and create flow.
+
 - `reportWebVitals.js`
 Purpose: Optional frontend performance metrics helper.
 

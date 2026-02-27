@@ -78,6 +78,10 @@ Update rule:
    - Dispatch trips page now supports API-based list and create flow
    - Dispatch status update flow added using status endpoint
    - Dispatch form includes source, vehicle, route, and planned lot details
+15. Frontend Step 13 completed:
+   - Plant intake entries page now supports API-based list and create flow
+   - Intake fields covered: dispatch/feedstock/source mapping, weighbridge values, quality and acceptance details
+   - Uses dropdown options loaded from dispatch trips and feedstock masters
 1. Project architecture and MVP scope decisions finalized:
    - Single plant per customer
    - Web-only first
@@ -178,11 +182,11 @@ Update rule:
 ### Planned / Pending
 1. Frontend feature pages beyond starter template.
 2. Next frontend module integrations:
-   - Intake and invoices pages.
+   - Invoices page.
 
 ### Next Target
 1. Start next phase:
-   - Build plant intake entries page with list + create integration.
+   - Build invoices page with weekly generate + list integration.
 
 ---
 

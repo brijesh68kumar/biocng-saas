@@ -15,6 +15,7 @@ import FeedstockTypesPage from './pages/FeedstockTypesPage';
 import HarvestBatchesPage from './pages/HarvestBatchesPage';
 import LandParcelsPage from './pages/LandParcelsPage';
 import LoginPage from './pages/LoginPage';
+import PlantIntakeEntriesPage from './pages/PlantIntakeEntriesPage';
 import VehiclesPage from './pages/VehiclesPage';
 
 // App routes are wrapped by auth provider so every page can access auth state.
@@ -43,6 +44,7 @@ function AppRoutes() {
         <Route path="center-receipt-lots" element={<CenterReceiptLotsPage />} />
         <Route path="center-stock-ledger" element={<CenterStockLedgerPage />} />
         <Route path="dispatch-trips" element={<DispatchTripsPage />} />
+        <Route path="plant-intake-entries" element={<PlantIntakeEntriesPage />} />
         <Route index element={<Navigate to="/dashboard" replace />} />
       </Route>
       <Route path="*" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />
