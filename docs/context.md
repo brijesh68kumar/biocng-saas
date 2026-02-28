@@ -466,6 +466,8 @@ CRUD + deactivate for:
 2. Rate cards screen includes:
    - create form for effective-date-based pricing rows
    - inline row editing for `effectiveFrom` and `ratePerTon`
+   - create-time quality-adjustment rule editor (metric/operator/threshold/adjustment)
+   - per-rate quality rule editor with save/remove/add flows
    - deactivate action for historical retention
    - resolve helper to test active rate as-of date
 3. Navigation/route updates:
@@ -554,7 +556,7 @@ This explains purpose of every important folder and file.
 2. Production hardening and integration testing pass:
    - Completed.
 3. Next:
-   - Add rate-card quality-adjustment editor flow in frontend and backend.
+   - Prepare first staging deployment pipeline and deployment checklist.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
 
@@ -578,7 +580,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated. Frontend operational module pages are implemented through invoices plus rate cards and reports, with shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, shared search/CSV controls, and invoice detail print view. Production hardening pass is completed (helmet, rate limit, CORS allow-list, env startup checks, smoke and happy-path E2E). Next add rate-card quality-adjustment editor flow.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated. Frontend operational module pages are implemented through invoices plus rate cards and reports, with shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, shared search/CSV controls, invoice print view, and rate-card quality-adjustment rule editor. Production hardening pass is completed (helmet, rate limit, CORS allow-list, env startup checks, smoke and happy-path E2E). Next prepare staging deployment pipeline/checklist.`
 
 ## 11) Mandatory Process For Every Future Change
 

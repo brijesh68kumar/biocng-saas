@@ -5,8 +5,37 @@ import ListToolbar from '../components/ListToolbar';
 import { formatDate } from '../utils/formatters';
 
 const partyTypes = ['farmer', 'collection-center', 'land-lease', 'supplier'];
+const adjustmentOperators = ['lt', 'lte', 'gt', 'gte', 'eq'];
 
-// Rate cards page: manage effective rate rows and resolve active rates by date.
+const createEmptyRule = () => ({
+  metric: 'moisturePercent',
+  operator: 'lte',
+  value: '0',
+  adjustmentPerTon: '0',
+});
+
+// Converts rule editor rows into backend payload with number-safe fields.
+const normalizeRules = (rows) =>
+  (rows || [])
+    .filter((row) => String(row.metric || '').trim())
+    .map((row) => ({
+      metric: String(row.metric || '').trim(),
+      operator: row.operator || 'lte',
+      value: Number(row.value || 0),
+      adjustmentPerTon: Number(row.adjustmentPerTon || 0),
+    }))
+    .filter((row) => !Number.isNaN(row.value) && !Number.isNaN(row.adjustmentPerTon));
+
+// Creates frontend draft rows from backend quality adjustment records.
+const draftRulesFromPayload = (rows) =>
+  (rows || []).map((row) => ({
+    metric: row.metric || 'moisturePercent',
+    operator: row.operator || 'lte',
+    value: String(row.value ?? 0),
+    adjustmentPerTon: String(row.adjustmentPerTon ?? 0),
+  }));
+
+// Rate cards page: manage effective rate rows and quality adjustment rules.
 export default function RateCardsPage() {
   const { authRequest } = useAuth();
   const [items, setItems] = useState([]);
@@ -22,9 +51,12 @@ export default function RateCardsPage() {
   const [feedstockTypeId, setFeedstockTypeId] = useState('');
   const [effectiveFrom, setEffectiveFrom] = useState('');
   const [ratePerTon, setRatePerTon] = useState('0');
+  const [createRules, setCreateRules] = useState([createEmptyRule()]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [editDrafts, setEditDrafts] = useState({});
+  const [selectedRulesRateId, setSelectedRulesRateId] = useState('');
+  const [rulesEditorRows, setRulesEditorRows] = useState([createEmptyRule()]);
 
   const [resolvePartyType, setResolvePartyType] = useState('collection-center');
   const [resolvePartyId, setResolvePartyId] = useState('');
@@ -64,6 +96,7 @@ export default function RateCardsPage() {
         draftMap[row._id] = {
           ratePerTon: String(row.ratePerTon ?? 0),
           effectiveFrom: row.effectiveFrom ? new Date(row.effectiveFrom).toISOString().slice(0, 10) : '',
+          qualityAdjustments: draftRulesFromPayload(row.qualityAdjustments || []),
         };
       });
       setEditDrafts(draftMap);
@@ -79,7 +112,7 @@ export default function RateCardsPage() {
     loadRateCards();
   }, [loadOptions, loadRateCards]);
 
-  // Create new rate card version row.
+  // Create new rate card version row with optional quality rules.
   const handleCreate = async (event) => {
     event.preventDefault();
     setErrorText('');
@@ -101,13 +134,14 @@ export default function RateCardsPage() {
           feedstockTypeId,
           effectiveFrom,
           ratePerTon: parsedRate,
-          qualityAdjustments: [],
+          qualityAdjustments: normalizeRules(createRules),
         }),
       });
 
       setPartyId('');
       setEffectiveFrom('');
       setRatePerTon('0');
+      setCreateRules([createEmptyRule()]);
       setSuccessText('Rate card created successfully.');
       await loadRateCards();
     } catch (error) {
@@ -117,12 +151,12 @@ export default function RateCardsPage() {
     }
   };
 
-  // Save a row update for editable fields.
-  const handleUpdate = async (rowId) => {
+  // Save row update for editable fields including quality rules.
+  const handleUpdate = async (rowId, overrideDraft = null) => {
     setErrorText('');
     setSuccessText('');
     try {
-      const draft = editDrafts[rowId];
+      const draft = overrideDraft || editDrafts[rowId];
       if (!draft) return;
 
       const parsedRate = Number(draft.ratePerTon);
@@ -136,6 +170,7 @@ export default function RateCardsPage() {
         body: JSON.stringify({
           ratePerTon: parsedRate,
           effectiveFrom: draft.effectiveFrom,
+          qualityAdjustments: normalizeRules(draft.qualityAdjustments || []),
         }),
       });
 
@@ -144,6 +179,34 @@ export default function RateCardsPage() {
     } catch (error) {
       setErrorText(error.message || 'Unable to update rate card');
     }
+  };
+
+  // Opens dedicated rule editor for one selected rate card row.
+  const handleOpenRulesEditor = (rowId) => {
+    const draft = editDrafts[rowId];
+    setSelectedRulesRateId(rowId);
+    setRulesEditorRows(
+      draft && Array.isArray(draft.qualityAdjustments) && draft.qualityAdjustments.length > 0
+        ? draft.qualityAdjustments
+        : [createEmptyRule()]
+    );
+  };
+
+  // Saves selected rule editor rows into row draft and persists to backend.
+  const handleSaveRules = async () => {
+    if (!selectedRulesRateId) return;
+
+    const mergedDraft = {
+      ...(editDrafts[selectedRulesRateId] || {}),
+      qualityAdjustments: rulesEditorRows,
+    };
+
+    setEditDrafts((prev) => ({
+      ...prev,
+      [selectedRulesRateId]: mergedDraft,
+    }));
+
+    await handleUpdate(selectedRulesRateId, mergedDraft);
   };
 
   // Deactivate one row to stop future resolution while keeping history.
@@ -194,6 +257,7 @@ export default function RateCardsPage() {
     feedstockTypeId: item.feedstockTypeId,
     effectiveFrom: formatDate(item.effectiveFrom),
     ratePerTon: item.ratePerTon,
+    qualityRuleCount: (item.qualityAdjustments || []).length,
     isActive: item.isActive ? 'yes' : 'no',
   }));
 
@@ -201,7 +265,7 @@ export default function RateCardsPage() {
     <div>
       <section className="card">
         <h1>Rate Cards</h1>
-        <p className="dashboard-meta">Manage effective pricing rows and resolve rate by party/feedstock date context.</p>
+        <p className="dashboard-meta">Manage effective pricing rows and quality-adjustment rules for procurement.</p>
       </section>
 
       <section className="card">
@@ -274,6 +338,83 @@ export default function RateCardsPage() {
                 required
               />
             </label>
+
+            <div className="module-actions">
+              <strong>Quality Rules (Optional)</strong>
+              <button
+                className="secondary-button"
+                type="button"
+                onClick={() => setCreateRules((prev) => [...prev, createEmptyRule()])}
+              >
+                Add Rule
+              </button>
+            </div>
+
+            {createRules.map((rule, index) => (
+              <div key={`create-rule-${index}`} className="table-inline">
+                <input
+                  className="auth-input"
+                  value={rule.metric}
+                  onChange={(event) =>
+                    setCreateRules((prev) =>
+                      prev.map((row, rowIndex) => (rowIndex === index ? { ...row, metric: event.target.value } : row))
+                    )
+                  }
+                  placeholder="metric (e.g. moisturePercent)"
+                />
+                <select
+                  className="auth-input"
+                  value={rule.operator}
+                  onChange={(event) =>
+                    setCreateRules((prev) =>
+                      prev.map((row, rowIndex) => (rowIndex === index ? { ...row, operator: event.target.value } : row))
+                    )
+                  }
+                >
+                  {adjustmentOperators.map((operator) => (
+                    <option key={operator} value={operator}>
+                      {operator}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="number"
+                  step="0.01"
+                  className="auth-input"
+                  value={rule.value}
+                  onChange={(event) =>
+                    setCreateRules((prev) =>
+                      prev.map((row, rowIndex) => (rowIndex === index ? { ...row, value: event.target.value } : row))
+                    )
+                  }
+                  placeholder="threshold"
+                />
+                <input
+                  type="number"
+                  step="0.01"
+                  className="auth-input"
+                  value={rule.adjustmentPerTon}
+                  onChange={(event) =>
+                    setCreateRules((prev) =>
+                      prev.map((row, rowIndex) => (rowIndex === index ? { ...row, adjustmentPerTon: event.target.value } : row))
+                    )
+                  }
+                  placeholder="adjustmentPerTon"
+                />
+                <button
+                  className="secondary-button"
+                  type="button"
+                  onClick={() =>
+                    setCreateRules((prev) => {
+                      const next = prev.filter((_, rowIndex) => rowIndex !== index);
+                      return next.length > 0 ? next : [createEmptyRule()];
+                    })
+                  }
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
 
             <div className="module-actions">
               <button className="auth-button" type="submit" disabled={isSubmitting || !feedstockTypeId}>
@@ -355,6 +496,7 @@ export default function RateCardsPage() {
             </p>
             <p className="dashboard-meta">Effective: {formatDate(resolvedRate.effectiveFrom)}</p>
             <p className="dashboard-meta">Rate Per Ton: {resolvedRate.ratePerTon}</p>
+            <p className="dashboard-meta">Quality Rules: {(resolvedRate.qualityAdjustments || []).length}</p>
           </div>
         ) : null}
       </section>
@@ -380,6 +522,7 @@ export default function RateCardsPage() {
                   <th>Feedstock Type ID</th>
                   <th>Effective From</th>
                   <th>Rate Per Ton</th>
+                  <th>Quality Rules</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -424,11 +567,15 @@ export default function RateCardsPage() {
                         }
                       />
                     </td>
+                    <td>{(item.qualityAdjustments || []).length}</td>
                     <td>{item.isActive ? 'Active' : 'Inactive'}</td>
                     <td>
                       <div className="table-inline">
                         <button className="secondary-button" type="button" onClick={() => handleUpdate(item._id)}>
                           Save
+                        </button>
+                        <button className="secondary-button" type="button" onClick={() => handleOpenRulesEditor(item._id)}>
+                          Edit Rules
                         </button>
                         <button
                           className="secondary-button"
@@ -447,6 +594,91 @@ export default function RateCardsPage() {
           </div>
         ) : null}
       </section>
+
+      {selectedRulesRateId ? (
+        <section className="card">
+          <h2>Quality Rules Editor</h2>
+          <p className="dashboard-meta">Editing rules for rate card ID: {selectedRulesRateId}</p>
+
+          <div className="module-actions">
+            <button className="secondary-button" type="button" onClick={() => setRulesEditorRows((prev) => [...prev, createEmptyRule()])}>
+              Add Rule
+            </button>
+            <button className="auth-button" type="button" onClick={handleSaveRules}>
+              Save Rules
+            </button>
+            <button className="secondary-button" type="button" onClick={() => setSelectedRulesRateId('')}>
+              Close Editor
+            </button>
+          </div>
+
+          {rulesEditorRows.map((rule, index) => (
+            <div key={`edit-rule-${index}`} className="table-inline">
+              <input
+                className="auth-input"
+                value={rule.metric}
+                onChange={(event) =>
+                  setRulesEditorRows((prev) =>
+                    prev.map((row, rowIndex) => (rowIndex === index ? { ...row, metric: event.target.value } : row))
+                  )
+                }
+                placeholder="metric (e.g. moisturePercent)"
+              />
+              <select
+                className="auth-input"
+                value={rule.operator}
+                onChange={(event) =>
+                  setRulesEditorRows((prev) =>
+                    prev.map((row, rowIndex) => (rowIndex === index ? { ...row, operator: event.target.value } : row))
+                  )
+                }
+              >
+                {adjustmentOperators.map((operator) => (
+                  <option key={operator} value={operator}>
+                    {operator}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                step="0.01"
+                className="auth-input"
+                value={rule.value}
+                onChange={(event) =>
+                  setRulesEditorRows((prev) =>
+                    prev.map((row, rowIndex) => (rowIndex === index ? { ...row, value: event.target.value } : row))
+                  )
+                }
+                placeholder="threshold"
+              />
+              <input
+                type="number"
+                step="0.01"
+                className="auth-input"
+                value={rule.adjustmentPerTon}
+                onChange={(event) =>
+                  setRulesEditorRows((prev) =>
+                    prev.map((row, rowIndex) => (rowIndex === index ? { ...row, adjustmentPerTon: event.target.value } : row))
+                  )
+                }
+                placeholder="adjustmentPerTon"
+              />
+              <button
+                className="secondary-button"
+                type="button"
+                onClick={() =>
+                  setRulesEditorRows((prev) => {
+                    const next = prev.filter((_, rowIndex) => rowIndex !== index);
+                    return next.length > 0 ? next : [createEmptyRule()];
+                  })
+                }
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+        </section>
+      ) : null}
     </div>
   );
 }

@@ -223,17 +223,22 @@ Update rule:
    - Expanded `.env.example` with production-oriented defaults and tuning controls
    - Added dedicated happy-path E2E command (`npm run e2e:happy`)
    - Validation run completed: `npm run smoke`, `npm run e2e:happy`, frontend test/build
+25. Rate card quality-adjustment editor flow completed:
+   - Added create-time quality rule editor in Rate Cards UI
+   - Added per-rate rule editing section with add/remove/save controls
+   - Wired rule editor save flow into existing `PATCH /api/rate-cards/:id`
+   - Validation run completed: frontend `npm test -- --watchAll=false` and `npm run build`
 
 ### Planned / Pending
 1. No mandatory MVP feature steps pending in current frontend + backend MVP plan.
 2. Optional next improvement:
-   - Add backend/frontend quality-adjustment editor for rate card rules.
+   - Apply quality-adjustment rules dynamically inside invoice amount calculation flow.
 3. Optional next improvement:
    - Prepare first staging deployment pipeline.
 
 ### Next Target
 1. Start next phase:
-   - Implement quality-adjustment editor flow for rate cards.
+   - Prepare first staging deployment pipeline and deployment checklist.
 
 ---
 
