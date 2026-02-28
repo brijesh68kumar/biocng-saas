@@ -5,12 +5,13 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const asyncHandler = require('../middleware/asyncHandler');
 const { protect } = require('../middleware/auth');
+const config = require('../config/env');
 
 const router = express.Router();
 
 // Creates JWT token used by frontend/clients to call protected routes.
 const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET || 'dev-secret', { expiresIn: '7d' });
+  return jwt.sign({ id }, config.jwtSecret, { expiresIn: config.jwtExpiresIn });
 };
 
 // Register user for a tenant (basic bootstrap endpoint for now).

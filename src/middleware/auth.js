@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const asyncHandler = require('./asyncHandler');
+const config = require('../config/env');
 
 // Middleware: validates Bearer token and loads current user into req.user
 const protect = asyncHandler(async (req, res, next) => {
@@ -12,7 +13,7 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 
   const token = authHeader.split(' ')[1];
-  const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev-secret');
+  const decoded = jwt.verify(token, config.jwtSecret);
 
   // Load user (without password hash) and ensure account is active
   const user = await User.findById(decoded.id).select('-password');

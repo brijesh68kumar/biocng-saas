@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
+const config = require('./env');
 
 // Connects application to MongoDB using env value or local default
 const connectDB = async () => {
-  const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/biogas';
-  await mongoose.connect(mongoURI);
+  await mongoose.connect(config.mongoUri);
   console.log('Connected to MongoDB');
 };
 

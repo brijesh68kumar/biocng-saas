@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const config = require('./config/env');
 
 // Route modules grouped by business area
 const authRoutes = require('./routes/auth');
@@ -20,8 +23,31 @@ const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 
-// Global middleware: allow cross-origin calls and JSON request bodies
-app.use(cors());
+// Security headers help reduce common web vulnerabilities for API responses.
+app.use(helmet());
+
+// Basic request throttling to protect API from abusive traffic spikes.
+const limiter = rateLimit({
+  windowMs: config.rateLimitWindowMs,
+  max: config.rateLimitMax,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
+
+// CORS policy:
+// 1) If no origin list is configured, allow all origins for local/dev convenience.
+// 2) If origins are configured, allow only explicit matches.
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || config.corsOrigins.length === 0 || config.corsOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+    callback(new Error('Not allowed by CORS'));
+  },
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Basic health route to verify API is up

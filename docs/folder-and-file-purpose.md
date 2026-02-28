@@ -8,7 +8,7 @@ Use this when you are new or when restarting work after a break.
 ### Root Files
 
 - `.env.example`
-Purpose: Template for environment variables (MongoDB URL, JWT secret, port).
+Purpose: Template for runtime environment variables (mode, port, DB, JWT, CORS, rate limits, smoke helpers).
 
 - `.gitignore`
 Purpose: Prevents local-only files (`node_modules`, `.env`, logs) from being committed.
@@ -27,6 +27,7 @@ Main scripts:
 1. `npm run dev`
 2. `npm run seed`
 3. `npm run smoke`
+4. `npm run e2e:happy`
 
 - `package-lock.json`
 Purpose: Exact dependency versions lock file for reproducible installs.
@@ -35,12 +36,15 @@ Purpose: Exact dependency versions lock file for reproducible installs.
 
 ### File: `src/app.js`
 Purpose: Builds Express app object.
-Registers middleware, route modules, and global error handlers.
+Registers security middleware, route modules, and global error handlers.
 
 ### Folder: `src/config`
 
 - `src/config/db.js`
 Purpose: MongoDB connection function used during backend startup.
+
+- `src/config/env.js`
+Purpose: Central runtime config parser and production startup validation.
 
 ### Folder: `src/middleware`
 
@@ -159,6 +163,9 @@ Run when setting up local environment.
 
 - `scripts/smoke.js`
 Purpose: End-to-end API sanity check (login + create/list across masters/land/crop/harvest/center/dispatch/intake flow + rate resolution + weekly invoice generation/list validation).
+
+- `scripts/e2e-happy.js`
+Purpose: Dedicated happy-path E2E flow (login -> dispatch/intake -> weekly invoice generation).
 
 ## Folder: `docs` (Project Documentation)
 

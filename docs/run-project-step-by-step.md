@@ -83,6 +83,15 @@ Expected:
 
 If smoke fails, ensure step 5 server is running.
 
+Optional happy-path E2E check:
+
+```powershell
+npm run e2e:happy
+```
+
+Expected:
+- `E2E happy path passed`
+
 ## 7. Start Frontend (React UI)
 
 Open a third terminal:
@@ -143,7 +152,19 @@ Every day, usually run:
 2. `npm run dev` (backend)
 3. `cd client` then `npm start` (frontend)
 
-## 9. Useful Commands
+## 9. Production Env Checklist
+
+Before production deploy, set these in server `.env`:
+1. `NODE_ENV=production`
+2. `MONGO_URI=<your production mongo uri>`
+3. `JWT_SECRET=<strong secret>`
+4. `CORS_ORIGIN=https://your-frontend-domain`
+5. Optional tuning:
+   - `JWT_EXPIRES_IN=7d`
+   - `RATE_LIMIT_WINDOW_MS=900000`
+   - `RATE_LIMIT_MAX=500`
+
+## 10. Useful Commands
 
 Stop running server in terminal:
 - Press `Ctrl + C`
@@ -154,7 +175,7 @@ Check backend root route:
 Invoke-WebRequest -Uri http://localhost:5000/ -UseBasicParsing
 ```
 
-## 10. If Something Breaks
+## 11. If Something Breaks
 
 Try this reset:
 
@@ -169,11 +190,12 @@ Then in second terminal:
 
 ```powershell
 npm run smoke
+npm run e2e:happy
 ```
 
 If still failing, share the full terminal error text.
 
-## 11. After Any Code Change (Documentation Habit)
+## 12. After Any Code Change (Documentation Habit)
 
 Always do this update cycle:
 

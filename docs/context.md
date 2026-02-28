@@ -48,6 +48,8 @@ This section describes how the user wants the project handled.
    - MongoDB local (`mongodb://localhost:27017/biogas` default).
 4. Security:
    - JWT auth and role-based route restrictions.
+   - Helmet security headers and API rate limiting middleware.
+   - CORS allow-list support from env configuration.
 5. Multi-tenancy:
    - `tenantId` on business entities + tenant middleware for query scoping.
 
@@ -179,9 +181,29 @@ CRUD + deactivate for:
    - `npm run seed`
 2. Smoke test script:
    - `npm run smoke`
-3. Backend dev autoreload:
+3. Dedicated happy-path E2E script:
+   - `npm run e2e:happy`
+4. Backend dev autoreload:
    - `npm run dev`
-4. Postman assets exist in `postman/`.
+5. Postman assets exist in `postman/`.
+
+### Production Hardening (Current)
+
+1. Backend startup now uses centralized env config with production checks:
+   - `src/config/env.js`
+   - Enforces required env vars in production (`MONGO_URI`, `JWT_SECRET`, `CORS_ORIGIN`)
+2. Security middleware added in app bootstrap:
+   - `helmet` headers
+   - `express-rate-limit` with env-based tuning
+   - env-based CORS origin allow-list
+3. JWT configuration standardized:
+   - shared env config for `JWT_SECRET` and `JWT_EXPIRES_IN`
+4. Environment template expanded:
+   - `.env.example` now includes mode, CORS, rate limit, JWT expiry, smoke helper vars
+5. Integration validation executed:
+   - `npm run smoke`
+   - `npm run e2e:happy`
+   - frontend `npm test -- --watchAll=false` and `npm run build`
 
 ### Frontend Auth Foundation (Current)
 
@@ -500,7 +522,9 @@ From project root:
    - `npm run dev`
 4. Validate backend:
    - `npm run smoke`
-5. Start frontend:
+5. Run happy-path E2E:
+   - `npm run e2e:happy`
+6. Start frontend:
    - `cd client`
    - `npm start`
 
@@ -527,9 +551,9 @@ This explains purpose of every important folder and file.
 
 1. Frontend Step 1-21:
    - Completed (auth, layout shell, operational modules, dashboard widgets, shared list controls, rate cards, invoice print view, and reports page).
-2. Next:
-   - Run production hardening and integration testing pass.
-3. Then:
+2. Production hardening and integration testing pass:
+   - Completed.
+3. Next:
    - Add rate-card quality-adjustment editor flow in frontend and backend.
 
 ## 9.1) Remaining Work Estimate (Planning Snapshot)
@@ -554,7 +578,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated by smoke test. Frontend operational module pages are implemented through invoices plus rate cards and reports, with shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, shared search/CSV controls, and invoice detail print view. Next run production hardening/integration testing and then add rate-card quality-adjustment editor flow.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated. Frontend operational module pages are implemented through invoices plus rate cards and reports, with shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, shared search/CSV controls, and invoice detail print view. Production hardening pass is completed (helmet, rate limit, CORS allow-list, env startup checks, smoke and happy-path E2E). Next add rate-card quality-adjustment editor flow.`
 
 ## 11) Mandatory Process For Every Future Change
 

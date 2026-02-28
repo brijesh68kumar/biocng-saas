@@ -216,15 +216,24 @@ Update rule:
    - Added KPI summary cards and top invoice-party ranking table
    - Added recent invoice snapshot table in selected range
    - Wired reports page in protected route and sidebar navigation
+24. Backend hardening and integration test pass completed:
+   - Added centralized env parser and production startup checks (`src/config/env.js`)
+   - Added security middleware (`helmet`) and global API rate limiter (`express-rate-limit`)
+   - Added env-driven CORS allow-list policy with safe dev fallback
+   - Expanded `.env.example` with production-oriented defaults and tuning controls
+   - Added dedicated happy-path E2E command (`npm run e2e:happy`)
+   - Validation run completed: `npm run smoke`, `npm run e2e:happy`, frontend test/build
 
 ### Planned / Pending
-1. No mandatory MVP feature steps pending in current frontend plan.
+1. No mandatory MVP feature steps pending in current frontend + backend MVP plan.
 2. Optional next improvement:
    - Add backend/frontend quality-adjustment editor for rate card rules.
+3. Optional next improvement:
+   - Prepare first staging deployment pipeline.
 
 ### Next Target
 1. Start next phase:
-   - Start production hardening and integration testing pass.
+   - Implement quality-adjustment editor flow for rate cards.
 
 ---
 
