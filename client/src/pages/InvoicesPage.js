@@ -245,6 +245,8 @@ export default function InvoicesPage() {
                     <th>Feedstock Type ID</th>
                     <th>Intake Entry ID</th>
                     <th>Qty (Ton)</th>
+                    <th>Base Rate</th>
+                    <th>Quality Adj/Ton</th>
                     <th>Rate Per Ton</th>
                     <th>Amount</th>
                   </tr>
@@ -255,6 +257,8 @@ export default function InvoicesPage() {
                       <td>{line.feedstockTypeId}</td>
                       <td>{line.intakeEntryId}</td>
                       <td>{line.qtyTon}</td>
+                      <td>{line.baseRatePerTon ?? '-'}</td>
+                      <td>{line.qualityAdjustmentPerTon ?? 0}</td>
                       <td>{line.ratePerTon}</td>
                       <td>{line.amount}</td>
                     </tr>

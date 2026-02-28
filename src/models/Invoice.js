@@ -11,13 +11,27 @@ const buildInvoiceNo = (date = new Date()) => {
 };
 
 // Invoice line details derived from intake entries.
+const appliedQualityRuleSchema = new mongoose.Schema(
+  {
+    metric: { type: String, required: true, trim: true },
+    operator: { type: String, enum: ['lt', 'lte', 'gt', 'gte', 'eq'], required: true },
+    thresholdValue: { type: Number, required: true },
+    intakeMetricValue: { type: Number, required: true },
+    adjustmentPerTon: { type: Number, required: true },
+  },
+  { _id: false }
+);
+
 const invoiceLineSchema = new mongoose.Schema(
   {
     intakeEntryId: { type: mongoose.Schema.Types.ObjectId, ref: 'PlantIntakeEntry', required: true },
     feedstockTypeId: { type: mongoose.Schema.Types.ObjectId, ref: 'FeedstockType', required: true },
     qtyTon: { type: Number, required: true, min: 0 },
+    baseRatePerTon: { type: Number, required: true, min: 0 },
+    qualityAdjustmentPerTon: { type: Number, default: 0 },
     ratePerTon: { type: Number, required: true, min: 0 },
     amount: { type: Number, required: true, min: 0 },
+    appliedQualityRules: { type: [appliedQualityRuleSchema], default: [] },
   },
   { _id: false }
 );

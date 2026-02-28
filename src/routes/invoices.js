@@ -17,6 +17,52 @@ const partyTypeMap = {
   'collection-center': 'collection-center',
 };
 
+// Comparison operators used by quality-adjustment rules in rate cards.
+const compareByOperator = {
+  lt: (left, right) => left < right,
+  lte: (left, right) => left <= right,
+  gt: (left, right) => left > right,
+  gte: (left, right) => left >= right,
+  eq: (left, right) => left === right,
+};
+
+// Evaluates quality adjustments against one intake row and returns total per-ton impact.
+const evaluateQualityAdjustments = (qualityAdjustments, intakeRow) => {
+  const adjustments = Array.isArray(qualityAdjustments) ? qualityAdjustments : [];
+  let totalAdjustmentPerTon = 0;
+  const appliedRules = [];
+
+  for (const rule of adjustments) {
+    const metric = String(rule.metric || '').trim();
+    if (!metric || typeof compareByOperator[rule.operator] !== 'function') {
+      continue;
+    }
+
+    const metricValue = Number(intakeRow[metric]);
+    const thresholdValue = Number(rule.value);
+    const adjustmentPerTon = Number(rule.adjustmentPerTon);
+    if (Number.isNaN(metricValue) || Number.isNaN(thresholdValue) || Number.isNaN(adjustmentPerTon)) {
+      continue;
+    }
+
+    if (compareByOperator[rule.operator](metricValue, thresholdValue)) {
+      totalAdjustmentPerTon += adjustmentPerTon;
+      appliedRules.push({
+        metric,
+        operator: rule.operator,
+        thresholdValue,
+        intakeMetricValue: metricValue,
+        adjustmentPerTon,
+      });
+    }
+  }
+
+  return {
+    totalAdjustmentPerTon: Number(totalAdjustmentPerTon.toFixed(4)),
+    appliedRules,
+  };
+};
+
 // Generate weekly invoices from intake records.
 router.post(
   '/generate-weekly',
@@ -123,8 +169,11 @@ router.post(
 
       const group = grouped.get(key);
       const qty = row.acceptedQtyTon;
-      const rate = resolvedRate.ratePerTon;
-      const amount = Number((qty * rate).toFixed(2));
+      const baseRatePerTon = Number(resolvedRate.ratePerTon);
+      const { totalAdjustmentPerTon, appliedRules } = evaluateQualityAdjustments(resolvedRate.qualityAdjustments, row);
+      const adjustedRate = Number((baseRatePerTon + totalAdjustmentPerTon).toFixed(4));
+      const finalRatePerTon = adjustedRate < 0 ? 0 : adjustedRate;
+      const amount = Number((qty * finalRatePerTon).toFixed(2));
 
       group.totalQtyTon = Number((group.totalQtyTon + qty).toFixed(3));
       group.totalAmount = Number((group.totalAmount + amount).toFixed(2));
@@ -132,8 +181,11 @@ router.post(
         intakeEntryId: row._id,
         feedstockTypeId: row.feedstockTypeId,
         qtyTon: qty,
-        ratePerTon: rate,
+        baseRatePerTon,
+        qualityAdjustmentPerTon: totalAdjustmentPerTon,
+        ratePerTon: finalRatePerTon,
         amount,
+        appliedQualityRules: appliedRules,
       });
     }
 

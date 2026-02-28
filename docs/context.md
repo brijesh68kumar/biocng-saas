@@ -153,10 +153,14 @@ CRUD + deactivate for:
    - auto `cycleCode` generation
 2. `Invoice` model is added for generated invoice documents and line items.
 3. Invoice routes are added and wired:
-   - `POST /api/invoices/generate-weekly` (basic generation)
+   - `POST /api/invoices/generate-weekly` (generation with quality-adjusted rate calculation)
    - `GET /api/invoices` (list generated invoices)
 4. End-to-end invoice smoke integration is implemented:
    - `smoke.js` generates weekly collection-center invoices and verifies invoice list output.
+5. Invoice line calculation now supports quality adjustments:
+   - resolves active base rate from rate cards
+   - evaluates matching `qualityAdjustments` against intake metrics
+   - applies per-ton total adjustment and stores applied rule details on invoice line
 
 ### Rate Cards (S1-04 Implemented)
 
@@ -580,7 +584,7 @@ This explains purpose of every important folder and file.
 
 Use this exact prompt after restart:
 
-`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow (S1-08 step 6.9) are implemented and validated. Frontend operational module pages are implemented through invoices plus rate cards and reports, with shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, shared search/CSV controls, invoice print view, and rate-card quality-adjustment rule editor. Production hardening pass is completed (helmet, rate limit, CORS allow-list, env startup checks, smoke and happy-path E2E). Next prepare staging deployment pipeline/checklist.`
+`Continue BioCNG SaaS from current master branch. Backend modules through invoice flow are implemented and validated, including quality-adjustment rule application in invoice calculations. Frontend operational module pages are implemented through invoices plus rate cards and reports, with shared auth request helper, formatting utilities, polished UI, dashboard KPI widgets, shared search/CSV controls, invoice print view, and rate-card quality-adjustment rule editor. Production hardening pass is completed (helmet, rate limit, CORS allow-list, env startup checks, smoke and happy-path E2E). Next prepare staging deployment pipeline/checklist.`
 
 ## 11) Mandatory Process For Every Future Change
 

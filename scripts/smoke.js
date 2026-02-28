@@ -445,7 +445,20 @@ async function main() {
       feedstockTypeId,
       effectiveFrom: '2026-01-01T00:00:00.000Z',
       ratePerTon: 1625,
-      qualityAdjustments: [],
+      qualityAdjustments: [
+        {
+          metric: 'moisturePercent',
+          operator: 'lte',
+          value: 20,
+          adjustmentPerTon: -50,
+        },
+        {
+          metric: 'contaminationPercent',
+          operator: 'gt',
+          value: 0.5,
+          adjustmentPerTon: -25,
+        },
+      ],
     }),
   });
   assert(
@@ -482,6 +495,19 @@ async function main() {
   assert(Array.isArray(invoiceList.body) && invoiceList.body.length >= 1, 'Expected at least one invoice in list');
   const hasGeneratedInvoice = invoiceList.body.some((x) => x.status === 'generated');
   assert(hasGeneratedInvoice, 'Expected generated invoice status in invoice list');
+  const invoiceWithLines = invoiceList.body.find((x) => Array.isArray(x.lines) && x.lines.length > 0);
+  assert(invoiceWithLines, 'Expected invoice to contain at least one line item');
+  const firstLine = invoiceWithLines.lines[0];
+  assert(firstLine.baseRatePerTon === 1625, `Expected baseRatePerTon 1625, got ${firstLine.baseRatePerTon}`);
+  assert(
+    firstLine.qualityAdjustmentPerTon === -75,
+    `Expected qualityAdjustmentPerTon -75, got ${firstLine.qualityAdjustmentPerTon}`
+  );
+  assert(firstLine.ratePerTon === 1550, `Expected adjusted ratePerTon 1550, got ${firstLine.ratePerTon}`);
+  assert(
+    Array.isArray(firstLine.appliedQualityRules) && firstLine.appliedQualityRules.length === 2,
+    'Expected two applied quality rules in invoice line'
+  );
 
   console.log('Smoke test passed');
 }

@@ -117,6 +117,7 @@ You should now see:
 7. In `Invoices` page:
    - Use `View` on a row to open invoice detail sheet
    - Use `Print Invoice` to print/download invoice as PDF from browser
+   - Generated line rates now include applicable quality-adjustment rules from rate cards
 8. In `Reports` page:
    - Choose `Date From` and `Date To`
    - Click `Load Report` to see summary cards and top invoice parties

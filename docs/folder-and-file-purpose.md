@@ -106,7 +106,7 @@ Purpose: Plant weighbridge and quality intake record model with accepted/rejecte
 Purpose: Weekly invoice cycle foundation model to control invoice generation windows and status.
 
 - `Invoice.js`
-Purpose: Generated invoice document model with invoice lines, totals, and cycle/party linkage.
+Purpose: Generated invoice document model with invoice lines, totals, cycle/party linkage, and applied quality-adjustment details.
 
 ### Folder: `src/routes` (API Endpoints)
 
@@ -153,7 +153,7 @@ Purpose: Dispatch trip CRUD, status transition API, and trip listing filters.
 Purpose: Plant intake entry CRUD routes with weighbridge and quality intake validation.
 
 - `invoices.js`
-Purpose: Basic weekly invoice generation API and invoice listing endpoints.
+Purpose: Weekly invoice generation/list APIs with dynamic quality-adjusted line-rate calculation.
 
 ## Folder: `scripts` (Utility Scripts)
 
@@ -162,7 +162,7 @@ Purpose: Inserts demo data (admin, masters, land/crop, harvest, center, dispatch
 Run when setting up local environment.
 
 - `scripts/smoke.js`
-Purpose: End-to-end API sanity check (login + create/list across masters/land/crop/harvest/center/dispatch/intake flow + rate resolution + weekly invoice generation/list validation).
+Purpose: End-to-end API sanity check (login + create/list across masters/land/crop/harvest/center/dispatch/intake flow + rate resolution + quality-adjusted weekly invoice generation/list validation).
 
 - `scripts/e2e-happy.js`
 Purpose: Dedicated happy-path E2E flow (login -> dispatch/intake -> weekly invoice generation).

@@ -228,12 +228,15 @@ Update rule:
    - Added per-rate rule editing section with add/remove/save controls
    - Wired rule editor save flow into existing `PATCH /api/rate-cards/:id`
    - Validation run completed: frontend `npm test -- --watchAll=false` and `npm run build`
+26. Invoice calculation now applies quality-adjustment rules dynamically:
+   - Added quality-rule evaluation logic in weekly invoice generation flow
+   - Invoice line now stores base rate, quality adjustment per ton, and applied rule details
+   - Added floor protection to prevent negative final rate per ton
+   - Smoke and happy-path E2E validations passed after change
 
 ### Planned / Pending
 1. No mandatory MVP feature steps pending in current frontend + backend MVP plan.
 2. Optional next improvement:
-   - Apply quality-adjustment rules dynamically inside invoice amount calculation flow.
-3. Optional next improvement:
    - Prepare first staging deployment pipeline.
 
 ### Next Target
